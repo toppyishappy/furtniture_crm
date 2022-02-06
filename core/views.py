@@ -16,3 +16,24 @@ class PurchaseOrder(View):
 
     def get(self, request):
         return render(request, 'core/purchase-order.html')
+
+
+@method_decorator(login_required, name='dispatch')
+class AdminManagement(View):
+
+    def get(self, request):
+        return render(request, 'core/admin-management.html')
+
+
+@method_decorator(login_required, name='dispatch')
+class Management(View):
+
+    def get(self, request):
+        return render(request, 'core/management.html')
+
+
+@method_decorator(login_required, name='dispatch')
+class Summary(View):
+
+    def get(self, request):
+        return render(request, 'core/summary.html')
