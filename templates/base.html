@@ -17,8 +17,20 @@
     {% endblock %}
 </head>
 <body>
-{% block content %}
-{% endblock %}
+<div class="row">
+    {% if user.is_authenticated %}
+        <div class="col-2">
+            <div>{{user}}</div>
+            <a href="/user/logout/"><div>admin</div></a>   
+            <a href="/user/logout/"><div>management</div></a>   
+            <a href="/user/logout/"><div>logout</div></a>   
+        </div>
+    {% endif %}
+    <div class="col">
+        {% block content %}
+        {% endblock %}
+    </div>
+</div>
 </body>
 {% block script%}
 {% endblock %}

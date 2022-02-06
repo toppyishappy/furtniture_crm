@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from django.views.generic import View
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 # Create your views here.
 
 class LoginView(View):
@@ -15,10 +15,14 @@ class LoginView(View):
         if user is not None:
             login(request, user)
             return redirect('/')
-            # Redirect to a success page.
-            
         else:
-            # Return an 'invalid login' error message.
-            return redirect('/user/')
+            return redirect('/user/login/')
+
+
+class LogoutView(View):
+
+    def get(self, request):
+        logout(request)
+        return redirect('/user/login/')
 
     
