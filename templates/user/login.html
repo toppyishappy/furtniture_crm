@@ -1,14 +1,25 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container">
-    <form action="" method="POST">
-        {% csrf_token %}
-        <div>login</div>
-        <div>username</div>
-        <input type="text" name="username" id="">
-        <div>password</div>
-        <input type="password" name="password" id="">
-        <input type="submit" name="" id="">
-    </form>
+    <div class="d-flex justify-content-center flex-column">
+        <div class="text-center">
+            <h1>Sofa Plus</h1>
+            <h3>Welcome to Sofa Plus</h3>
+        </div>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label for="usrename" class="form-label">Username</label>
+                <input type="text" id="usrename" class="form-control" name="usrename">
+                <label for="inputPassword5" class="form-label">Password</label>
+                <input type="password" id="inputPassword5" class="form-control" name="password">
+
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-secondary">Sign in</button>
+            </div>
+        </form>
+    </div>
+        
 </div>
 {% endblock %}
