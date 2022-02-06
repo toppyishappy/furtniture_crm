@@ -1,9 +1,33 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container">
-    <div class="card">aa</div>
-    <div class="card">aa</div>
-    <div class="card">aa</div>
-    <div class="card">aa</div>
-</div>
+    <div class="d-flex">
+        <div class="card mx-2" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">Purchase order</h5>
+              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+              <a href="/purchase-order/" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+        <div class="card mx-2" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">Admin management</h5>
+              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+              <a href="/admin-management/" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+        <div class="card mx-2" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">Management</h5>
+              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+              <a href="/management/" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+        <div class="card mx-2" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">Summary</h5>
+              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+              <a href="/summary/" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -17,19 +17,21 @@
     {% endblock %}
 </head>
 <body>
-<div class="row">
-    {% if user.is_authenticated %}
-        <div class="col-2">
-            <div>{{user}}</div>
-            <a href="/user/logout/"><div>admin</div></a>   
-            <a href="/user/logout/"><div>management</div></a>   
-            <a href="/user/logout/"><div>logout</div></a>   
+    <nav class="navbar navbar-light bg-light mb-3">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">Sofa plus</a>
+          {% if user.is_authenticated %}
+            <div class="d-flex">
+                <div class="mx-2">{{user}}</div>
+                <a href="/user/logout/"><div>logout</div></a>   
+            </div>
+          {% endif %}
         </div>
-    {% endif %}
-    <div class="col">
-        {% block content %}
-        {% endblock %}
-    </div>
+    </nav>
+<div class="container">
+    {% block content %}
+    {% endblock %}
+
 </div>
 </body>
 {% block script%}
