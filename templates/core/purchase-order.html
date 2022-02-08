@@ -1,6 +1,261 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container">
-    <div>purchase order</div>
+    <!-- section customer -->
+    <div class="row">
+        <div class="col-6">
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-3 m-auto">
+                        <label for="exampleFormControlInput1" class="">วันที่</label>
+                    </div>
+                    <div class="col">
+                        <input type="date" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-3 m-auto">
+                        <label for="exampleFormControlInput1" class="">ชื่อลุกค้า</label>
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-3 m-auto">
+                        <label for="exampleFormControlInput1" class="">ที่อยู่</label>
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-3 m-auto">
+                        <label for="exampleFormControlInput1" class="">กำหนดส่งสินค้า</label>
+                    </div>
+                    <div class="col">
+                        <input type="date" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-3 m-auto">
+                        <label for="exampleFormControlInput1" class="">สถานที่จัดงาน</label>
+                    </div>
+                    <div class="col">
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Open this select menu</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-3 m-auto">
+                        <label for="exampleFormControlInput1" class="">เบอร์โทรศัพท์</label>
+                    </div>
+                    <div class="col">
+                        <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-3 m-auto">
+                                <label for="exampleFormControlInput1" class="">จังหวัด</label>
+                            </div>
+                            <div class="col">
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Open this select menu</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-3 m-auto">
+                                <label for="exampleFormControlInput1" class="">เขต</label>
+                            </div>
+                            <div class="col">
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Open this select menu</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-3 m-auto">
+                                <label for="exampleFormControlInput1" class="">แขวง</label>
+                            </div>
+                            <div class="col">
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Open this select menu</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <!-- end section -->
+    <!-- section item -->
+    <div class="row">
+        <div class="col">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Add order</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Order list</button>
+                </li>
+              </ul>
+              <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    Add order
+                </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="row">
+                                    <div class="col mt-3">
+                                        <div class="d-flex-inline">
+                                            <span >แบบ</span>
+                                            <span>Caro 2RR-MOTOR กว้าง 2.10 ลึก 0.90 ม.</span>
+                                        </div>
+                                    </div>
+                                    <div class="col mt-3">
+                                        <div class="d-flex-inline">
+                                            <span >วัสดุ/รหัส</span>
+                                            <span>หนังแท้อิตาลีทั้งตัว</span>
+                                        </div>
+                                    </div>
+                                    <div class="col mt-3">
+                                        <div class="d-flex-inline">
+                                            <span >สี</span>
+                                            <span>s478</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mt-3">
+                                        <div class="d-flex-inline">
+                                            <span >ประเภท</span>
+                                            <span>2RR</span>
+                                        </div>
+                                    </div>
+                                    <div class="col mt-3">
+                                        <div class="d-flex-inline">
+                                            <span >จำนวน</span>
+                                            <span>1</span>
+                                        </div>
+                                    </div>
+                                    <div class="col mt-3">
+                                        <div class="d-flex-inline">
+                                            <span >ราคา</span>
+                                            <span>29999</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="d-flex-inline" style="">
+                                    <img src="https://pet-az.com/images/site/pics/bichon-frise-on-white-03.jpg" alt="">
+                                    <!-- <img src="https://pet-az.com/images/site/pics/bichon-frise-on-white-03.jpg" alt=""> -->
+    
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+              </div>
+        </div>
+    </div>
+    <hr/>
+    <!-- end section -->
+    <!-- section sale -->
+    <div class="row mb-3">
+        <div class="col-4 mb-3">
+            <div class="row">
+                <div class="col-3 m-auto">
+                    <label for="exampleFormControlInput1" class="">มัดจำ(เปอเซ็นต์)</label>
+                </div>
+                <div class="col">
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Open this select menu</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 mb-3">
+            <div class="row">
+                <div class="col-3 m-auto">
+                    <label for="exampleFormControlInput1" class="">การชำระเงิน</label>
+                </div>
+                <div class="col">
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Open this select menu</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-4 mb-3">
+            <textarea name="" id="" cols="30" rows="10"></textarea>
+        </div>
+        <div class="col-4 mb-3">
+            <div class="row">
+                <div class="col-3 m-auto">
+                    <label for="exampleFormControlInput1" class="">ลายมือชื่อ</label>
+                </div>
+                <div class="col">
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Open this select menu</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
+{% endblock %}
+
+{% block script%}
 {% endblock %}
