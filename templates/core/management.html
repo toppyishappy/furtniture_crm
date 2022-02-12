@@ -1,6 +1,30 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container">
+<!-- modal -->
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+      <div class="modal-content">
+  
+          <!-- Modal Header -->
+          <div class="modal-header">
+          <h4 class="modal-title">Modal Heading</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+  
+          <!-- Modal body -->
+          <div class="modal-body">
+          Modal body..
+          </div>
+  
+          <!-- Modal footer -->
+          <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+          </div>
+  
+      </div>
+  </div>
+</div>
+<!-- end modal -->
     <div>management</div>
     <table class="table table-striped">
         <thead>
@@ -48,9 +72,10 @@
                 <td>Caro 2RR-MOTOR กว้าง 2.10 ลึก 0.90 ม.</td>
                 <td>On going</td>
                 <td>ปรับไฟฟ้าซ้ายขวา</td>
-                <td><button class="btn-secondary btn">Confirm</button></td>
+                <td>
+                  <button class='btn btn-success' data-bs-toggle="modal" data-bs-target="#myModal">Confirm</button>
+                </td>
             </tr>
           </tbody>
     </table>
-</div>
 {% endblock %}

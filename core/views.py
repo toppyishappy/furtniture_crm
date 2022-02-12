@@ -3,6 +3,7 @@ from django.views.generic import View
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
+from core.forms import PurchaseOrderForm
 
 @method_decorator(login_required, name='dispatch')
 class HomePage(View):
@@ -15,7 +16,15 @@ class HomePage(View):
 class PurchaseOrder(View):
 
     def get(self, request):
-        return render(request, 'core/purchase-order.html')
+        form = PurchaseOrderForm()
+        return render(request, 'core/purchase-order.html', {'form': form})
+
+
+@method_decorator(login_required, name='dispatch')
+class PurchaseOrderDetail(View):
+
+    def get(self, request, id):
+        return render(request, 'core/purchase-order-detail.html')
 
 
 @method_decorator(login_required, name='dispatch')

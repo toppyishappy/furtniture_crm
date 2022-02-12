@@ -1,6 +1,15 @@
 {% extends 'base.html' %}
+{% block style%}
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dependencies/JQL.min.js"></script>
+<script type="text/javascript" src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dependencies/typeahead.bundle.js"></script>
+
+<link rel="stylesheet" href="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dist/jquery.Thailand.min.css">
+<script type="text/javascript" src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dist/jquery.Thailand.min.js"></script>
+{% endblock %}
 {% block content %}
-<div class="container">
+    
+    <h3 class="text-center">ใบสั่งซื้อสินค้า</h3>
     <!-- section customer -->
     <div class="row">
         <div class="col-6">
@@ -10,7 +19,8 @@
                         <label for="exampleFormControlInput1" class="">วันที่</label>
                     </div>
                     <div class="col">
-                        <input type="date" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                        {{form.date}}
+                        <!-- <input type="date" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com"> -->
                     </div>
                 </div>
             </div>
@@ -20,7 +30,8 @@
                         <label for="exampleFormControlInput1" class="">ชื่อลุกค้า</label>
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                        {{form.fullname}}
+                        <!-- <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com"> -->
                     </div>
                 </div>
             </div>
@@ -30,7 +41,8 @@
                         <label for="exampleFormControlInput1" class="">ที่อยู่</label>
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                        {{form.address}}
+                        <!-- <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com"> -->
                     </div>
                 </div>
             </div>
@@ -40,7 +52,8 @@
                         <label for="exampleFormControlInput1" class="">กำหนดส่งสินค้า</label>
                     </div>
                     <div class="col">
-                        <input type="date" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                        {{form.due_date}}
+                        <!-- <input type="date" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com"> -->
                     </div>
                 </div>
             </div>
@@ -67,55 +80,35 @@
                         <label for="exampleFormControlInput1" class="">เบอร์โทรศัพท์</label>
                     </div>
                     <div class="col">
-                        <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                        {{form.tel}}
+                        <!-- <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com"> -->
                     </div>
                 </div>
             </div>
             <div class="mb-3">
                 <div class="row">
                     <div class="col">
-                        <div class="row">
-                            <div class="col-3 m-auto">
-                                <label for="exampleFormControlInput1" class="">จังหวัด</label>
-                            </div>
-                            <div class="col">
-                                <select class="form-select" aria-label="Default select example">
-                                    <option selected>Open this select menu</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
-                            </div>
+                        <div class="d-flex">
+                            <label for="">จังหวัด</label>
+                            <input type="text" id="province">
                         </div>
                     </div>
                     <div class="col">
-                        <div class="row">
-                            <div class="col-3 m-auto">
-                                <label for="exampleFormControlInput1" class="">เขต</label>
-                            </div>
-                            <div class="col">
-                                <select class="form-select" aria-label="Default select example">
-                                    <option selected>Open this select menu</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
-                            </div>
+                        <div class="d-flex">
+                            <label for="">เขต</label>
+                            <input type="text" id="district">
                         </div>
                     </div>
                     <div class="col">
-                        <div class="row">
-                            <div class="col-3 m-auto">
-                                <label for="exampleFormControlInput1" class="">แขวง</label>
-                            </div>
-                            <div class="col">
-                                <select class="form-select" aria-label="Default select example">
-                                    <option selected>Open this select menu</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
-                            </div>
+                        <div class="d-flex">
+                            <label for="">อำเภอ</label>
+                            <input type="text" id="amphoe">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="d-flex">
+                            <label for="">ไปรษณีย์</label>
+                            <input type="text" id="zipcode">
                         </div>
                     </div>
                 </div>
@@ -253,9 +246,20 @@
             </div>
         </div>
     </div>
+    <div class="row mb-3">
+        <button class="btn btn-success">save</button>
+    </div>
 
-</div>
 {% endblock %}
 
 {% block script%}
+<script>
+    $.Thailand({
+    $district: $('#district'), // input ของตำบล
+    $amphoe: $('#amphoe'), // input ของอำเภอ
+    $province: $('#province'), // input ของจังหวัด
+    $zipcode: $('#zipcode'), // input ของรหัสไปรษณีย์
+});
+</script>
+
 {% endblock %}
