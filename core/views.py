@@ -26,6 +26,12 @@ class PurchaseOrderDetail(View):
     def get(self, request, id):
         return render(request, 'core/purchase-order-detail.html')
 
+@method_decorator(login_required, name='dispatch')
+class PurchaseOrderDetailEdit(View):
+
+    def get(self, request, id):
+        return render(request, 'core/purchase-order-detail-edit.html')
+
 
 @method_decorator(login_required, name='dispatch')
 class AdminManagement(View):

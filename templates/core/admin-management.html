@@ -1,11 +1,37 @@
 {% extends 'base.html' %}
 {% block content %}
+
+<!-- modal -->
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+      <div class="modal-content">
+  
+          <!-- Modal Header -->
+          <div class="modal-header">
+          <h4 class="modal-title">อนุมัติข้อมูล</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+  
+          <!-- Modal body -->
+          <div class="modal-body">
+          ยืนยันข้อมูลการอนุมัติข้อมูล ?
+          </div>
+  
+          <!-- Modal footer -->
+          <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
+          <button type="button" class="btn btn-primary button-shadow" data-bs-dismiss="modal" >ยืนยัน</button>
+          </div>
+  
+      </div>
+  </div>
+</div>
+
 <div class="container">
     <div>admin management</div>
     <table class="table table-striped">
       <thead>
           <tr>
-            <th scope="col">no</th>
             <th scope="col">PO Date</th>
             <th scope="col">PO Number</th>
             <th scope="col">Customer</th>
@@ -18,7 +44,6 @@
         </thead>
         <tbody>
           <tr>
-              <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></td>
               <td>12/05/22</td>
               <td>5478</td>
               <td>Adam</td>
@@ -26,10 +51,9 @@
               <td>Caro 2RR-MOTOR กว้าง 2.10 ลึก 0.90 ม.</td>
               <td>On going</td>
               <td>ปรับไฟฟ้าซ้ายขวา</td>
-              <td><button class="btn-secondary btn">Confirm</button></td>
+              <td><button class='btn btn-success' data-bs-toggle="modal" data-bs-target="#myModal">Confirm</button></td>
           </tr>
           <tr>
-              <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></td>
               <td>12/05/22</td>
               <td>5478</td>
               <td>Adam</td>
@@ -37,10 +61,9 @@
               <td>Caro 2RR-MOTOR กว้าง 2.10 ลึก 0.90 ม.</td>
               <td>On going</td>
               <td>ปรับไฟฟ้าซ้ายขวา</td>
-              <td><button class="btn-secondary btn">Confirm</button></td>
+              <td><button class='btn btn-success' data-bs-toggle="modal" data-bs-target="#myModal">Confirm</button></td>
           </tr>
           <tr>
-              <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></td>
               <td>12/05/22</td>
               <td>5478</td>
               <td>Adam</td>
@@ -48,7 +71,7 @@
               <td>Caro 2RR-MOTOR กว้าง 2.10 ลึก 0.90 ม.</td>
               <td>On going</td>
               <td>ปรับไฟฟ้าซ้ายขวา</td>
-              <td><button class="btn-secondary btn">Confirm</button></td>
+              <td><button class='btn btn-success' data-bs-toggle="modal" data-bs-target="#myModal">Confirm</button></td>
           </tr>
         </tbody>
   </table>
