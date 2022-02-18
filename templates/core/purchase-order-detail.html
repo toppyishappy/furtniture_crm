@@ -1,7 +1,97 @@
 {% extends 'base.html' %}
 {% block content %}
+
+<div class="modal fade" id="myModal_Confirm">
+    <div class="modal-dialog">
+        <div class="modal-content">
+    
+            <!-- Modal Header -->
+            <div class="modal-header">
+            <h4 class="modal-title">อนุมัติข้อมูล</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+    
+            <!-- Modal body -->
+            <div class="modal-body">
+            ยืนยันข้อมูลการอนุมัติข้อมูล ?
+            </div>
+    
+            <!-- Modal footer -->
+            <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
+            <button type="button" class="btn btn-primary button-shadow" data-bs-dismiss="modal" >ยืนยัน</button>
+            </div>
+    
+        </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="myModal_Reject">
+    <div class="modal-dialog">
+        <div class="modal-content">
+    
+            <!-- Modal Header -->
+            <div class="modal-header">
+            <h4 class="modal-title">ไม่อนุมัติข้อมูล</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+    
+            <!-- Modal body -->
+            <div class="modal-body">
+            ปฏิเสธการอนุมัติข้อมูล ?
+            </div>
+    
+            <!-- Modal footer -->
+            <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
+            <button type="button" class="btn btn-primary button-shadow" data-bs-dismiss="modal" >ยืนยัน</button>
+            </div>
+    
+        </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+    
+            <!-- Modal Header -->
+            <div class="modal-header">
+            <h4 class="modal-title">อนุมัติข้อมูล</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+    
+            <!-- Modal body -->
+            <div class="modal-body">
+            ยืนยันข้อมูลการอนุมัติข้อมูล ?
+            </div>
+    
+            <!-- Modal footer -->
+            <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
+            <button type="button" class="btn btn-primary button-shadow" data-bs-dismiss="modal" >ยืนยัน</button>
+            </div>
+    
+        </div>
+    </div>
+  </div>
+  
     <div>ใบสั่งซื้อสินค้า</div>
-    <div>Address</div>
+    <div class="d-flex justify-content-end mb-3">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary m-2">Print</button>
+            <button type="button" class="btn btn-success m-2 " data-bs-toggle="modal" data-bs-target="#myModal_Confirm">Confirm</button>
+            <button type="button" class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#myModal_Reject">Reject</button>
+            <button type="button" class="btn btn-warning m-2" onclick="RedirectEditPage()">Edit</button>
+            <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Separated link</a></li>
+            </ul>
+        </div>
+    </div>
     <!-- user information -->
     <div class="row">
         <div class="col-6">
@@ -181,4 +271,13 @@
             <img src="https://upic.me/i/a6/hd003.jpg" alt="" style="width: 200px;" >
         </div>
     </div>
+{% endblock %}
+{% block script %}
+<script>
+    function RedirectEditPage(){
+    const urlParams = new URLSearchParams(window.location.search);
+    const htmla = window.location.hostname;
+    window.location.href = `/purchase-order/edit/1`
+  }
+</script>
 {% endblock %}
