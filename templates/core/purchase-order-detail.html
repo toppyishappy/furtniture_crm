@@ -76,10 +76,9 @@
     </div>
   </div>
   
-    <div>ใบสั่งซื้อสินค้า</div>
     <div class="d-flex justify-content-end mb-3">
         <div class="btn-group">
-            <button type="button" class="btn btn-primary m-2">Print</button>
+            <button type="button" class="btn btn-primary m-2" onclick="PrintPage()">Print</button>
             <button type="button" class="btn btn-success m-2 " data-bs-toggle="modal" data-bs-target="#myModal_Confirm">Confirm</button>
             <button type="button" class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#myModal_Reject">Reject</button>
             <button type="button" class="btn btn-warning m-2" onclick="RedirectEditPage()">Edit</button>
@@ -92,102 +91,108 @@
             </ul>
         </div>
     </div>
-    <!-- user information -->
-    <div class="row">
+    <div class="d-flex justify-content-end mb-3">
+        Status : <span class="badge rounded-pill bg-success">On Going</span>
+    </div>
+    <div>ใบสั่งซื้อสินค้า</div>
+    <!-- section customer -->
+    <div class="row mt-3">
         <div class="col-6">
-            <div class="mb-3">
-                <div class="row">
-                    <div class="col-3 m-auto">
-                        <label for="exampleFormControlInput1" class="">วันที่</label>
-                    </div>
-                    <div class="col">
-                        <label>10/02/2022</label>
-                    </div>
+            <div class="row">
+                <div class="col-3 m-auto">
+                    <label for="exampleFormControlInput1" class="">วันที่</label>
                 </div>
-            </div>
-            <div class="mb-3">
-                <div class="row">
-                    <div class="col-3 m-auto">
-                        <label for="exampleFormControlInput1" class="">ชื่อลุกค้า</label>
-                    </div>
-                    <div class="col">
-                        <label>สมพร สุขเสมอ</label>
-                    </div>
-                </div>
-            </div>
-            <div class="mb-3">
-                <div class="row">
-                    <div class="col-3 m-auto">
-                        <label for="exampleFormControlInput1" class="">ที่อยู่</label>
-                    </div>
-                    <div class="col">
-                        200 ถนนมหาจักร
-                    </div>
-                </div>
-            </div>
-            <div class="mb-3">
-                <div class="row">
-                    <div class="col-3 m-auto">
-                        <label for="exampleFormControlInput1" class="">กำหนดส่งสินค้า</label>
-                    </div>
-                    <div class="col">
-                        13/04/2022
-                    </div>
+                <div class="col">
+                    10/02/2022
                 </div>
             </div>
         </div>
         <div class="col-6">
-            <div class="mb-3">
-                <div class="row">
-                    <div class="col-3 m-auto">
-                        <label for="exampleFormControlInput1" class="">สถานที่จัดงาน</label>
-                    </div>
+            <div class="row">
+                <div class="col-3 m-auto">
+                    <label for="exampleFormControlInput1" class="">สถานที่จัดงาน</label>
+                </div>
+                <div class="col">
+                    สยาม
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-6">
+            <div class="row">
+                <div class="col-3 m-auto">
+                    <label for="exampleFormControlInput1" class="">ชื่อลุกค้า</label>
+                </div>
+                <div class="col">
+                    สมชาย มั่งมี
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="row">
+                <div class="col-3 m-auto">
+                    <label for="exampleFormControlInput1" class="">เบอร์โทรศัพท์</label>
+                </div>
+                <div class="col">
+                    0970968234
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-6">
+            <div class="row">
+                <div class="col-3 m-auto">
+                    <label for="exampleFormControlInput1" class="">ที่อยู่</label>
+                </div>
+                <div class="col">
+                    200 ถนนมหาจักร
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="row">
+                <div class="col">
                     <div class="col">
-                        <label>One</label>
+                        <div class="row">
+                            <div class="col-4">จังหวัด</div>
+                            <div class="col">กรุงเทพมหานคร</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <div class="col-4">เขต</div>
+                        <div class="col">ป้อมปราบศตรูพ่าย</div>
                     </div>
                 </div>
             </div>
-            <div class="mb-3">
-                <div class="row">
-                    <div class="col-3 m-auto">
-                        <label for="exampleFormControlInput1" class="">เบอร์โทรศัพท์</label>
-                    </div>
-                    <div class="col">
-                        <label>0970992134</label>
-                    </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="row">
+                <div class="col-3 m-auto">
+                    <label for="exampleFormControlInput1" class="">กำหนดส่งสินค้า</label>
+                </div>
+                <div class="col">
+                    20/02/2022
                 </div>
             </div>
-            <div class="mb-3">
-                <div class="row">
-                    <div class="col">
-                        <div class="row">
-                            <div class="col-3 m-auto">
-                                <label for="exampleFormControlInput1" class="">จังหวัด</label>
-                            </div>
-                            <div class="col">
-                                <label>กรุงเทพมหานคร</label>
-                            </div>
-                        </div>
+        </div>
+        <div class="col-6">
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col-4">อำเภอ</div>
+                        <div class="col">ป้อมปราบศตรูพ่าย</div>
                     </div>
-                    <div class="col">
-                        <div class="row">
-                            <div class="col-3 m-auto">
-                                <label for="exampleFormControlInput1" class="">เขต</label>
-                            </div>
-                            <div class="col">
-                                <label>ป้อมปราบศตรูพ่าย</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="row">
-                            <div class="col-3 m-auto">
-                                <label for="exampleFormControlInput1" class="">แขวง</label>
-                            </div>
-                            <div class="col">
-                                <label>ป้อมปราบศตรูพ่าย</label>
-                            </div>
-                        </div>
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <div class="col-4">ไปรษณีย์</div>
+                        <div class="col">10100</div>
                     </div>
                 </div>
             </div>
@@ -197,7 +202,7 @@
     <!-- end section -->
 
     <!-- item information -->
-    <div class="row">
+    <!-- <div class="row">
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -240,14 +245,102 @@
                 </tr>
             </tbody>
         </table>
+    </div> -->
+    
+    <div class="row">
+        <div class="col">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Order list</button>
+                </li>
+              </ul>
+              <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="container" style="overflow-y: scroll; height: 500px;">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="row">
+                                    <div class="col mt-3">
+                                        <div class="d-flex-inline">
+                                            <span >แบบ</span>
+                                            <span>Caro 2RR-MOTOR กว้าง 2.10 ลึก 0.90 ม.</span>
+                                        </div>
+                                    </div>
+                                    <div class="col mt-3">
+                                        <div class="d-flex-inline">
+                                            <span >วัสดุ/รหัส</span>
+                                            <span>หนังแท้อิตาลีทั้งตัว</span>
+                                        </div>
+                                    </div>
+                                    <div class="col mt-3">
+                                        <div class="d-flex-inline">
+                                            <span >สี</span>
+                                            <span>s478</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mt-3">
+                                        <div class="d-flex-inline">
+                                            <span >ประเภท</span>
+                                            <span>2RR</span>
+                                        </div>
+                                    </div>
+                                    <div class="col mt-3">
+                                        <div class="d-flex-inline">
+                                            <span >จำนวน</span>
+                                            <span>1</span>
+                                        </div>
+                                    </div>
+                                    <div class="col mt-3">
+                                        <div class="d-flex-inline">
+                                            <span >ราคา</span>
+                                            <span>29999</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="d-flex" style="overflow-x: scroll;">
+                                <div class="me-2 border">
+                                    <img src="https://i.pinimg.com/originals/5f/50/67/5f50676000b6468d30faf12449b5bc69.jpg" alt="">
+                                </div>
+                                <div class="me-2 border">
+                                    <img src="https://i.pinimg.com/originals/5f/50/67/5f50676000b6468d30faf12449b5bc69.jpg" alt="">
+                                </div>
+                                <div class="me-2 border">
+                                    <img src="https://i.pinimg.com/originals/5f/50/67/5f50676000b6468d30faf12449b5bc69.jpg" alt="">
+                                </div>
+                                <div class="me-2 border">
+                                    <img src="https://i.pinimg.com/originals/5f/50/67/5f50676000b6468d30faf12449b5bc69.jpg" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+        </div>
     </div>
     <hr/>
     <!-- end section -->
     <div class="row">
         <div class="col">
+            <div class="row">
+                <div class="col-3 m-auto">
+                    <label for="exampleFormControlInput1" class="">การชำระเงิน</label>
+                </div>
+                <div class="col">
+                    เงินสด
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
             <div>
-                <label for="">หมายเหตู</label>
-                <textarea name="" id="" cols="30" rows="10"></textarea>
+                <label for="">หมายเหตู </label>
+                test text
             </div>
         </div>
         <div class="col">
@@ -279,5 +372,9 @@
     const htmla = window.location.hostname;
     window.location.href = `/purchase-order/edit/1`
   }
+
+  function PrintPage(){
+        window.print();
+    }
 </script>
 {% endblock %}
