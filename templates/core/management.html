@@ -13,7 +13,30 @@
   
           <!-- Modal body -->
           <div class="modal-body">
-          Modal body..
+            <div class="row mb-2">
+              <div class="col-4">โครงสร้าง</div>
+              <div class="col">
+                <button type="button" class="btn btn-primary">เริ่ม</button>
+                <button type="button" class="btn btn-secondary">สิ้นสุด</button>
+                <button type="button" class="btn btn-danger">reject</button>
+              </div>
+            </div>
+            <div class="row mb-2">
+              <div class="col-4">งานเย็บ<span class="badge rounded-pill bg-success">เสร็จ</span></div>
+              <div class="col">
+                <button type="button" class="btn btn-primary">เริ่ม</button>
+                <button type="button" class="btn btn-secondary">สิ้นสุด</button>
+                <button type="button" class="btn btn-danger">reject</button>
+              </div>
+            </div>
+            <div class="row mb-2">
+              <div class="col-4">จัดส่ง</div>
+              <div class="col">
+                <button type="button" class="btn btn-primary">เริ่ม</button>
+                <button type="button" class="btn btn-secondary">สิ้นสุด</button>
+                <button type="button" class="btn btn-danger">reject</button>
+              </div>
+            </div>
           </div>
   
           <!-- Modal footer -->
@@ -26,56 +49,68 @@
 </div>
 <!-- end modal -->
     <div>management</div>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-              <th scope="col">no</th>
-              <th scope="col">PO Date</th>
-              <th scope="col">PO Number</th>
-              <th scope="col">Customer</th>
-              <th scope="col">Due date</th>
-              <th scope="col">Model</th>
-              <th scope="col">Stattus</th>
-              <th scope="col">Comment</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-                <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></td>
-                <td>12/05/22</td>
-                <td>5478</td>
-                <td>Adam</td>
-                <td>18/06/22</td>
-                <td>Caro 2RR-MOTOR กว้าง 2.10 ลึก 0.90 ม.</td>
-                <td>On going</td>
-                <td>ปรับไฟฟ้าซ้ายขวา</td>
-                <td><button class="btn-secondary btn">Confirm</button></td>
-            </tr>
-            <tr>
-                <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></td>
-                <td>12/05/22</td>
-                <td>5478</td>
-                <td>Adam</td>
-                <td>18/06/22</td>
-                <td>Caro 2RR-MOTOR กว้าง 2.10 ลึก 0.90 ม.</td>
-                <td>On going</td>
-                <td>ปรับไฟฟ้าซ้ายขวา</td>
-                <td><button class="btn-secondary btn">Confirm</button></td>
-            </tr>
-            <tr>
-                <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></td>
-                <td>12/05/22</td>
-                <td>5478</td>
-                <td>Adam</td>
-                <td>18/06/22</td>
-                <td>Caro 2RR-MOTOR กว้าง 2.10 ลึก 0.90 ม.</td>
-                <td>On going</td>
-                <td>ปรับไฟฟ้าซ้ายขวา</td>
-                <td>
-                  <button class='btn btn-success' data-bs-toggle="modal" data-bs-target="#myModal">Confirm</button>
-                </td>
-            </tr>
-          </tbody>
-    </table>
+    <div class="d-flex justify-content-end">
+      <button type="button" class="btn btn-primary">excel</button>
+    </div>
+    <div class="row">
+      <table class="table table-striped">
+          <thead>
+              <tr>
+                <th scope="col">no</th>
+                <th scope="col">PO Date</th>
+                <th scope="col">PO Number</th>
+                <th scope="col">Customer</th>
+                <th scope="col">Due date</th>
+                <th scope="col">Model</th>
+                <th scope="col">Stattus</th>
+                <th scope="col">Comment</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                  <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></td>
+                  <td>12/05/22</td>
+                  <td><a href="/purchase-order/1">5478</a></td>
+                  <td>Adam</td>
+                  <td>18/06/22</td>
+                  <td>Caro 2RR-MOTOR กว้าง 2.10 ลึก 0.90 ม.</td>
+                  <td>On going</td>
+                  <td>ปรับไฟฟ้าซ้ายขวา</td>
+                  <td><button class="btn-secondary btn">Confirm</button></td>
+              </tr>
+              <tr style="background: firebrick;">
+                  <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></td>
+                  <td>12/05/22</td>
+                  <td>5478</td>
+                  <td>Adam</td>
+                  <td>18/01/22</td>
+                  <td>Caro 2RR-MOTOR กว้าง 2.10 ลึก 0.90 ม.</td>
+                  <td>On going</td>
+                  <td>ปรับไฟฟ้าซ้ายขวา</td>
+                  <td><button class="btn-secondary btn">Confirm</button></td>
+              </tr>
+              <tr>
+                  <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></td>
+                  <td>12/05/22</td>
+                  <td>5478</td>
+                  <td>Adam</td>
+                  <td>18/06/22</td>
+                  <td>Caro 2RR-MOTOR กว้าง 2.10 ลึก 0.90 ม.</td>
+                  <td>On going</td>
+                  <td>ปรับไฟฟ้าซ้ายขวา</td>
+                  <td>
+                    <button class='btn btn-success' data-bs-toggle="modal" data-bs-target="#myModal">Confirm</button>
+                  </td>
+              </tr>
+            </tbody>
+      </table>
+    </div>
+{% endblock %}
+{% block scrript %}
+    <script>
+      function navigateToDetail(){
+        window.location.href = '/purchase-order/1/'
+      }
+    </script>
 {% endblock %}
