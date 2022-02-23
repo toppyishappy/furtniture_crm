@@ -11,359 +11,219 @@
     
     <h3 class="text-center">ใบสั่งซื้อสินค้า</h3>
     <!-- section customer -->
-    <div class="row mt-3">
-        <div class="col-6">
-            <div class="row">
-                <div class="col-3 m-auto">
-                    <label for="exampleFormControlInput1" class="">วันที่</label>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="row mt-3">
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-3 m-auto">
+                        <label for="exampleFormControlInput1" class="">วันที่</label>
+                    </div>
+                    <div class="col">
+                        {{form.date}}
+                    </div>
                 </div>
-                <div class="col">
-                    {{form.date}}
+            </div>
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-3 m-auto">
+                        <label for="exampleFormControlInput1" class="">สถานที่จัดงาน</label>
+                    </div>
+                    <div class="col">
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Open this select menu</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-6">
-            <div class="row">
-                <div class="col-3 m-auto">
-                    <label for="exampleFormControlInput1" class="">สถานที่จัดงาน</label>
+        <div class="row mt-3">
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-3 m-auto">
+                        <label for="exampleFormControlInput1" class="">ชื่อลุกค้า</label>
+                    </div>
+                    <div class="col">
+                        {{form.fullname}}
+                    </div>
                 </div>
-                <div class="col">
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Open this select menu</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
+            </div>
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-3 m-auto">
+                        <label for="exampleFormControlInput1" class="">เบอร์โทรศัพท์</label>
+                    </div>
+                    <div class="col">
+                        {{form.tel}}
+                    </div>
+                    <span class="text-danger">{{form.tel.errors.as_text}}</span>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row mt-3">
-        <div class="col-6">
-            <div class="row">
-                <div class="col-3 m-auto">
-                    <label for="exampleFormControlInput1" class="">ชื่อลุกค้า</label>
-                </div>
-                <div class="col">
-                    {{form.fullname}}
-                </div>
-            </div>
-        </div>
-        <div class="col-6">
-            <div class="row">
-                <div class="col-3 m-auto">
-                    <label for="exampleFormControlInput1" class="">เบอร์โทรศัพท์</label>
-                </div>
-                <div class="col">
-                    {{form.tel}}
+        <div class="row mt-3">
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-3 m-auto">
+                        <label for="exampleFormControlInput1" class="">ที่อยู่</label>
+                    </div>
+                    <div class="col">
+                        {{form.address}}
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row mt-3">
-        <div class="col-6">
-            <div class="row">
-                <div class="col-3 m-auto">
-                    <label for="exampleFormControlInput1" class="">ที่อยู่</label>
-                </div>
-                <div class="col">
-                    {{form.address}}
-                </div>
-            </div>
-        </div>
-        <div class="col-6">
-            <div class="row">
-                <div class="col">
+            <div class="col-6">
+                <div class="row">
+                    <div class="col">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-4">จังหวัด</div>
+                                <div class="col"><input type="text" id="province"></div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col">
                         <div class="row">
-                            <div class="col-4">จังหวัด</div>
-                            <div class="col"><input type="text" id="province"></div>
+                            <div class="col-4">เขต</div>
+                            <div class="col"><input type="text" id="district"></div>
                         </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="row">
-                        <div class="col-4">เขต</div>
-                        <div class="col"><input type="text" id="district"></div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-6">
-            <div class="row">
-                <div class="col-3 m-auto">
-                    <label for="exampleFormControlInput1" class="">กำหนดส่งสินค้า</label>
-                </div>
-                <div class="col">
-                    {{form.due_date}}
-                </div>
-            </div>
-        </div>
-        <div class="col-6">
-            <div class="row">
-                <div class="col">
-                    <div class="row">
-                        <div class="col-4">อำเภอ</div>
-                        <div class="col"><input type="text" id="amphoe"></div>
+        <div class="row">
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-3 m-auto">
+                        <label for="exampleFormControlInput1" class="">กำหนดส่งสินค้า</label>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="row">
-                        <div class="col-4">ไปรษณีย์</div>
-                        <div class="col"><input type="text" id="zipcode"></div>
+                    <div class="col">
+                        {{form.due_date}}
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <hr/>
-    <!-- end section -->
-    <!-- section item -->
-    <div class="row">
-        <div class="col">
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Add order</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Order list</button>
-                </li>
-              </ul>
-              <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <div class="container">
-                        <div class="row mt-2">
-                            <div class="col-6">
-                                <div class="row">
-                                    <div class="col-3 m-auto">
-                                        <label for="exampleFormControlInput1" class="">การชำระเงิน</label>
-                                    </div>
-                                    <div class="col">
-                                        <select class="form-select" aria-label="Default select example">
-                                            <option selected>Open this select menu</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="row">
-                                    <div class="col-2 m-auto">
-                                        <label for="exampleFormControlInput1" class="">จำนวน</label>
-                                    </div>
-                                    <div class="col-2">
-                                        <select class="form-select" aria-label="Default select example">
-                                            <option selected>Open this select menu</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-2 m-auto">
-                                        <label for="exampleFormControlInput1" class="">สี</label>
-                                    </div>
-                                    <div class="col-2">
-                                        <select class="form-select" aria-label="Default select example">
-                                            <option selected>Open this select menu</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-2 m-auto">
-                                        <label for="exampleFormControlInput1" class="">ราคา</label>
-                                    </div>
-                                    <div class="col-2">
-                                        <select class="form-select" aria-label="Default select example">
-                                            <option selected>Open this select menu</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col-6">
-                                <div class="row">
-                                    <div class="col-3 m-auto">
-                                        <label for="exampleFormControlInput1" class="">ประเภท</label>
-                                    </div>
-                                    <div class="col">
-                                        <select class="form-select" aria-label="Default select example">
-                                            <option selected>Open this select menu</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="row">
-                                    <div class="col-2 m-auto">
-                                        <label for="exampleFormControlInput1" class="">รูปภาพ</label>
-                                    </div>
-                                    <div class="col">
-                                        <input type="file">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col-6">
-                                <div class="row">
-                                    <div class="col-3 m-auto">
-                                        <label for="exampleFormControlInput1" class="">วัสดุ/รหัส</label>
-                                    </div>
-                                    <div class="col">
-                                        <select class="form-select" aria-label="Default select example">
-                                            <option selected>Open this select menu</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                    <div class="container" style="overflow-y: scroll; height: 500px;">
+            <div class="col-6">
+                <div class="row">
+                    <div class="col">
                         <div class="row">
-                            <div class="col-8">
-                                <div class="row">
-                                    <div class="col mt-3">
-                                        <div class="d-flex-inline">
-                                            <span >แบบ</span>
-                                            <span>Caro 2RR-MOTOR กว้าง 2.10 ลึก 0.90 ม.</span>
-                                        </div>
-                                    </div>
-                                    <div class="col mt-3">
-                                        <div class="d-flex-inline">
-                                            <span >วัสดุ/รหัส</span>
-                                            <span>หนังแท้อิตาลีทั้งตัว</span>
-                                        </div>
-                                    </div>
-                                    <div class="col mt-3">
-                                        <div class="d-flex-inline">
-                                            <span >สี</span>
-                                            <span>s478</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col mt-3">
-                                        <div class="d-flex-inline">
-                                            <span >ประเภท</span>
-                                            <span>2RR</span>
-                                        </div>
-                                    </div>
-                                    <div class="col mt-3">
-                                        <div class="d-flex-inline">
-                                            <span >จำนวน</span>
-                                            <span>1</span>
-                                        </div>
-                                    </div>
-                                    <div class="col mt-3">
-                                        <div class="d-flex-inline">
-                                            <span >ราคา</span>
-                                            <span>29999</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="col-4">อำเภอ</div>
+                            <div class="col"><input type="text" id="amphoe"></div>
                         </div>
+                    </div>
+                    <div class="col">
                         <div class="row">
-                            <div class="d-flex" style="overflow-x: scroll;">
-                                <div class="me-2 border">
-                                    <img src="https://i.pinimg.com/originals/5f/50/67/5f50676000b6468d30faf12449b5bc69.jpg" alt="">
-                                </div>
-                                <div class="me-2 border">
-                                    <img src="https://i.pinimg.com/originals/5f/50/67/5f50676000b6468d30faf12449b5bc69.jpg" alt="">
-                                </div>
-                                <div class="me-2 border">
-                                    <img src="https://i.pinimg.com/originals/5f/50/67/5f50676000b6468d30faf12449b5bc69.jpg" alt="">
-                                </div>
-                                <div class="me-2 border">
-                                    <img src="https://i.pinimg.com/originals/5f/50/67/5f50676000b6468d30faf12449b5bc69.jpg" alt="">
-                                </div>
-                            </div>
+                            <div class="col-4">ไปรษณีย์</div>
+                            <div class="col"><input type="text" id="zipcode"></div>
                         </div>
                     </div>
                 </div>
-              </div>
+            </div>
         </div>
-    </div>
-    <hr/>
-    <!-- end section -->
-    <!-- section sale -->
-    <div class="row mb-3">
-        <div class="col-6">
-            <div class="row">
-                <div class="col-3 m-auto">
-                    <label for="exampleFormControlInput1" class="">มัดจำ(เปอเซ็นต์)</label>
+        <hr/>
+        <!-- end section -->
+        <!-- section sale -->
+        <div class="row mb-3">
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-3 m-auto">
+                        <label for="exampleFormControlInput1" class="">มัดจำ(เปอเซ็นต์)</label>
+                    </div>
+                    <div class="col">
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Open this select menu</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="col">
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Open this select menu</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
+            </div>
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-3 m-auto">
+                        <label for="exampleFormControlInput1" class="">การชำระเงิน</label>
+                    </div>
+                    <div class="col">
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Open this select menu</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-6">
-            <div class="row">
-                <div class="col-3 m-auto">
-                    <label for="exampleFormControlInput1" class="">การชำระเงิน</label>
+        <div class="row mb-3">
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-3">หมายเหตุ</div>
+                    <div class="col">{{form.comment}}</div>
                 </div>
-                <div class="col">
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Open this select menu</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
+            </div>
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-3 m-auto">
+                        ลายมือชื่อ
+                    </div>
+                    <div class="col">
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Open this select menu</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row mb-3">
-        <div class="col-6">
-            <div class="row">
-                <div class="col-3">หมายเหตุ</div>
-                <div class="col">{{form.comment}}</div>
-            </div>
-        </div>
-        <div class="col-6">
-            <div class="row">
-                <div class="col-3 m-auto">
-                    ลายมือชื่อ
-                </div>
-                <div class="col">
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Open this select menu</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-    </div>
-    <a href="/"><button class="btn btn-success">save</button></a>
+        <!-- end section -->
+        <a href="/"><input type="submit" class="btn btn-success"></input></a>
+    </form>
 
 {% endblock %}
 
 {% block script%}
+<script>
+    const postData = async(data) => {
+        await fetch('/api/purchase-order', 
+            {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        return await response.json()
+    }
+    const addItem = async() => {
+        const formData = new FormData();
+        const fileList = document.getElementById('file').files;
+        for(var i=0;i<fileList.length;i++) {
+            formData.append('file'+i, fileList.item(i));
+        }
+        const purchaseMethod = $('#purchase-method').val()
+        const model = $('#model').val()
+        const type = $('#type').val()
+        const material = $('#material').val()
+        const amount = $('#amount').val()
+        const color = $('#color').val()
+        const price = $('#price').val()
+        data = {
+            purchaseMethod,
+            model,
+            type,
+            material,
+            amount,
+            color,
+            price
+        }
+        const res = await postData(data)
+        
+    }
+</script>
 <script>
     $.Thailand({
     $district: $('#district'), // input ของตำบล

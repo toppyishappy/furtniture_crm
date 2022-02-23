@@ -1,3 +1,4 @@
+from multiprocessing import context
 import pdb
 from django.shortcuts import redirect, render
 from django.views.generic import View
@@ -17,7 +18,8 @@ class LoginView(View):
             login(request, user)
             return redirect('/')
         else:
-            return redirect('/user/login/')
+            context = {'msg': 'เข้าสู่ระบบไม่สำเร็จ กรุณาตรวจสอบ username หรือ password อีกครั้ง'}
+            return render(request, 'user/login.html', context=context)
 
 
 class LogoutView(View):
