@@ -1,4 +1,6 @@
+from calendar import month
 from datetime import datetime, timedelta
+from dateutil import relativedelta
 
 from django.shortcuts import redirect, render
 from django.views.generic import View, ListView
@@ -147,15 +149,14 @@ class Management(ListView):
     template_name = 'core/management.html'
     paginate_by = 1
 
-    # def get_context_data(self, **kwargs):
-    #     context = super(Management, self).get_context_data(**kwargs)
-    #     department = Department.objects.filter(status=True)
-    #     context['departments'] = department
-    #     return context
-
     def get_queryset(self):
         result = []
+        month_range = self.request.GET.get('query', None)
         orders = SaleOrder.objects.filter(status=SaleOrder.ON_GOING)
+        if month_range:
+            start_month = datetime.strptime(month_range, '%Y-%m')
+            end_month = start_month + relativedelta.relativedelta(months=1) - timedelta(days=1)
+            orders = orders.filter(created_date__range=(start_month, end_month))
         for order in orders:
             result.append({
                 'customer': Customer.objects.get(id=order.customer_id),

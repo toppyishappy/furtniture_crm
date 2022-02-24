@@ -63,7 +63,7 @@ class ManagementAPI(View):
         department_id = data['department_id']
         order_id = data['order_id']
         order = SaleOrder.objects.filter(id=order_id).first()
-        log = DepartmentLog.objects.filter(order=order, department_id=department_id).first()
+        log = DepartmentLog.objects.filter(order=order, department_id=department_id, status=True).first()
         if not log:
             log = DepartmentLog(order=order, department_id=department_id)
         if action == 'start':

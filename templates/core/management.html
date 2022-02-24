@@ -36,8 +36,10 @@
 <div class="row">
   <div class="d-flex justify-content-between p-0">
     <div>
-      <input type="month">
-      <button type="button" class="btn btn-primary">Search</button>
+      <form action="" method="get">
+        <input type="month" name="query">
+        <input type="submit" value="search" class="btn btn-primary">
+      </form>
     </div>
     <button type="button" class="btn btn-primary">excel</button>
   </div>
@@ -64,7 +66,7 @@
           <tr class="">
         {% endif %}
           <td>{{item.order.created_date|date:"SHORT_DATE_FORMAT"}}</td>
-          <td>{{item.order.id}}</td>
+          <td><a href="/purchase-order/{{item.order.id}}">{{item.order.id}}</a></td>
           <td>{{item.customer.fullname}}</td>
           <td>{{item.order.delivery_date|date:"SHORT_DATE_FORMAT"}}</td>
           <td>{{item.order.status}}</td>
@@ -134,7 +136,6 @@
                 </div>
               </div>
             `
-             
           }
         }
         content.innerHTML = html;
@@ -152,7 +153,16 @@
         const path = '/api/management';
         const res = await postData(path, data);
         if(res.ok){
-          window.location.reload();
+          Swal.fire({
+            icon: 'success',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+            footer: '<a href="">Why do I have this issue?</a>'
+          }).then(result => {
+            if(result.isConfirmed){
+              window.location.reload();
+            }
+          })
         }
       }
     </script>
