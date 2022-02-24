@@ -14,8 +14,8 @@ class DepartmentLog(models.Model):
     order = models.ForeignKey('core.SaleOrder', on_delete=models.CASCADE)
     status = models.BooleanField(default=True)
     department_id = models.IntegerField()
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
+    start_time = models.DateTimeField(blank=True, null=True)
+    end_time = models.DateTimeField(blank=True, null=True)
 
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)

@@ -5,10 +5,11 @@ from django.views.generic import View, ListView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.db import DatabaseError, transaction
+from django.utils import timezone
 from django.core.paginator import Paginator
 
 from core.forms import PurchaseOrderForm, ItemForm, SaleForm
-from core.models import ItemColor, ItemImage, ItemMaterial, ItemModel, ItemType, SaleOrder, SaleOrderDetail, WorkLocation
+from core.models import Department, ItemColor, ItemImage, ItemMaterial, ItemModel, ItemType, SaleOrder, SaleOrderDetail, WorkLocation
 from user.models import Customer
 
 @method_decorator(login_required, name='dispatch')
@@ -127,26 +128,53 @@ class PurchaseOrderEdit(View):
 
 @method_decorator(login_required, name='dispatch')
 class AdminManagement(ListView):
-    model = SaleOrder
     template_name = 'core/admin-management.html'
     paginate_by = 1
 
     def get_queryset(self):
         result = []
-        orders = SaleOrder.objects.filter(status=SaleOrder.INITIAL)
+        orders = SaleOrder.objects.filter(status=SaleOrder.WATING_APPROVED)
         for order in orders:
             result.append({
                 'customer': Customer.objects.get(id=order.customer_id),
-                'order': order
+                'order': order,
             })
         return result
 
 
 @method_decorator(login_required, name='dispatch')
-class Management(View):
+class Management(ListView):
+    template_name = 'core/management.html'
+    paginate_by = 1
 
-    def get(self, request):
-        return render(request, 'core/management.html')
+    # def get_context_data(self, **kwargs):
+    #     context = super(Management, self).get_context_data(**kwargs)
+    #     department = Department.objects.filter(status=True)
+    #     context['departments'] = department
+    #     return context
+
+    def get_queryset(self):
+        result = []
+        orders = SaleOrder.objects.filter(status=SaleOrder.ON_GOING)
+        for order in orders:
+            result.append({
+                'customer': Customer.objects.get(id=order.customer_id),
+                'order': order,
+                'flag': self.check_delivery_date(order.delivery_date),
+            })
+        return result
+    
+    def check_delivery_date(self, date):
+        # 0 = nomral
+        # 1 = yellow
+        # 2 = red
+        diff_date = timezone.now().date() - date
+        if diff_date.days <= 7 and diff_date.days >= 1:
+            return 1
+        elif diff_date.days <= 0:
+            return 2
+        else:
+            return 0
 
 
 @method_decorator(login_required, name='dispatch')

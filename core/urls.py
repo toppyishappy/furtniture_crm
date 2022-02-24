@@ -1,6 +1,6 @@
 from django.urls import path
 from core.views import HomePage, PurchaseOrder, AdminManagement, Management, Summary, PurchaseOrderDetail, PurchaseOrderEdit, PurchaseOrderItem
-from core.api.v1 import AdminManagementAPI
+from core.api.v1 import AdminManagementAPI, ManagementAPI, DepartmentListAPI
 
 urlpatterns = [
     path('', HomePage.as_view()),
@@ -14,6 +14,9 @@ urlpatterns = [
 
     # api
     path('api/admin-management', AdminManagementAPI.as_view()),
+    path('api/management', ManagementAPI.as_view()),
+    path('api/department', DepartmentListAPI.as_view()),
+    
 ]
 
 # api url

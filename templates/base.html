@@ -32,4 +32,22 @@
 </body>
 {% block script%}
 {% endblock %}
+<script>
+    const postData = async(path, data) => {
+        const response = await fetch(path, 
+            {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        return await response.json()
+    }
+
+    const gettData = async(path) => {
+        const response = await fetch(path)
+        return await response.json()
+    }
+</script>
 </html>

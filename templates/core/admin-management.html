@@ -1,88 +1,31 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<!-- modal -->
-<div class="modal fade" id="myModal">
-  <div class="modal-dialog">
-      <div class="modal-content">
-  
-          <!-- Modal Header -->
-          <div class="modal-header">
-          <h4 class="modal-title">อนุมัติข้อมูล</h4>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-          </div>
-  
-          <!-- Modal body -->
-          <div class="modal-body">
-          ยืนยันข้อมูลการอนุมัติข้อมูล ?
-          </div>
-  
-          <!-- Modal footer -->
-          <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
-          <button type="button" class="btn btn-primary button-shadow" data-bs-dismiss="modal" onclick="confirm()">ยืนยัน</button>
-          </div>
-  
-      </div>
-  </div>
-</div>
-
-<div class="container">
-    <div>admin management</div>
-    <table class="table table-striped">
-      <thead>
-          <tr>
-            <th scope="col">PO Date</th>
-            <th scope="col">PO Number</th>
-            <th scope="col">Customer</th>
-            <th scope="col">Due date</th>
-            <th scope="col">Stattus</th>
-            <th scope="col">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- <tr>
-              <td>12/05/22</td>
-              <td><a href="/purchase-order/1">5478</a></td>
-              <td>Adam</td>
-              <td>18/06/22</td>
-              <td>Caro 2RR-MOTOR กว้าง 2.10 ลึก 0.90 ม.</td>
-              <td>On going</td>
-              <td>ปรับไฟฟ้าซ้ายขวา</td>
-              <td><button class='btn btn-success' data-bs-toggle="modal" data-bs-target="#myModal">Confirm</button></td>
-          </tr>
-          <tr>
-              <td>12/05/22</td>
-              <td>5478</td>
-              <td>Adam</td>
-              <td>18/06/22</td>
-              <td>Caro 2RR-MOTOR กว้าง 2.10 ลึก 0.90 ม.</td>
-              <td>On going</td>
-              <td>ปรับไฟฟ้าซ้ายขวา</td>
-              <td><button class='btn btn-success' data-bs-toggle="modal" data-bs-target="#myModal">Confirm</button></td>
-          </tr>
-          <tr>
-              <td>12/05/22</td>
-              <td>5478</td>
-              <td>Adam</td>
-              <td>18/06/22</td>
-              <td>Caro 2RR-MOTOR กว้าง 2.10 ลึก 0.90 ม.</td>
-              <td>On going</td>
-              <td>ปรับไฟฟ้าซ้ายขวา</td>
-              <td><button class='btn btn-success' data-bs-toggle="modal" data-bs-target="#myModal">Confirm</button></td>
-          </tr> -->
-          {% for item in page_obj %}
-          <tr>
-            <td>{{item.order.created_date|date:"SHORT_DATE_FORMAT"}}</td>
-            <td>{{item.order.id}}</td>
-            <td>{{item.customer.fullname}}</td>
-            <td>{{item.order.delivery_date|date:"SHORT_DATE_FORMAT"}}</td>
-            <td>{{item.order.status}}</td>
-            <td><button class='btn btn-success' onclick="confirm('{{item.order.id}}')">Confirm</button></td>
+<div>admin management</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+          <th scope="col">PO Date</th>
+          <th scope="col">PO Number</th>
+          <th scope="col">Customer</th>
+          <th scope="col">Due date</th>
+          <th scope="col">Stattus</th>
+          <th scope="col">Action</th>
         </tr>
-          {% endfor %}
-        </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {% for item in page_obj %}
+        <tr>
+          <td>{{item.order.created_date|date:"SHORT_DATE_FORMAT"}}</td>
+          <td>{{item.order.id}}</td>
+          <td>{{item.customer.fullname}}</td>
+          <td>{{item.order.delivery_date|date:"SHORT_DATE_FORMAT"}}</td>
+          <td>{{item.order.status}}</td>
+          <td><button class='btn btn-success' onclick="confirm('{{item.order.id}}')">Confirm</button></td>
+      </tr>
+        {% endfor %}
+      </tbody>
+</table>
 
 
 <div class="d-flex justify-content-center mt-2">
@@ -105,7 +48,6 @@
       {% endif %}
     </ul>
   </nav>
-</div>
 </div>
 
 
@@ -137,18 +79,5 @@
     }
   })
   }
-</script>
-<script>
-  const postData = async(path, data) => {
-        const response = await fetch(path, 
-            {
-                method: 'POST',
-                headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-        return await response.json()
-    }
 </script>
 {% endblock %}
