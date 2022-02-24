@@ -1,5 +1,7 @@
 from django.urls import path
 from core.views import HomePage, PurchaseOrder, AdminManagement, Management, Summary, PurchaseOrderDetail, PurchaseOrderEdit, PurchaseOrderItem
+from core.api.v1 import AdminManagementAPI
+
 urlpatterns = [
     path('', HomePage.as_view()),
     path('purchase-order/', PurchaseOrder.as_view()),
@@ -11,7 +13,7 @@ urlpatterns = [
     path('summary/', Summary.as_view()),
 
     # api
-    # path('api/purchase-order', PurchaseOrderAPI.as_view()),
+    path('api/admin-management', AdminManagementAPI.as_view()),
 ]
 
 # api url

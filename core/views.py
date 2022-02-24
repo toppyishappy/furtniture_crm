@@ -1,10 +1,11 @@
 from datetime import datetime, timedelta
 
 from django.shortcuts import redirect, render
-from django.views.generic import View
+from django.views.generic import View, ListView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.db import DatabaseError, transaction
+from django.core.paginator import Paginator
 
 from core.forms import PurchaseOrderForm, ItemForm, SaleForm
 from core.models import ItemColor, ItemImage, ItemMaterial, ItemModel, ItemType, SaleOrder, SaleOrderDetail, WorkLocation
@@ -112,7 +113,7 @@ class PurchaseOrderItem(View):
                 print('error')
         
         if sale_form.is_valid():
-            SaleOrder.objects.update(**(sale_form.cleaned_data))
+            SaleOrder.objects.update(**(sale_form.cleaned_data), status=SaleOrder.WATING_APPROVED)
             return redirect('/')
         return redirect(f'/purchase-order/{id}/item')
 
@@ -125,10 +126,20 @@ class PurchaseOrderEdit(View):
 
 
 @method_decorator(login_required, name='dispatch')
-class AdminManagement(View):
+class AdminManagement(ListView):
+    model = SaleOrder
+    template_name = 'core/admin-management.html'
+    paginate_by = 1
 
-    def get(self, request):
-        return render(request, 'core/admin-management.html')
+    def get_queryset(self):
+        result = []
+        orders = SaleOrder.objects.filter(status=SaleOrder.INITIAL)
+        for order in orders:
+            result.append({
+                'customer': Customer.objects.get(id=order.customer_id),
+                'order': order
+            })
+        return result
 
 
 @method_decorator(login_required, name='dispatch')

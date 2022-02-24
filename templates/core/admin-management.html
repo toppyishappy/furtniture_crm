@@ -20,7 +20,7 @@
           <!-- Modal footer -->
           <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
-          <button type="button" class="btn btn-primary button-shadow" data-bs-dismiss="modal" >ยืนยัน</button>
+          <button type="button" class="btn btn-primary button-shadow" data-bs-dismiss="modal" onclick="confirm()">ยืนยัน</button>
           </div>
   
       </div>
@@ -36,14 +36,12 @@
             <th scope="col">PO Number</th>
             <th scope="col">Customer</th>
             <th scope="col">Due date</th>
-            <th scope="col">Model</th>
             <th scope="col">Stattus</th>
-            <th scope="col">Comment</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <!-- <tr>
               <td>12/05/22</td>
               <td><a href="/purchase-order/1">5478</a></td>
               <td>Adam</td>
@@ -72,42 +70,85 @@
               <td>On going</td>
               <td>ปรับไฟฟ้าซ้ายขวา</td>
               <td><button class='btn btn-success' data-bs-toggle="modal" data-bs-target="#myModal">Confirm</button></td>
-          </tr>
+          </tr> -->
+          {% for item in page_obj %}
+          <tr>
+            <td>{{item.order.created_date|date:"SHORT_DATE_FORMAT"}}</td>
+            <td>{{item.order.id}}</td>
+            <td>{{item.customer.fullname}}</td>
+            <td>{{item.order.delivery_date|date:"SHORT_DATE_FORMAT"}}</td>
+            <td>{{item.order.status}}</td>
+            <td><button class='btn btn-success' onclick="confirm('{{item.order.id}}')">Confirm</button></td>
+        </tr>
+          {% endfor %}
         </tbody>
   </table>
 
-  <div class="d-flex justify-content-center mt-2">
-    <nav aria-label="Page navigation example">
-      <ul class="pagination">
-        <li class="page-item">
-          <a class="page-link" aria-label="Previous">
-            <span >Prev</span>
-          </a>
+
+<div class="d-flex justify-content-center mt-2">
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+      {% endif %}
+      {% for page in page_obj.paginator.page_range %}
+        {% if page == page_obj.number %}
+        <li class="page-item active" aria-current="page">
+          <a class="page-link" href="?page={{page}}">{{ page }}</a>
         </li>
-        <li class="page-item">
-          <a class="page-link" aria-label="Next" >
-            <span >1</span>
-          </a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" aria-label="Next" >
-            <span >2</span>
-          </a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" aria-label="Next" >
-            <span >3</span>
-          </a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" aria-label="Next" >
-            <span >Next</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </div>
+        {% else %}
+          <li class="page-item"><a class="page-link" href="?page={{page}}">{{ page }}</a></li>
+        {% endif %}
+      {% endfor %}
+      {% if page_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+</div>
 </div>
 
 
+{% endblock %}
+{% block script %}
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  const confirm = (orderId) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    })
+  .then( async(result) => {
+    if (result.isConfirmed) {
+      const data = {
+        'action': 'confirm',
+        'order_id': orderId
+      }
+      const path = '/api/admin-management'
+      const res = await postData(path, data)
+      if(res.ok){
+        window.location.href = '/admin-management/';
+      }
+    }
+  })
+  }
+</script>
+<script>
+  const postData = async(path, data) => {
+        const response = await fetch(path, 
+            {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        return await response.json()
+    }
+</script>
 {% endblock %}
