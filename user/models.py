@@ -5,7 +5,6 @@ from django.contrib.auth.models import User
 class Customer(models.Model):
     fullname = models.CharField(max_length=50)
     tel = models.CharField(max_length=10)
-    address = models.TextField()
 
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
@@ -17,3 +16,10 @@ class EmployeeSignature(models.Model):
 
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
+
+    def get_choices():
+        result = [('', 'Please select a choice')]
+        objects = EmployeeSignature.objects.values()
+        for i in objects:
+            result.append((i['id'], i['name']))
+        return result

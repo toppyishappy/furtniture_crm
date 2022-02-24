@@ -30,12 +30,13 @@
                         <label for="exampleFormControlInput1" class="">สถานที่จัดงาน</label>
                     </div>
                     <div class="col">
-                        <select class="form-select" aria-label="Default select example">
+                        {{form.work_place_id}}
+                        <!-- <select class="form-select" aria-label="Default select example" required name="work_location_id">
                             <option selected>Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
+                            {% for item in work_location %}
+                                <option value="{{item.id}}">{{item.name}}</option>
+                            {% endfor %}
+                        </select> -->
                     </div>
                 </div>
             </div>
@@ -70,7 +71,7 @@
                         <label for="exampleFormControlInput1" class="">ที่อยู่</label>
                     </div>
                     <div class="col">
-                        {{form.address}}
+                        {{form.delivery_address}}
                     </div>
                 </div>
             </div>
@@ -80,14 +81,14 @@
                         <div class="col">
                             <div class="row">
                                 <div class="col-4">จังหวัด</div>
-                                <div class="col"><input type="text" id="province"></div>
+                                <div class="col">{{form.province}}</div>
                             </div>
                         </div>
                     </div>
                     <div class="col">
                         <div class="row">
                             <div class="col-4">เขต</div>
-                            <div class="col"><input type="text" id="district"></div>
+                            <div class="col">{{form.district}}</div>
                         </div>
                     </div>
                 </div>
@@ -100,7 +101,7 @@
                         <label for="exampleFormControlInput1" class="">กำหนดส่งสินค้า</label>
                     </div>
                     <div class="col">
-                        {{form.due_date}}
+                        {{form.delivery_date}}
                     </div>
                 </div>
             </div>
@@ -109,13 +110,13 @@
                     <div class="col">
                         <div class="row">
                             <div class="col-4">อำเภอ</div>
-                            <div class="col"><input type="text" id="amphoe"></div>
+                            <div class="col">{{form.amphoe}}</div>
                         </div>
                     </div>
                     <div class="col">
                         <div class="row">
                             <div class="col-4">ไปรษณีย์</div>
-                            <div class="col"><input type="text" id="zipcode"></div>
+                            <div class="col">{{form.zipcode}}</div>
                         </div>
                     </div>
                 </div>
@@ -123,63 +124,7 @@
         </div>
         <hr/>
         <!-- end section -->
-        <!-- section sale -->
-        <div class="row mb-3">
-            <div class="col-6">
-                <div class="row">
-                    <div class="col-3 m-auto">
-                        <label for="exampleFormControlInput1" class="">มัดจำ(เปอเซ็นต์)</label>
-                    </div>
-                    <div class="col">
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="row">
-                    <div class="col-3 m-auto">
-                        <label for="exampleFormControlInput1" class="">การชำระเงิน</label>
-                    </div>
-                    <div class="col">
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col-6">
-                <div class="row">
-                    <div class="col-3">หมายเหตุ</div>
-                    <div class="col">{{form.comment}}</div>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="row">
-                    <div class="col-3 m-auto">
-                        ลายมือชื่อ
-                    </div>
-                    <div class="col">
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- end section -->
+        
         <a href="/"><input type="submit" class="btn btn-success"></input></a>
     </form>
 
