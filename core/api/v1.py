@@ -1,14 +1,16 @@
 from datetime import datetime
+import io
 import json
+import xlsxwriter
 
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.generic import View
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
 
-from core.models import Department, SaleOrder, SaleOrderDetail
+from core.models import Department, ItemColor, ItemMaterial, ItemModel, ItemType, SaleOrder, SaleOrderDetail
 from log.models import DepartmentLog
 
 @method_decorator([login_required, csrf_exempt], name='dispatch')
@@ -22,6 +24,59 @@ class AdminManagementAPI(View):
         order.save()
         return JsonResponse({'ok': True})
 
+
+@method_decorator([login_required, csrf_exempt], name='dispatch')
+class ExportExcelAPI(View):
+    
+    def get_data(self, id_list):
+        result = []
+        for id in id_list:
+            sale_order = SaleOrder.objects.filter(id=id).first()
+            order_details = SaleOrderDetail.objects.filter(sale_order=sale_order)
+            for detail in order_details:
+                result.append({
+                    'sale_order_id': sale_order.id,
+                    'model': ItemModel.get_object(detail.model_id).name,
+                    'color': ItemColor.get_object(detail.color_id).name,
+                    'type': ItemType.get_object(detail.type_id).name,
+                    'material': ItemMaterial.get_object(detail.material_id).name,
+                })
+        return result
+
+    def get(self, request):
+        output = io.BytesIO()
+        workbook = xlsxwriter.Workbook(output)
+        worksheet = workbook.add_worksheet()
+        id_list = [1,3]
+        result = self.get_data(id_list)
+        worksheet.write(0, 0, 'id')
+        worksheet.write(1, 0, 'model')
+        worksheet.write(2, 0, 'color')
+        worksheet.write(3, 0, 'type')
+        worksheet.write(4, 0, 'material')
+        for row, item in enumerate(result):
+            worksheet.write(0, row+1, item['sale_order_id'])
+            worksheet.write(1, row+1, item['model'])
+            worksheet.write(2, row+1, item['color'])
+            worksheet.write(3, row+1, item['type'])
+            worksheet.write(4, row+1, item['material'])
+        # worksheet.write(5, 0, 'Some Data')
+
+        workbook.close()
+
+        # Rewind the buffer.
+        output.seek(0)
+
+        response = HttpResponse(
+            output,
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+        filename = 'django_simple.xlsx'
+        response['Content-Disposition'] = 'attachment; filename=%s' % filename
+        # Set up the Http response.
+
+        return response
+        return JsonResponse({'res': result})
 
 @method_decorator([login_required, csrf_exempt], name='dispatch')
 class PurchaseOrdertAPI(View):

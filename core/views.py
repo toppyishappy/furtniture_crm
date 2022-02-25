@@ -93,7 +93,8 @@ class PurchaseOrderItem(View):
                 'type': ItemType.get_object(item.type_id),
                 'color': ItemColor.get_object(item.color_id),
                 'material': ItemMaterial.get_object(item.material_id),
-                'images': ItemImage.get_all_images(item)
+                'images': ItemImage.get_all_images(item),
+                'id': item.id
             })
         return result
 
@@ -147,7 +148,7 @@ class AdminManagement(ListView):
 @method_decorator(login_required, name='dispatch')
 class Management(ListView):
     template_name = 'core/management.html'
-    paginate_by = 1
+    paginate_by = 2
 
     def get_queryset(self):
         result = []

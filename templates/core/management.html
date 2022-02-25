@@ -48,6 +48,7 @@
   <table class="table table-striped">
     <thead>
         <tr>
+          <th scope="col">#</th>
           <th scope="col">PO Date</th>
           <th scope="col">PO Number</th>
           <th scope="col">Customer</th>
@@ -58,20 +59,21 @@
       </thead>
       <tbody>
         {% for item in page_obj %}
-        {% if item.flag == 1%}
-          <tr class="bg-warning">
-        {% elif item.flag == 2%}
-          <tr class="bg-danger">
-        {% else %}
-          <tr class="">
-        {% endif %}
-          <td>{{item.order.created_date|date:"SHORT_DATE_FORMAT"}}</td>
-          <td><a href="/purchase-order/{{item.order.id}}">{{item.order.id}}</a></td>
-          <td>{{item.customer.fullname}}</td>
-          <td>{{item.order.delivery_date|date:"SHORT_DATE_FORMAT"}}</td>
-          <td>{{item.order.status}}</td>
-          <td><button class='btn btn-success' onclick="toggleModal({{item.order.id}})">Confirm</button></td>
-      </tr>
+          {% if item.flag == 1%}
+            <tr class="bg-warning">
+          {% elif item.flag == 2%}
+            <tr class="bg-danger">
+          {% else %}
+            <tr class="">
+          {% endif %}
+              <td><input type="checkbox" name="" id=""></td>
+              <td>{{item.order.created_date|date:"SHORT_DATE_FORMAT"}}</td>
+              <td><a href="/purchase-order/{{item.order.id}}">{{item.order.id}}</a></td>
+              <td>{{item.customer.fullname}}</td>
+              <td>{{item.order.delivery_date|date:"SHORT_DATE_FORMAT"}}</td>
+              <td>{{item.order.status}}</td>
+              <td><button class='btn btn-success' onclick="toggleModal({{item.order.id}})">Confirm</button></td>
+        </tr>
       {% endfor %}
       </tbody>
   </table>
