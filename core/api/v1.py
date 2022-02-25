@@ -8,7 +8,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
 
-from core.models import Department, SaleOrder
+from core.models import Department, SaleOrder, SaleOrderDetail
 from log.models import DepartmentLog
 
 @method_decorator([login_required, csrf_exempt], name='dispatch')
@@ -22,6 +22,15 @@ class AdminManagementAPI(View):
         order.save()
         return JsonResponse({'ok': True})
 
+
+@method_decorator([login_required, csrf_exempt], name='dispatch')
+class PurchaseOrdertAPI(View):
+    
+    def delete(self, request):
+        data = json.loads(request.body)
+        item_id = data['item_id']
+        SaleOrderDetail.objects.filter(id=item_id).delete()
+        return JsonResponse({'ok': True})
 
 @method_decorator([login_required, csrf_exempt], name='dispatch')
 class DepartmentListAPI(View):

@@ -135,6 +135,9 @@
                     </div>
                 </div>
             </div>
+            <div class="col-4">
+                <button class="btn btn-danger" onclick="deleteItem({{item.id}})">Delete</button>
+            </div>
         </div>
         <div class="row">
             <div class="d-flex" style="overflow-x: scroll;">
@@ -222,4 +225,18 @@
     <input type="submit" value="submit" class="btn btn-primary" />
 </form>
 <!-- end section -->
+{% endblock %}
+{% block script %}
+<script>
+    const deleteItem = async(itemId) => {
+        const path = '/api/purchase-order';
+        const data = {
+            'item_id': itemId,
+        }
+        const res = await deleteData(path, data)
+        if(res.ok){
+            window.location.reload();
+        }
+    }
+</script>
 {% endblock %}

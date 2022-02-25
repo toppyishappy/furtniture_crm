@@ -65,7 +65,6 @@ class ItemType(models.Model):
     def get_choices():
         result = [('', 'Please select a choice')]
         objects = ItemType.objects.values()
-        print(objects)
         for i in objects:
             result.append((i['id'], i['name']))
         return result
