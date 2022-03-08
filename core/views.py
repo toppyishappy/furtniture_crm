@@ -114,10 +114,11 @@ class PurchaseOrderDetail(View):
             deposit_price = sale_order.deposite_money
         elif sale_order.deposite_type == '0':
             deposit_price = summary_price * Decimal( sale_order.deposite_percent / 100)
+        remain_price = summary_price - deposit_price
         result = {
                 'summary_price' : summary_price,
-                'deposit_price' : deposit_price,
-                'remain_price' : summary_price - deposit_price
+                'deposit_price' : f'{deposit_price:.2f}',
+                'remain_price' : f'{remain_price:.2f}'
         }
         return result
 
