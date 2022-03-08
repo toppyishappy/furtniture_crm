@@ -1,5 +1,7 @@
 from calendar import month
 from datetime import datetime, timedelta
+from decimal import Decimal
+from unittest import result
 from dateutil import relativedelta
 
 from django.shortcuts import redirect, render
@@ -27,7 +29,6 @@ class PurchaseOrder(View):
     def get(self, request):
         form = PurchaseOrderForm()
         context = {
-            'work_location': WorkLocation.objects.all(),
             'form': form
         }
         return render(request, 'core/purchase-order.html', context=context)
@@ -36,24 +37,28 @@ class PurchaseOrder(View):
         form = PurchaseOrderForm(request.POST)
         if form.is_valid():
             date = form.cleaned_data['date']
-            work_location_id = form.cleaned_data['work_location_id']
+            work_location_id = form.cleaned_data['work_place_id']
             fullname = form.cleaned_data['fullname']
             tel = form.cleaned_data['tel']
             delivery_address = form.cleaned_data['delivery_address']
-            str_dudate = form.cleaned_data['delivery_date']
-            start_week_date = datetime.strptime(str_dudate + '-1', "%Y-W%W-%w")
-            end_week_date = start_week_date + timedelta(days=7)
+            str_dudate = form.cleaned_data['delivery_date'].split(" - ")
+            start_week_date = datetime.strptime(str_dudate[0] , "%m-%d-%Y")
+            end_week_date = datetime.strptime(str_dudate[0] , "%m-%d-%Y")
+            if len(str_dudate) > 1:
+                end_week_date = datetime.strptime(str_dudate[1] , "%m-%d-%Y")
+            print(start_week_date, ' ;  ' , end_week_date)
             province = form.cleaned_data['province']
             district = form.cleaned_data['district']
             amphoe = form.cleaned_data['amphoe']
             zipcode = form.cleaned_data['zipcode']
-            address_format = f'ที่อยู่ {delivery_address} จังหวัด {province} เขต {district} แขวง {amphoe} รหัสไปรษณีย์ {zipcode}'
-
+            address_format = f'{delivery_address} จังหวัด {province} เขต {district} แขวง {amphoe} รหัสไปรษณีย์ {zipcode}'
+            comment = form.cleaned_data['comment']
             try:
                 with transaction.atomic():
                     customer = Customer.objects.create(fullname=fullname, tel=tel)
-                    order = SaleOrder.objects.create(customer_id=customer.id, delivery_address=address_format, 
-                    delivery_date=end_week_date, work_location_id=work_location_id)
+                    order = SaleOrder.objects.create(form_date=date,customer_id=customer.id, delivery_address=address_format, 
+                    delivery_start_date=start_week_date,delivery_end_date=end_week_date , work_location_id=work_location_id,
+                    comment = comment)
                     order_id = order.id
                 return redirect(f'/purchase-order/{order_id}/item')
             except:
@@ -67,8 +72,54 @@ class PurchaseOrder(View):
 class PurchaseOrderDetail(View):
 
     def get(self, request, id):
-        return render(request, 'core/purchase-order-detail.html')
+        sale_order = SaleOrder.objects.filter(id=id).first()
+        customer = Customer.objects.get(id=sale_order.customer_id)
+        work_location = WorkLocation.objects.get(id=sale_order.work_location_id)
+        objects = SaleOrderDetail.objects.filter(sale_order=sale_order)
+        delivery_date = sale_order.delivery_start_date
+        if sale_order.delivery_start_date != sale_order.delivery_end_date:
+            delivery_date = sale_order.delivery_start_date.strftime("%m/%d/%Y") + ' - ' + sale_order.delivery_end_date.strftime("%m/%d/%Y")
+        objects,summary_price = self.get_object_detail(objects)
+        price_detail = self.get_price_detail(summary_price,sale_order)
+        context = {
+            'customer': customer,
+            'work_location':work_location,
+            'sale_order': sale_order,
+            'delivery_date': delivery_date,
+            'objects': objects,
+            'price_detail' :  price_detail
+        }
+        return render(request, 'core/purchase-order-detail.html',context=context)
 
+    def get_object_detail(self, objects):
+        result = []
+        summary_price = 0
+        for item in objects:
+            result.append({
+                'model': ItemModel.get_object(item.model_id),
+                'type': ItemType.get_object(item.type_id),
+                'color': ItemColor.get_object(item.color_id),
+                'material': ItemMaterial.get_object(item.material_id),
+                'images': ItemImage.get_all_images(item),
+                'amount': item.amount,
+                'price': item.price,
+                'id': item.id
+            })
+            summary_price += item.price
+        return result,summary_price
+    
+    def get_price_detail(self,summary_price, sale_order):
+        deposit_price = 0
+        if sale_order.deposite_type == '1':
+            deposit_price = sale_order.deposite_money
+        elif sale_order.deposite_type == '0':
+            deposit_price = summary_price * Decimal( sale_order.deposite_percent / 100)
+        result = {
+                'summary_price' : summary_price,
+                'deposit_price' : deposit_price,
+                'remain_price' : summary_price - deposit_price
+        }
+        return result
 
 @method_decorator(login_required, name='dispatch')
 class PurchaseOrderItem(View):
@@ -94,6 +145,8 @@ class PurchaseOrderItem(View):
                 'color': ItemColor.get_object(item.color_id),
                 'material': ItemMaterial.get_object(item.material_id),
                 'images': ItemImage.get_all_images(item),
+                'amount': item.amount,
+                'price': item.price,
                 'id': item.id
             })
         return result
@@ -108,9 +161,10 @@ class PurchaseOrderItem(View):
                     type_id = form.cleaned_data['type_id']
                     color_id = form.cleaned_data['color_id']
                     material_id = form.cleaned_data['material_id']
+                    price = form.cleaned_data['price']
                     files = request.FILES.getlist('files')
                     sale_order = SaleOrder.objects.get(id=id)
-                    detail = SaleOrderDetail.objects.create(sale_order=sale_order, model_id=model_id, type_id=type_id, color_id=color_id, material_id=material_id, price=0)
+                    detail = SaleOrderDetail.objects.create(sale_order=sale_order, model_id=model_id, type_id=type_id, color_id=color_id, material_id=material_id, price=price)
                     for file in files:
                         ItemImage.objects.create(image=file, order_detail=detail)
             except:

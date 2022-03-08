@@ -112,6 +112,7 @@ class SaleOrderDetail(models.Model):
     material_id = models.IntegerField()
     type_id = models.IntegerField()
     comment = models.TextField(blank=True, null=True)
+    amount = models.IntegerField()
     price = models.DecimalField(max_digits=9, decimal_places=2)
 
     created_date = models.DateTimeField(auto_now_add=True)
@@ -142,13 +143,14 @@ class SaleOrder(models.Model):
     PERCENTAGE = 0
     MONEY = 1
     DEPOSITE_CHOICES = (
-        (PERCENTAGE, 'percetange'),
+        (PERCENTAGE, 'percentage'),
         (MONEY, 'money'),
     )
-
+    form_date = models.DateField()
     customer_id = models.IntegerField()
     work_location_id = models.IntegerField()
-    delivery_date = models.DateField()
+    delivery_start_date = models.DateField()
+    delivery_end_date = models.DateField()
     delivery_address = models.TextField()
     payment_method = models.IntegerField(choices=PATMENT_CHOICES, blank=True, null=True)
     total_price = models.DecimalField(max_digits=9, decimal_places=2, default=0)

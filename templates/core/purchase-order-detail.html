@@ -103,7 +103,7 @@
                     <label for="exampleFormControlInput1" class="">วันที่</label>
                 </div>
                 <div class="col">
-                    10/02/2022
+                    {{sale_order.form_date}}
                 </div>
             </div>
         </div>
@@ -113,7 +113,7 @@
                     <label for="exampleFormControlInput1" class="">สถานที่จัดงาน</label>
                 </div>
                 <div class="col">
-                    สยาม
+                    {{work_location.name}}
                 </div>
             </div>
         </div>
@@ -125,7 +125,7 @@
                     <label for="exampleFormControlInput1" class="">ชื่อลุกค้า</label>
                 </div>
                 <div class="col">
-                    สมชาย มั่งมี
+                    {{customer.fullname}}
                 </div>
             </div>
         </div>
@@ -135,7 +135,7 @@
                     <label for="exampleFormControlInput1" class="">เบอร์โทรศัพท์</label>
                 </div>
                 <div class="col">
-                    0970968234
+                    {{customer.tel}}
                 </div>
             </div>
         </div>
@@ -144,40 +144,10 @@
         <div class="col-6">
             <div class="row">
                 <div class="col-3 m-auto">
-                    <label for="exampleFormControlInput1" class="">ที่อยู่</label>
-                </div>
-                <div class="col">
-                    200 ถนนมหาจักร
-                </div>
-            </div>
-        </div>
-        <div class="col-6">
-            <div class="row">
-                <div class="col">
-                    <div class="col">
-                        <div class="row">
-                            <div class="col-4">จังหวัด</div>
-                            <div class="col">กรุงเทพมหานคร</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="row">
-                        <div class="col-4">เขต</div>
-                        <div class="col">ป้อมปราบศตรูพ่าย</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6">
-            <div class="row">
-                <div class="col-3 m-auto">
                     <label for="exampleFormControlInput1" class="">กำหนดส่งสินค้า</label>
                 </div>
                 <div class="col">
-                    20/02/2022
+                    {{delivery_date}}
                 </div>
             </div>
         </div>
@@ -185,14 +155,8 @@
             <div class="row">
                 <div class="col">
                     <div class="row">
-                        <div class="col-4">อำเภอ</div>
-                        <div class="col">ป้อมปราบศตรูพ่าย</div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="row">
-                        <div class="col-4">ไปรษณีย์</div>
-                        <div class="col">10100</div>
+                        <div class="col-4">ที่อยู่จัดส่ง </div>
+                        <div class="col">{{sale_order.delivery_address}}</div>
                     </div>
                 </div>
             </div>
@@ -247,79 +211,63 @@
         </table>
     </div> -->
     
-    <div class="row">
-        <div class="col">
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Order list</button>
-                </li>
-              </ul>
-              <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                    <div class="container" style="overflow-y: scroll; height: 500px;">
-                        <div class="row">
-                            <div class="col-8">
-                                <div class="row">
-                                    <div class="col mt-3">
-                                        <div class="d-flex-inline">
-                                            <span >แบบ</span>
-                                            <span>Caro 2RR-MOTOR กว้าง 2.10 ลึก 0.90 ม.</span>
-                                        </div>
-                                    </div>
-                                    <div class="col mt-3">
-                                        <div class="d-flex-inline">
-                                            <span >วัสดุ/รหัส</span>
-                                            <span>หนังแท้อิตาลีทั้งตัว</span>
-                                        </div>
-                                    </div>
-                                    <div class="col mt-3">
-                                        <div class="d-flex-inline">
-                                            <span >สี</span>
-                                            <span>s478</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col mt-3">
-                                        <div class="d-flex-inline">
-                                            <span >ประเภท</span>
-                                            <span>2RR</span>
-                                        </div>
-                                    </div>
-                                    <div class="col mt-3">
-                                        <div class="d-flex-inline">
-                                            <span >จำนวน</span>
-                                            <span>1</span>
-                                        </div>
-                                    </div>
-                                    <div class="col mt-3">
-                                        <div class="d-flex-inline">
-                                            <span >ราคา</span>
-                                            <span>29999</span>
-                                        </div>
-                                    </div>
-                                </div>
+    <div class="row mb-3">
+        <div class="container" style="overflow-y: scroll; height: 500px;">
+            {% for item in objects %}
+            <div class="row">
+                <div class="col-8">
+                    <div class="row">
+                        <div class="col mt-3">
+                            <div class="d-flex-inline">
+                                <span >แบบ</span>
+                                <span>{{item.model.name}}</span>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="d-flex" style="overflow-x: scroll;">
-                                <div class="me-2 border">
-                                    <img src="https://i.pinimg.com/originals/5f/50/67/5f50676000b6468d30faf12449b5bc69.jpg" alt="">
-                                </div>
-                                <div class="me-2 border">
-                                    <img src="https://i.pinimg.com/originals/5f/50/67/5f50676000b6468d30faf12449b5bc69.jpg" alt="">
-                                </div>
-                                <div class="me-2 border">
-                                    <img src="https://i.pinimg.com/originals/5f/50/67/5f50676000b6468d30faf12449b5bc69.jpg" alt="">
-                                </div>
-                                <div class="me-2 border">
-                                    <img src="https://i.pinimg.com/originals/5f/50/67/5f50676000b6468d30faf12449b5bc69.jpg" alt="">
-                                </div>
+                        <div class="col mt-3">
+                            <div class="d-flex-inline">
+                                <span >วัสดุ/รหัส</span>
+                                <span>{{item.material.name}}</span>
+                            </div>
+                        </div>
+                        <div class="col mt-3">
+                            <div class="d-flex-inline">
+                                <span >สี</span>
+                                <span>{{item.color.name}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mt-3">
+                            <div class="d-flex-inline">
+                                <span >ประเภท</span>
+                                <span>{{item.type.name}}</span>
+                            </div>
+                        </div>
+                        <div class="col mt-3">
+                            <div class="d-flex-inline">
+                                <span >จำนวน</span>
+                                <span>{{item.amount}}</span>
+                            </div>
+                        </div>
+                        <div class="col mt-3">
+                            <div class="d-flex-inline">
+                                <span >ราคา</span>
+                                <span>{{item.price}}</span>
                             </div>
                         </div>
                     </div>
                 </div>
-              </div>
+            </div>
+            <div class="row">
+                <div class="d-flex" style="overflow-x: scroll;">
+                    {% for img in item.images %}
+                        <div class="me-2 border">
+                            <img src="{{img.image.url}}" alt="">
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
         </div>
     </div>
     <hr/>
@@ -331,7 +279,7 @@
                     <label for="exampleFormControlInput1" class="">การชำระเงิน</label>
                 </div>
                 <div class="col">
-                    เงินสด
+                    {{sale_order.payment_method}}
                 </div>
             </div>
         </div>
@@ -339,22 +287,22 @@
     <div class="row">
         <div class="col">
             <div>
-                <label for="">หมายเหตู </label>
-                test text
+                <label for="">หมายเหตุ </label>
+                {{sale_order.comment}}
             </div>
         </div>
         <div class="col">
             <div class="d-flex">
                 <label for="">รวม</label>
-                <label for="">1000</label>
+                <label for="">{{price_detail.summary_price}}</label>
             </div>
             <div class="d-flex">
                 <label for="">มัดจำ</label>
-                <label for="">400</label>
+                <label for="">{{price_detail.deposit_price}}</label>
             </div>
             <div class="d-flex">
                 <label for="">คงเหลือ</label>
-                <label for=""></label>
+                <label for="">{{price_detail.remain_price}}</label>
             </div>
         </div>
     </div>

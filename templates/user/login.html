@@ -3,26 +3,31 @@
 
 {% endblock %}
 {% block content %}
-<div class="d-flex justify-content-center flex-column">
-    <div class="text-center">
-        <h1>Sofa Plus</h1>
-        <h3>Welcome to Sofa Plus</h3>
-        {% if msg %}
-        <div class="border" style="color: darkred; background: lightcoral;">{{msg}}</div>
-        {% endif %}
-    </div>
-    <form action="" method="POST">
-        {% csrf_token %}
-        <div class="mb-4">
-            <label for="usrename" class="form-label">Username</label>
-            <input type="text" id="usrename" class="form-control" name="username">
-            <label for="inputPassword5" class="form-label">Password</label>
-            <input type="password" id="inputPassword5" class="form-control" name="password">
-
+<div class="row">
+    <div class="col-8"></div>
+        <div class="col-4">
+            <div class="d-flex justify-content-center flex-column" style="margin-top: 100px;">
+                <div class="text-center mb-4">
+                    <h1>Sofa Plus</h1>
+                    <h3>Welcome to Sofa Plus</h3>
+                    {% if msg %}
+                    <div class="border" style="color: darkred; background: lightcoral;">{{msg}}</div>
+                    {% endif %}
+                </div>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        <label for="usrename" class="form-label">Username</label>
+                        <input type="text" id="usrename" class="form-control" name="username">
+                        <label for="inputPassword5" class="form-label">Password</label>
+                        <input type="password" id="inputPassword5" class="form-control" name="password">
+                    </div>          
+                    <div class="text-center">
+                    <button type="submit" class="btn btn-secondary">Sign in</button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="text-center">
-            <button type="submit" class="btn btn-secondary">Sign in</button>
-        </div>
-    </form>
 </div>
 {% endblock %}
+
