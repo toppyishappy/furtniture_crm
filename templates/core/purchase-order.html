@@ -2,12 +2,10 @@
 {% block style%}
 <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
 <script type="text/javascript" src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dependencies/JQL.min.js"></script>
 <script type="text/javascript" src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dependencies/typeahead.bundle.js"></script>
 <link rel="stylesheet" href="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dist/jquery.Thailand.min.css">
 <script type="text/javascript" src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dist/jquery.Thailand.min.js"></script>
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css">
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/2.10.6/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
@@ -22,81 +20,53 @@
         {% csrf_token %}
         <div class="row mt-3">
             <div class="col-6">
-                <div class="row">
-                    <div class="col-3 m-auto">
+                <div class="row form-group">
                         <label for="exampleFormControlInput1" class="">วันที่</label>
-                    </div>
-                    <div class="col">
-                        {{form.date}}
-                    </div>
+                        {{form.date}}      
                 </div>
             </div>
             <div class="col-6">
-                <div class="row">
-                    <div class="col-3 m-auto">
+                <div class="row form-group">
                         <label for="exampleFormControlInput1" class="">สถานที่จัดงาน</label>
-                    </div>
-                    <div class="col">
                         {{form.work_place_id}}
-                        <!-- <select class="form-select" aria-label="Default select example" required name="work_location_id">
-                            <option selected>Open this select menu</option>
-                            {% for item in work_location %}
-                                <option value="{{item.id}}">{{item.name}}</option>
-                            {% endfor %}
-                        </select> -->
-                    </div>
                 </div>
             </div>
         </div>
         <div class="row mt-3">
             <div class="col-6">
-                <div class="row">
-                    <div class="col-3 m-auto">
+                <div class="row form-group">
                         <label for="exampleFormControlInput1" class="">ชื่อลุกค้า</label>
-                    </div>
-                    <div class="col">
                         {{form.fullname}}
-                    </div>
                 </div>
             </div>
             <div class="col-6">
                 <div class="row">
-                    <div class="col-3 m-auto">
                         <label for="exampleFormControlInput1" class="">เบอร์โทรศัพท์</label>
-                    </div>
-                    <div class="col">
                         {{form.tel}}
-                    </div>
                     <span class="text-danger">{{form.tel.errors.as_text}}</span>
                 </div>
             </div>
         </div>
         <div class="row mt-3">
+                <div class="row form-group">
+                        <label for="exampleFormControlInput1" class="">ที่อยู่</label>
+                        {{form.delivery_address}}
+                </div>
+        </div>
+        <div class="row">
             <div class="col-6">
                 <div class="row">
-                    <div class="col-3 m-auto">
-                        <label for="exampleFormControlInput1" class="">ที่อยู่</label>
-                    </div>
                     <div class="col">
-                        {{form.delivery_address}}
+                        <div class="col-4">จังหวัด</div>
+                        <div class="col">{{form.province}}</div>
                     </div>
                 </div>
             </div>
             <div class="col-6">
                 <div class="row">
                     <div class="col">
-                        <div class="col">
-                            <div class="row">
-                                <div class="col-4">จังหวัด</div>
-                                <div class="col">{{form.province}}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="row">
                             <div class="col-4">เขต</div>
                             <div class="col">{{form.district}}</div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -104,36 +74,28 @@
         <div class="row">
             <div class="col-6">
                 <div class="row">
-                    <div class="col-3 m-auto">
-                        <label for="exampleFormControlInput1" class="">กำหนดส่งสินค้า</label>
-                    </div>
                     <div class="col">
-                        <div class="container">    
-                            <div class="row">
-                                <div class="col-sm-6 form-group">
-                                    <div class="input-group" id="DateDemo">
-                                        {{form.delivery_date}}
-                                      <!-- <input type='text' id='weeklyDatePicker' placeholder="Select Week" /> -->
-                                  </div>
-                              </div>
-                          </div>
-                        </div>
+                            <div class="col-4">อำเภอ</div>
+                            <div class="col">{{form.amphoe}}</div>
                     </div>
                 </div>
             </div>
             <div class="col-6">
                 <div class="row">
                     <div class="col">
-                        <div class="row">
-                            <div class="col-4">อำเภอ</div>
-                            <div class="col">{{form.amphoe}}</div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="row">
                             <div class="col-4">ไปรษณีย์</div>
                             <div class="col">{{form.zipcode}}</div>
-                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+        <label for="exampleFormControlInput1" class="">กำหนดส่งสินค้า</label>
+        <div class="col">
+            <div class="container">    
+                <div class="col-sm-6 form-group">
+                    <div class="input-group" id="DateDemo">
+                        {{form.delivery_date}}
                     </div>
                 </div>
             </div>

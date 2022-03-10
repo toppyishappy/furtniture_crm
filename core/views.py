@@ -81,13 +81,15 @@ class PurchaseOrderDetail(View):
             delivery_date = sale_order.delivery_start_date.strftime("%m/%d/%Y") + ' - ' + sale_order.delivery_end_date.strftime("%m/%d/%Y")
         objects,summary_price = self.get_object_detail(objects)
         price_detail = self.get_price_detail(summary_price,sale_order)
+        status = self.mapping_status(sale_order.status)
         context = {
             'customer': customer,
             'work_location':work_location,
             'sale_order': sale_order,
             'delivery_date': delivery_date,
             'objects': objects,
-            'price_detail' :  price_detail
+            'price_detail' :  price_detail,
+            'status': status
         }
         return render(request, 'core/purchase-order-detail.html',context=context)
 
@@ -121,6 +123,9 @@ class PurchaseOrderDetail(View):
                 'remain_price' : f'{remain_price:.2f}'
         }
         return result
+
+    def mapping_status(self,status):
+        return 'mock status'
 
 @method_decorator(login_required, name='dispatch')
 class PurchaseOrderItem(View):

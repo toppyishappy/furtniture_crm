@@ -79,8 +79,8 @@
     <div class="d-flex justify-content-end mb-3">
         <div class="btn-group">
             <button type="button" class="btn btn-primary m-2" onclick="PrintPage()">Print</button>
-            <button type="button" class="btn btn-success m-2 " data-bs-toggle="modal" data-bs-target="#myModal_Confirm">Confirm</button>
-            <button type="button" class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#myModal_Reject">Reject</button>
+            <button type="button" class="btn btn-success m-2 " onclick="update_status('{{sale_order.id}}','confirm')">Confirm</button>
+            <button type="button" class="btn btn-danger m-2" onclick="update_status('{{sale_order.id}}','reject')">Reject</button>
             <button type="button" class="btn btn-warning m-2" onclick="RedirectEditPage()">Edit</button>
             <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">Action</a></li>
@@ -92,7 +92,7 @@
         </div>
     </div>
     <div class="d-flex justify-content-end mb-3">
-        Status : <span class="badge rounded-pill bg-success">On Going</span>
+        Status : <span class="badge rounded-pill bg-success">{{status}}</span>
     </div>
     <div>ใบสั่งซื้อสินค้า</div>
     <!-- section customer -->
@@ -314,6 +314,42 @@
     </div>
 {% endblock %}
 {% block script %}
+<script>
+    const update_status = (orderid,action) => {
+        var confirmText = '';
+        if(action == "confirm")
+        {
+            confirmText = 'Yes, confirm it!'
+        }
+        else
+        {
+            confirmText = 'Yes, delete it!';
+        }
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: confirmText
+      })
+    .then( async(result) => {
+      if (result.isConfirmed) {
+        debugger;
+        const data = {
+          'action': 'confirm',
+          'order_id': orderId
+        }
+        const path = '/api/admin-management'
+        const res = await postData(path, data)
+        if(res.ok){
+          window.location.href = '/admin-management/';
+        }
+      }
+    })
+    }
+  </script>
 <script>
     function RedirectEditPage(){
     const urlParams = new URLSearchParams(window.location.search);

@@ -22,7 +22,7 @@ class PurchaseOrderForm(forms.Form):
     # district = forms.CharField(max_length=50)
     # zone = forms.CharField(max_length=50)
     work_place_id = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-select'}), choices=WorkLocation.get_choices())
-    delivery_address = forms.CharField(widget=forms.Textarea(attrs={'rows': 2, 'style': 'width: 471px;'}))
+    delivery_address = forms.CharField(widget=forms.Textarea(attrs={'rows': 1}))
     date = forms.DateField(widget=forms.TextInput(attrs={'class':'form-control', 'type': 'date'}))
     delivery_date = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'id': 'weeklyDatePicker'}))
     province = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'id': 'province'}))
