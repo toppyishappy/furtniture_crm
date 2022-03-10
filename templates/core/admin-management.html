@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% block style%}
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 {% endblock %}
 {% block content %}
 
@@ -18,14 +17,14 @@
       </thead>
       <tbody>
         {% for item in page_obj %}
-        <tr class='clickable-row' data-href='/purchase-order/{{item.order.id}}'>
+        <tr>
           <td>{{item.order.created_date|date:"SHORT_DATE_FORMAT"}}</td>
           <td><a href="/purchase-order/{{item.order.id}}">{{item.order.id}}</a></td>
           <td>{{item.customer.fullname}}</td>
           <td>{{item.order.delivery_date|date:"SHORT_DATE_FORMAT"}}</td>
           <td>{{item.order.status}}</td>
           <td><button class='btn btn-success' onclick="confirm('{{item.order.id}}')">Confirm</button></td>
-      </tr>
+        </tr>
         {% endfor %}
       </tbody>
 </table>
@@ -81,12 +80,5 @@
     }
   })
   }
-</script>
-<script>
-  jQuery(document).ready(function($) {
-    $(".clickable-row").click(function() {
-        window.location = $(this).data("href");
-    });
-});
 </script>
 {% endblock %}
