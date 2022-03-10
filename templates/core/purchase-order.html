@@ -20,84 +20,55 @@
         {% csrf_token %}
         <div class="row mt-3">
             <div class="col-6">
-                <div class="row form-group">
-                        <label for="exampleFormControlInput1" class="">วันที่</label>
-                        {{form.date}}      
-                </div>
+                <label for="exampleFormControlInput1" class="form-label">วันที่</label>
+                {{form.date}} 
             </div>
             <div class="col-6">
-                <div class="row form-group">
-                        <label for="exampleFormControlInput1" class="">สถานที่จัดงาน</label>
-                        {{form.work_place_id}}
-                </div>
+                <label for="exampleFormControlInput1" class="form-label">สถานที่จัดงาน</label>
+                {{form.work_place_id}}
             </div>
         </div>
         <div class="row mt-3">
             <div class="col-6">
-                <div class="row form-group">
-                        <label for="exampleFormControlInput1" class="">ชื่อลุกค้า</label>
-                        {{form.fullname}}
-                </div>
+                <label for="exampleFormControlInput1" class="form-label">ชื่อลุกค้า</label>
+                {{form.fullname}}
             </div>
             <div class="col-6">
-                <div class="row">
-                        <label for="exampleFormControlInput1" class="">เบอร์โทรศัพท์</label>
-                        {{form.tel}}
-                    <span class="text-danger">{{form.tel.errors.as_text}}</span>
-                </div>
+                <label for="exampleFormControlInput1" class="form-label">เบอร์โทรศัพท์</label>
+                {{form.tel}}
+                <span class="text-danger">{{form.tel.errors.as_text}}</span>
             </div>
         </div>
         <div class="row mt-3">
-                <div class="row form-group">
-                        <label for="exampleFormControlInput1" class="">ที่อยู่</label>
-                        {{form.delivery_address}}
-                </div>
-        </div>
-        <div class="row">
-            <div class="col-6">
-                <div class="row">
-                    <div class="col">
-                        <div class="col-4">จังหวัด</div>
-                        <div class="col">{{form.province}}</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="row">
-                    <div class="col">
-                            <div class="col-4">เขต</div>
-                            <div class="col">{{form.district}}</div>
-                    </div>
-                </div>
+            <div class="col-12">
+                <label for="exampleFormControlInput1" class="form-label">ที่อยู่</label>
+                {{form.delivery_address}}
             </div>
         </div>
         <div class="row">
             <div class="col-6">
-                <div class="row">
-                    <div class="col">
-                            <div class="col-4">อำเภอ</div>
-                            <div class="col">{{form.amphoe}}</div>
-                    </div>
-                </div>
+                <label for="exampleFormControlInput1" class="form-label">จังหวัด</label>
+                {{form.province}}
             </div>
             <div class="col-6">
-                <div class="row">
-                    <div class="col">
-                            <div class="col-4">ไปรษณีย์</div>
-                            <div class="col">{{form.zipcode}}</div>
-                    </div>
-                </div>
+                <label for="exampleFormControlInput1" class="form-label">จังหวัด</label>
+                {{form.district}}
             </div>
         </div>
-        <div>
-        <label for="exampleFormControlInput1" class="">กำหนดส่งสินค้า</label>
-        <div class="col">
-            <div class="container">    
-                <div class="col-sm-6 form-group">
-                    <div class="input-group" id="DateDemo">
-                        {{form.delivery_date}}
-                    </div>
-                </div>
+        <div class="row">
+            <div class="col-6">
+                <label for="exampleFormControlInput1" class="form-label">อำเภอ</label>
+                {{form.amphoe}}
+            </div>
+            <div class="col-6">
+                <label for="exampleFormControlInput1" class="form-label">ไปรษณีย์</label>
+                {{form.zipcode}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <label for="exampleFormControlInput1" class="">กำหนดส่งสินค้า</label>
+                {{form.delivery_date}}
             </div>
         </div>
         <hr/>
