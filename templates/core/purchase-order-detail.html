@@ -1,4 +1,14 @@
 {% extends 'base.html' %}
+{% block style %}
+    <style>
+        @media print{
+            #btnPrint{
+                display: none;
+            }
+        }
+    </style>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+{% endblock %}
 {% block content %}
 
 <div class="modal fade" id="myModal_Confirm">
@@ -78,10 +88,10 @@
   
     <div class="d-flex justify-content-end mb-3">
         <div class="btn-group">
-            <button type="button" class="btn btn-primary m-2" onclick="PrintPage()">Print</button>
-            <button type="button" class="btn btn-success m-2 " onclick="update_status('{{sale_order.id}}','confirm')">Confirm</button>
-            <button type="button" class="btn btn-danger m-2" onclick="update_status('{{sale_order.id}}','reject')">Reject</button>
-            <button type="button" class="btn btn-warning m-2" onclick="RedirectEditPage()">Edit</button>
+            <button type="button" class="btn btn-primary m-2" id="btnPrint" onclick="PrintPage()">Print</button>
+            <button type="button" class="btn btn-success m-2 " id="btnPrint" onclick="update_status('{{sale_order.id}}','confirm')">Confirm</button>
+            <button type="button" class="btn btn-danger m-2" id="btnPrint" onclick="update_status('{{sale_order.id}}','reject')">Reject</button>
+            <button type="button" class="btn btn-warning m-2" id="btnPrint" onclick="RedirectEditPage()">Edit</button>
             <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">Action</a></li>
             <li><a class="dropdown-item" href="#">Another action</a></li>
