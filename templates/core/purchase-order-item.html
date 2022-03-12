@@ -10,6 +10,20 @@
 
     </div>
 </div>
+
+<div class="modal fade" id="qrModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/1200px-QR_code_for_mobile_English_Wikipedia.svg.png" alt="">
+
+        </div>
+    </div>
+</div>
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#qrModal">
+    Launch demo modal
+  </button>
+
 <form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="row">
@@ -189,7 +203,17 @@
             </div>
         </div>
     </div>
-    <input type="submit" value="submit" class="btn btn-primary" />
+    <div class="row">
+        <div class="col-2">
+            <input type="submit" value="submit" class="btn btn-primary" />
+        </div>
+        <div class="col-2">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#qrModal">
+                QR code
+            </button>
+        </div>
+    </div>
+    
 </form>
 <!-- end section -->
 {% endblock %}
@@ -207,11 +231,6 @@
             })
         .then( async(result) => {
             if (result.isConfirmed) {
-            const data = {
-                'action': 'confirm',
-                'order_id': orderId
-            }
-            if(res.ok){
                 const path = '/api/purchase-order';
                 const data = {
                     'item_id': itemId,
@@ -220,7 +239,6 @@
                 if(res.ok){
                     window.location.reload();
                 }
-            }
             }
         })
         
