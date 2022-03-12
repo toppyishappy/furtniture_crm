@@ -1,79 +1,55 @@
 {% extends 'base.html' %}
 {% block content %}
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog justify-content-center" style="height: 100%; display: flex!important; align-items: center;">
+        <div class="d-flex justify-content-center">
+            <div class="spinner-grow" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+
+    </div>
+</div>
 <form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="row">
         <div class="container">
             <div class="row mt-2">
                 <div class="col-6">
-                    <div class="row">
-                        <div class="col-3 m-auto">
-                            <label for="exampleFormControlInput1" class="">แบบ</label>
-                        </div>
-                        <div class="col">
-                            {{form.model_id}}
-                        </div>
-                    </div>
+                    <label for="exampleFormControlInput1" class="form-label">แบบ</label>
+                    {{form.model_id}}
                 </div>
-                <div class="col-6">
-                    <div class="row">
-                        <div class="col-2 m-auto">
-                            <label for="exampleFormControlInput1" class="">จำนวน</label>
-                        </div>
-                        <div class="col-2">
-                            {{form.amount}}
-                        </div>
-                        <div class="col-2 m-auto">
-                            <label for="exampleFormControlInput1" class="">สี</label>
-                        </div>
-                        <div class="col-2">
-                            {{form.color_id}}
-                        </div>
-                        <div class="col-2 m-auto">
-                            <label for="exampleFormControlInput1" class="">ราคา</label>
-                        </div>
-                        <div class="col-2">
-                            {{form.price}}
-                        </div>
-                    </div>
+                <div class="col-2">
+                    <label for="exampleFormControlInput1" class="form-label">จำนวน</label>
+                    {{form.amount}}
+                </div>
+                <div class="col-2">
+                    <label for="exampleFormControlInput1" class="form-label">สี</label>
+                    {{form.color_id}}
+                </div>
+                <div class="col-2">
+                    <label for="exampleFormControlInput1" class="form-label">ราคา</label>
+                    {{form.price}}
                 </div>
             </div>
             <div class="row mt-2">
                 <div class="col-6">
-                    <div class="row">
-                        <div class="col-3 m-auto">
-                            <label for="exampleFormControlInput1" class="">ประเภท</label>
-                        </div>
-                        <div class="col">
-                            {{form.type_id}}
-                        </div>
-                    </div>
+                    <label for="exampleFormControlInput1" class="form-label">ประเภท</label>
+                    {{form.type_id}}
                 </div>
                 <div class="col-6">
-                    <div class="row">
-                        <div class="col-2 m-auto">
-                            <label for="exampleFormControlInput1" class="">รูปภาพ</label>
-                        </div>
-                        <div class="col">
-                            {{form.files}}
-                        </div>
-                    </div>
+                    <label for="exampleFormControlInput1" class="form-label">รูปภาพ</label>
+                    {{form.files}}
                 </div>
             </div>
             <div class="row mt-2">
                 <div class="col-6">
-                    <div class="row">
-                        <div class="col-3 m-auto">
-                            <label for="exampleFormControlInput1" class="">วัสดุ/รหัส</label>
-                        </div>
-                        <div class="col">
-                            {{form.material_id}}
-                        </div>
-                    </div>
+                    <label for="exampleFormControlInput1" class="form-label">วัสดุ/รหัส</label>
+                    {{form.material_id}}
                 </div>
             </div>
             <div class="row">
-                <input type="submit" class="btn btn-primary" value="add"/>
+                <input type="submit" class="btn btn-primary" value="add" data-bs-toggle="modal" data-bs-target="#exampleModal"/>
                 <!-- <button class="btn btn-primary">Add</button> -->
             </div>
         </div>
@@ -219,14 +195,34 @@
 {% block script %}
 <script>
     const deleteItem = async(itemId) => {
-        const path = '/api/purchase-order';
-        const data = {
-            'item_id': itemId,
-        }
-        const res = await deleteData(path, data)
-        if(res.ok){
-            window.location.reload();
-        }
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+            })
+        .then( async(result) => {
+            if (result.isConfirmed) {
+            const data = {
+                'action': 'confirm',
+                'order_id': orderId
+            }
+            if(res.ok){
+                const path = '/api/purchase-order';
+                const data = {
+                    'item_id': itemId,
+                }
+                const res = await deleteData(path, data)
+                if(res.ok){
+                    window.location.reload();
+                }
+            }
+            }
+        })
+        
     }
 </script>
 {% endblock %}

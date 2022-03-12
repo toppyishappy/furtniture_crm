@@ -168,13 +168,15 @@ class PurchaseOrderItem(View):
                     color_id = form.cleaned_data['color_id']
                     material_id = form.cleaned_data['material_id']
                     price = form.cleaned_data['price']
+                    amount = form.cleaned_data['amount']
                     files = request.FILES.getlist('files')
                     sale_order = SaleOrder.objects.get(id=id)
-                    detail = SaleOrderDetail.objects.create(sale_order=sale_order, model_id=model_id, type_id=type_id, color_id=color_id, material_id=material_id, price=price)
+                    detail = SaleOrderDetail.objects.create(sale_order=sale_order, model_id=model_id, type_id=type_id, color_id=color_id,
+                                                                material_id=material_id, price=price, amount=amount)
                     for file in files:
                         ItemImage.objects.create(image=file, order_detail=detail)
             except:
-                print('error')
+                print('error', form.errors)
         
         if sale_form.is_valid():
             SaleOrder.objects.update(**(sale_form.cleaned_data), status=SaleOrder.WATING_APPROVED)

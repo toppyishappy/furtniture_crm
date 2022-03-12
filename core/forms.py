@@ -23,7 +23,7 @@ class PurchaseOrderForm(forms.Form):
     # zone = forms.CharField(max_length=50)
     work_place_id = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-select'}), choices=WorkLocation.get_choices())
     delivery_address = forms.CharField(widget=forms.Textarea(attrs={'rows': 1, 'class': 'form-select'}))
-    date = forms.DateField(widget=forms.TextInput(attrs={'class':'form-control', 'type': 'date'}))
+    date = forms.DateField(widget=forms.TextInput(attrs={'class':'form-control', 'type': 'date', 'id': 'date'}))
     delivery_date = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'id': 'weeklyDatePicker'}))
     province = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'id': 'province'}))
     district = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'id': 'district'}))
@@ -40,7 +40,7 @@ class ItemForm(forms.Form):
     model_id = forms.ChoiceField(choices=ItemModel.get_choices(), widget=forms.Select(attrs={'class':'form-select'}))
     color_id = forms.ChoiceField(choices=ItemColor.get_choices(), widget=forms.Select(attrs={'class':'form-select'}))
     material_id = forms.ChoiceField(choices=ItemMaterial.get_choices(), widget=forms.Select(attrs={'class':'form-select'}))
-    files = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}), required=False)
+    files = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True, 'class': 'form-control'}), required=False)
     amount = forms.IntegerField(min_value=0,required=True, initial=0,widget=forms.NumberInput(attrs={'class':'form-control'})) 
     price = forms.DecimalField(min_value=0,required=True, initial=0,decimal_places=2,widget=forms.NumberInput(attrs={'class':'form-control'})) 
 

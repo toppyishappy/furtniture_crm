@@ -51,7 +51,7 @@
                 {{form.province}}
             </div>
             <div class="col-6">
-                <label for="exampleFormControlInput1" class="form-label">จังหวัด</label>
+                <label for="exampleFormControlInput1" class="form-label">เขต</label>
                 {{form.district}}
             </div>
         </div>
@@ -133,6 +133,8 @@ $(document).ready(function(){
     moment.locale('en', {
       week: { dow: 1 } // Monday is the first day of the week
     });
+
+    document.getElementById('date').value = new Date().toLocaleString('en-CA').split(',')[0]
 
   //Initialize the datePicker(I have taken format as mm-dd-yyyy, you can     //have your owh)
   $("#weeklyDatePicker").datetimepicker({

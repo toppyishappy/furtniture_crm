@@ -3,4 +3,4 @@
 /caches
 *.sqlite3
 configs.py
-static_root/
+static_root/*
