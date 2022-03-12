@@ -9,6 +9,9 @@ class Customer(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
+    def get_object(id):
+        return Customer.objects.get(id)
+
 
 class EmployeeSignature(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

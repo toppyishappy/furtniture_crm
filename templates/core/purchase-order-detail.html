@@ -165,7 +165,7 @@
             <div class="row">
                 <div class="col">
                     <div class="row">
-                        <div class="col-4">ที่อยู่จัดส่ง </div>
+                        <div class="col-3">ที่อยู่จัดส่ง </div>
                         <div class="col">{{sale_order.delivery_address}}</div>
                     </div>
                 </div>
@@ -268,15 +268,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="d-flex" style="overflow-x: scroll;">
-                    {% for img in item.images %}
-                        <div class="me-2 border">
-                            <img src="{{img.image.url}}" alt="">
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
+            
             {% endfor %}
         </div>
     </div>
@@ -322,6 +314,19 @@
             <img src="https://upic.me/i/a6/hd003.jpg" alt="" style="width: 200px;" >
         </div>
     </div>
+    <!-- section image -->
+    {% for item in objects %}
+    <div class="row">
+        <div class="d-flex" style="overflow-x: scroll;">
+            {% for img in item.images %}
+                <div class="me-2 border">
+                    <img style="height: 200px;" src="{{img.image.url}}" alt="">
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+    <!-- end section -->
 {% endblock %}
 {% block script %}
 <script>

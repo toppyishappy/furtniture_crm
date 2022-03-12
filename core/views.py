@@ -188,8 +188,35 @@ class PurchaseOrderItem(View):
 class PurchaseOrderEdit(View):
 
     def get(self, request, id):
-        return render(request, 'core/purchase-order-edit.html')
+        sale_order = SaleOrder.objects.get(id=id)
+        customer_id = sale_order.customer_id
+        customer = Customer.objects.get(id=customer_id)
+        user_form = PurchaseOrderForm(instance=customer)
+        form = ItemForm()
+        objects = SaleOrderDetail.objects.filter(sale_order=sale_order)
+        sale_form = SaleForm()
+        context = {
+            'form': form,
+            'sale_form': sale_form,
+            'objects': self.get_object_detail(objects),
+            'user_form': user_form
+        }
+        return render(request, 'core/purchase-order-edit.html', context=context)
 
+    def get_object_detail(self, objects):
+        result = []
+        for item in objects:
+            result.append({
+                'model': ItemModel.get_object(item.model_id),
+                'type': ItemType.get_object(item.type_id),
+                'color': ItemColor.get_object(item.color_id),
+                'material': ItemMaterial.get_object(item.material_id),
+                'images': ItemImage.get_all_images(item),
+                'amount': item.amount,
+                'price': item.price,
+                'id': item.id
+            })
+        return result
 
 @method_decorator(login_required, name='dispatch')
 class AdminManagement(ListView):

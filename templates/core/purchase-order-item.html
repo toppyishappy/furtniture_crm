@@ -15,9 +15,8 @@
 <div class="modal fade" id="qrModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/1200px-QR_code_for_mobile_English_Wikipedia.svg.png"
+            <img  style="height: 400px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/1200px-QR_code_for_mobile_English_Wikipedia.svg.png"
                 alt="">
-
         </div>
     </div>
 </div>
@@ -78,7 +77,7 @@
         {% for item in objects %}
         <div class="card mt-2 mb-2">
             <div>
-                <button class="btn btn-danger btn-close" onclick="deleteItem({{item.id}})"
+                <button class="btn btn-close" onclick="deleteItem({{item.id}})"
                     style="float: right;"></button>
             </div>
             <div class="card-body">
@@ -126,11 +125,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mt-2">
                     <div class="d-flex" style="overflow-x: scroll;">
                         {% for img in item.images %}
                         <div class="me-2 border">
-                            <img width="200" height="200" src="{{img.image.url}}" alt="">
+                            <img style="height: 200px;" src="{{img.image.url}}" alt="">
                         </div>
                         {% endfor %}
                     </div>
