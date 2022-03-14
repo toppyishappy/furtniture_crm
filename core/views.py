@@ -11,13 +11,17 @@ from django.utils import timezone
 
 from core.forms import PurchaseOrderForm, ItemForm, SaleForm
 from core.models import Department, ItemColor, ItemImage, ItemMaterial, ItemModel, ItemType, SaleOrder, SaleOrderDetail, WorkLocation
-from user.models import Customer, EmployeeSignature
+from user.models import Customer, EmployeeSignature, User
 
 @method_decorator(login_required, name='dispatch')
 class HomePage(View):
 
     def get(self, request):
-        return render(request, 'homepage.html')
+        role = request.user.role
+        context = {
+            'role': role
+        }
+        return render(request, 'homepage.html', context=context)
 
 
 @method_decorator(login_required, name='dispatch')
@@ -130,11 +134,13 @@ class PurchaseOrderItem(View):
         form = ItemForm()
         sale_order = SaleOrder.objects.filter(id=id).first()
         objects = SaleOrderDetail.objects.filter(sale_order=sale_order)
+        user = request.user
         sale_form = SaleForm()
         context = {
             'form': form,
             'sale_form': sale_form,
-            'objects': self.get_object_detail(objects)
+            'objects': self.get_object_detail(objects),
+            'signature': f'{user.first_name} {user.last_name}'
         }
         return render(request, 'core/purchase-order-item.html', context=context)
 
@@ -175,7 +181,9 @@ class PurchaseOrderItem(View):
                 print('error', form.errors)
         
         if sale_form.is_valid():
-            SaleOrder.objects.update(**(sale_form.cleaned_data), status=SaleOrder.WATING_APPROVED)
+            user = request.user
+            signature = EmployeeSignature.objects.get(user=user)
+            SaleOrder.objects.update(**(sale_form.cleaned_data), status=SaleOrder.WATING_APPROVED, signature_id=signature.id)
             return redirect('/')
         return redirect(f'/purchase-order/{id}/item')
 

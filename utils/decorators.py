@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 import json
 
+from user.models import User
+
 
 def json_response(func):
     """
@@ -25,4 +27,12 @@ def json_response(func):
         except:
             data = json.dumps(str(objects))
         return HttpResponse(data, "application/json")
-    return decorator
+    return 
+    
+
+def is_sale(func):
+    def decorator(request, *args, **kwargs):
+        if request.user.role == User.SALE:
+            return
+    return
+

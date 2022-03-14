@@ -142,7 +142,9 @@ class SaleOrder(models.Model):
     )
     PERCENTAGE = 0
     MONEY = 1
+    NONE = 3
     DEPOSITE_CHOICES = (
+        (NONE, 'Please select a choice'),
         (PERCENTAGE, 'percentage'),
         (MONEY, 'money'),
     )
@@ -167,3 +169,4 @@ class SaleOrder(models.Model):
 
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
+

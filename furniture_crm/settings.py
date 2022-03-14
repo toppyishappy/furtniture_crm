@@ -1,6 +1,6 @@
 from .common_settings import *  # pylint: disable=W0401
 
-
+AUTH_USER_MODEL = 'user.User'
 INSTALLED_APPS += [
     'compressor',
     'user',

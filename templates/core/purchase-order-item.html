@@ -71,8 +71,8 @@
         </div>
     </div>
 </form>
-
-<div class="row mb-3">
+{% if objects %}
+<div class="row mb-3" >
     <div class="container border shadow-sm" style="overflow-y: scroll; height: 300px;">
         {% for item in objects %}
         <div class="card mt-2 mb-2">
@@ -114,13 +114,13 @@
                         <div class="col-2">
                             <div class="d-flex-inline">
                                 <span>จำนวน</span>
-                                <span>1</span>
+                                <span>{{item.amount}}</span>
                             </div>
                         </div>
                         <div class="col-2">
                             <div class="d-flex-inline">
                                 <span>ราคา</span>
-                                <span>29999</span>
+                                <span>{{item.price}}</span>
                             </div>
                         </div>
                     </div>
@@ -139,46 +139,49 @@
         {% endfor %}
     </div>
 </div>
+{% endif %}
 <!-- end section -->
 <!-- section sale -->
 <form action="" method="post">
     {% csrf_token %}
     <div class="row mb-3">
         <div class="col-6">
-            <label for="exampleFormControlInput1" class="form-label">มัดจำ(เปอเซ็นต์)</label>
-            {{sale_form.deposite_percent}}
-        </div>
-        <div class="col-6">
             <label for="exampleFormControlInput1" class="form-label">วิธีการมัดจำ</label>
             {{sale_form.deposite_type}}
         </div>
-    </div>
-    <div class="row mb-3">
-        <div class="col-6">
+        <div class="col-3">
+            <label for="exampleFormControlInput1" class="form-label">มัดจำ(เปอเซ็นต์)</label>
+            {{sale_form.deposite_percent}}
+        </div>
+        <div class="col-3">
             <label for="exampleFormControlInput1" class="form-label">มัดจำ(จำนวนเงิน)</label>
             {{sale_form.deposite_money}}
         </div>
+    </div>
+    <div class="row mb-3">
         <div class="col-6">
             <label for="exampleFormControlInput1" class="form-label">วิธีการชำระเงิน</label>
             {{sale_form.payment_method}}
         </div>
+        <div class="col-6">
+            <label for="exampleFormControlInput1" class="form-label">ลายมือชื่อ</label>
+            <input disabled type="email" class="form-control" id="exampleFormControlInput1" value="{{signature}}">
+        </div>
     </div>
     <div class="row mb-3">
-        <div class="col-6">
+        <div class="col-12">
             <label for="exampleFormControlInput1" class="form-label">หมายเหตุ</label>
             {{sale_form.comment}}
         </div>
-        <div class="col-6">
-            <label for="exampleFormControlInput1" class="form-label">ลายมือชื่อ</label>
-            {{sale_form.signature_id}}
-        </div>
+
     </div>
-    <div class="row">
+    <hr/>
+    <div class="row justify-content-center">
         <div class="col-2">
-            <input type="submit" value="submit" class="btn btn-primary" />
+            <input type="submit" value="submit" class="btn btn-primary btn-submit" />
         </div>
         <div class="col-2">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#qrModal">
+            <button type="button" class="btn btn-primary btn-submit" data-bs-toggle="modal" data-bs-target="#qrModal">
                 QR code
             </button>
         </div>
@@ -189,6 +192,24 @@
 {% endblock %}
 {% block script %}
 <script>
+    function handleChange(e) {
+        console.log(e.value)
+        if(e.value === '0'){
+            document.getElementById('deposite-money').disabled = true
+            document.getElementById('deposite-percent').disabled = false
+            document.getElementById('deposite-money').value = 0
+        }else if(e.value === '1'){
+            document.getElementById('deposite-money').disabled = false
+            document.getElementById('deposite-percent').disabled = true
+            document.getElementById('deposite-percent').value = 0
+        }else{
+            document.getElementById('deposite-money').disabled = true
+            document.getElementById('deposite-percent').disabled = true
+            document.getElementById('deposite-money').value = 0
+            document.getElementById('deposite-percent').value = 0
+        }
+
+    }
     const deleteItem = async (itemId) => {
         Swal.fire({
                 title: 'Are you sure?',
