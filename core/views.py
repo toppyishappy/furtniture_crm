@@ -11,7 +11,7 @@ from django.utils import timezone
 
 from core.forms import PurchaseOrderForm, ItemForm, SaleForm
 from core.models import Department, ItemColor, ItemImage, ItemMaterial, ItemModel, ItemType, SaleOrder, SaleOrderDetail, WorkLocation
-from user.models import Customer
+from user.models import Customer, EmployeeSignature
 
 @method_decorator(login_required, name='dispatch')
 class HomePage(View):
@@ -224,6 +224,24 @@ class AdminManagement(ListView):
     def get_queryset(self):
         result = []
         orders = SaleOrder.objects.filter(status=SaleOrder.WATING_APPROVED)
+        for order in orders:
+            result.append({
+                'customer': Customer.objects.get(id=order.customer_id),
+                'order': order,
+            })
+        return result
+
+
+@method_decorator(login_required, name='dispatch')
+class SaleManagement(ListView):
+    template_name = 'core/sale-management.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        result = []
+        self.request.user
+        signature = EmployeeSignature.objects.get(user=self.request.user)
+        orders = SaleOrder.objects.filter(status=SaleOrder.WATING_APPROVED, signature_id=signature.id)
         for order in orders:
             result.append({
                 'customer': Customer.objects.get(id=order.customer_id),

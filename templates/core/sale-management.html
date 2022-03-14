@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>admin management</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+          <th scope="col">PO Date</th>
+          <th scope="col">PO Number</th>
+          <th scope="col">Customer</th>
+          <th scope="col">Due date</th>
+          <th scope="col">Status</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in page_obj %}
+        <tr>
+          <td>{{item.order.created_date|date:"SHORT_DATE_FORMAT"}}</td>
+          <td><a href="/purchase-order/{{item.order.id}}">{{item.order.id}}</a></td>
+          <td>{{item.customer.fullname}}</td>
+          <td>{{item.order.delivery_start_date|date:"SHORT_DATE_FORMAT"}} - {{item.order.delivery_end_date|date:"SHORT_DATE_FORMAT"}}</td>
+          <td>{{item.order.status}}</td>
+          <td><button class='btn btn-success' onclick="confirm('{{item.order.id}}')">Confirm</button></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+</table>
+
+
+<div class="d-flex justify-content-center mt-2">
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+      {% endif %}
+      {% for page in page_obj.paginator.page_range %}
+        {% if page == page_obj.number %}
+        <li class="page-item active" aria-current="page">
+          <a class="page-link" href="?page={{page}}">{{ page }}</a>
+        </li>
+        {% else %}
+          <li class="page-item"><a class="page-link" href="?page={{page}}">{{ page }}</a></li>
+        {% endif %}
+      {% endfor %}
+      {% if page_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+</div>
+
+
+{% endblock %}
+{% block script %}
+<script>
+  const confirm = (orderId) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    })
+  .then( async(result) => {
+    if (result.isConfirmed) {
+      const data = {
+        'action': 'confirm',
+        'order_id': orderId
+      }
+      const path = '/api/admin-management'
+      const res = await postData(path, data)
+      if(res.ok){
+        window.location.href = '/admin-management/';
+      }
+    }
+  })
+  }
+</script>
+{% endblock %}
