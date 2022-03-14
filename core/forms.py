@@ -1,13 +1,12 @@
-from dataclasses import field
-from email.policy import default
 from django import forms
 from django.core.validators import RegexValidator
 from django.forms import ModelForm
 
-from core.models import ItemColor, ItemMaterial, ItemModel, ItemType, SaleOrder, WorkLocation
-from user.models import EmployeeSignature
+from core.models import ItemColor, ItemMaterial, ItemModel, ItemType, SaleOrder, SaleOrderDetail, WorkLocation
+from user.models import Customer, EmployeeSignature
 
-class PurchaseOrderForm(forms.Form):
+
+class PurchaseOrderForm(ModelForm):
     fullname = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class':'form-control'}))
     tel = forms.CharField(max_length=10, widget=forms.TextInput(attrs={'class':'form-control'}), 
                             validators=[RegexValidator('^0\d{9}$', message='กรุณาตรวจสอบเบอร์โทรศัพ')])
@@ -24,9 +23,16 @@ class PurchaseOrderForm(forms.Form):
     zipcode = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'id': 'zipcode'}))
 
     comment = forms.CharField(widget=forms.Textarea(attrs={'rows': 2, 'style': 'width: 471px;'}), required=False)
- 
-    # sender = forms.EmailField()
-    # cc_myself = forms.BooleanField(required=False)
+
+    class Meta:
+        model = Customer
+        fields = '__all__'
+    
+    def initial_data(customer, sale_order):
+        return {'fullname': customer.fullname, 'tel': customer.tel, 'work_place_id': 1, 'delivery_address': 'e', 'date': sale_order.created_date,
+                'delivery_date': sale_order.delivery_end_date, 'province': sale_order.province, 'district': sale_order.district, 
+                'amphoe': sale_order.amphoe, 'zipcode': sale_order.zipcode}
+
 
 class ItemForm(forms.Form):
     type_id = forms.ChoiceField(choices=ItemType.get_choices(), widget=forms.Select(attrs={'class':'form-select'}))
@@ -37,11 +43,19 @@ class ItemForm(forms.Form):
     amount = forms.IntegerField(min_value=1,required=True, initial=1,widget=forms.NumberInput(attrs={'class':'form-control'})) 
     price = forms.DecimalField(min_value=0,required=True, initial=0,decimal_places=2,widget=forms.NumberInput(attrs={'class':'form-control'})) 
 
+    
 class SaleForm(forms.Form):
     signature_id = forms.ChoiceField(choices=EmployeeSignature.get_choices(), widget=forms.Select(attrs={'class':'form-select'})) 
     deposite_type = forms.ChoiceField(choices=SaleOrder.DEPOSITE_CHOICES, widget=forms.Select(attrs={'class':'form-select'})) 
     payment_method = forms.ChoiceField(choices=SaleOrder.PATMENT_CHOICES, widget=forms.Select(attrs={'class':'form-select'})) 
-    # payment_method = forms.ChoiceField(choices=SaleOrder.PATMENT_CHOICES, widget=forms.Select(attrs={'class':'form-select'}))
     comment = forms.CharField(widget=forms.Textarea(attrs={'rows': 2, 'style': 'width: 471px;'}), required=False)
     deposite_percent = forms.IntegerField(min_value=0,max_value =100,required=True, initial=0,widget=forms.NumberInput(attrs={'class':'form-control'})) 
     deposite_money = forms.DecimalField(min_value=0,required=True, initial=0,decimal_places=2,widget=forms.NumberInput(attrs={'class':'form-control'})) 
+
+    class Meta:
+        model = Customer
+        fields = '__all__'
+    
+    def initial_data(sale_order):
+        return {'deposite_percent': sale_order.deposite_percent, 'deposite_type': sale_order.deposite_type, 'payment_method': sale_order.payment_method,
+                'deposite_money': sale_order.deposite_money}

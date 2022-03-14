@@ -1,7 +1,5 @@
-from calendar import month
 from datetime import datetime, timedelta
 from decimal import Decimal
-from unittest import result
 from dateutil import relativedelta
 
 from django.shortcuts import redirect, render
@@ -10,7 +8,6 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.db import DatabaseError, transaction
 from django.utils import timezone
-from django.core.paginator import Paginator
 
 from core.forms import PurchaseOrderForm, ItemForm, SaleForm
 from core.models import Department, ItemColor, ItemImage, ItemMaterial, ItemModel, ItemType, SaleOrder, SaleOrderDetail, WorkLocation
@@ -40,7 +37,6 @@ class PurchaseOrder(View):
             work_location_id = form.cleaned_data['work_place_id']
             fullname = form.cleaned_data['fullname']
             tel = form.cleaned_data['tel']
-            delivery_address = form.cleaned_data['delivery_address']
             str_dudate = form.cleaned_data['delivery_date'].split(" - ")
             start_week_date = datetime.strptime(str_dudate[0] , "%m-%d-%Y")
             end_week_date = datetime.strptime(str_dudate[0] , "%m-%d-%Y")
@@ -51,12 +47,12 @@ class PurchaseOrder(View):
             district = form.cleaned_data['district']
             amphoe = form.cleaned_data['amphoe']
             zipcode = form.cleaned_data['zipcode']
-            address_format = f'{delivery_address} จังหวัด {province} เขต {district} แขวง {amphoe} รหัสไปรษณีย์ {zipcode}'
             comment = form.cleaned_data['comment']
             try:
                 with transaction.atomic():
                     customer = Customer.objects.create(fullname=fullname, tel=tel)
-                    order = SaleOrder.objects.create(form_date=date,customer_id=customer.id, delivery_address=address_format, 
+                    order = SaleOrder.objects.create(form_date=date,customer_id=customer.id, province=province, district=district,
+                    amphoe=amphoe, zipcode=zipcode,
                     delivery_start_date=start_week_date,delivery_end_date=end_week_date , work_location_id=work_location_id,
                     comment = comment)
                     order_id = order.id
@@ -191,10 +187,12 @@ class PurchaseOrderEdit(View):
         sale_order = SaleOrder.objects.get(id=id)
         customer_id = sale_order.customer_id
         customer = Customer.objects.get(id=customer_id)
-        user_form = PurchaseOrderForm(instance=customer)
+        init_purchase_form = PurchaseOrderForm.initial_data(customer, sale_order)
+        init_saleorder_form = SaleForm.initial_data(sale_order)
+        user_form = PurchaseOrderForm(initial=init_purchase_form)
+        sale_form = SaleForm(initial=init_saleorder_form)
         form = ItemForm()
         objects = SaleOrderDetail.objects.filter(sale_order=sale_order)
-        sale_form = SaleForm()
         context = {
             'form': form,
             'sale_form': sale_form,
@@ -273,3 +271,4 @@ class Summary(View):
 
     def get(self, request):
         return render(request, 'core/summary.html')
+
