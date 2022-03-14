@@ -24,5 +24,6 @@ class EmployeeSignature(models.Model):
         result = [('', 'Please select a choice')]
         objects = EmployeeSignature.objects.values()
         for i in objects:
-            result.append((i['id'], i['name']))
+            user = User.objects.get(id=i['user_id'])
+            result.append((i['id'], user.first_name))
         return result

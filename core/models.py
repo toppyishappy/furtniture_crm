@@ -146,8 +146,13 @@ class SaleOrder(models.Model):
         (PERCENTAGE, 'percentage'),
         (MONEY, 'money'),
     )
+    province = models.CharField(max_length=50)
+    district = models.CharField(max_length=50)
+    amphoe = models.CharField(max_length=50)
+    zipcode = models.CharField(max_length=50)
     form_date = models.DateField()
     customer_id = models.IntegerField()
+    signature_id = models.IntegerField(blank=True, null=True)
     work_location_id = models.IntegerField()
     delivery_start_date = models.DateField()
     delivery_end_date = models.DateField()
@@ -156,7 +161,7 @@ class SaleOrder(models.Model):
     total_price = models.DecimalField(max_digits=9, decimal_places=2, default=0)
     deposite_percent = models.IntegerField(default=0)
     deposite_money = models.DecimalField(max_digits=9, decimal_places=2, default=0)
-    deposite_type = models.CharField(default=0, max_length=5)
+    deposite_type = models.IntegerField(choices=DEPOSITE_CHOICES, blank=True, null=True)
     status = models.IntegerField(choices=STATUS_CHOICES, default=0)
     comment = models.TextField(blank=True, null=True)
 
