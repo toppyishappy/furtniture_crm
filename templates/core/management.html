@@ -53,7 +53,7 @@
           <th scope="col">PO Number</th>
           <th scope="col">Customer</th>
           <th scope="col">Due date</th>
-          <th scope="col">Stattus</th>
+          <th scope="col">Status</th>
           <th scope="col">Action</th>
         </tr>
       </thead>
@@ -70,7 +70,7 @@
               <td>{{item.order.created_date|date:"SHORT_DATE_FORMAT"}}</td>
               <td><a href="/purchase-order/{{item.order.id}}">{{item.order.id}}</a></td>
               <td>{{item.customer.fullname}}</td>
-              <td>{{item.order.delivery_date|date:"SHORT_DATE_FORMAT"}}</td>
+              <td>{{item.order.delivery_start_date|date:"SHORT_DATE_FORMAT"}} - {{item.order.delivery_end_date|date:"SHORT_DATE_FORMAT"}}</td>
               <td>{{item.order.status}}</td>
               <td><button class='btn btn-success' onclick="toggleModal({{item.order.id}})">Confirm</button></td>
         </tr>

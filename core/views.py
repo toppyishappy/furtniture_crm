@@ -251,7 +251,7 @@ class Management(ListView):
             result.append({
                 'customer': Customer.objects.get(id=order.customer_id),
                 'order': order,
-                'flag': self.check_delivery_date(order.delivery_date),
+                'flag': self.check_delivery_date(order.delivery_end_date),
             })
         return result
     
@@ -259,7 +259,7 @@ class Management(ListView):
         # 0 = nomral
         # 1 = yellow
         # 2 = red
-        diff_date = timezone.now().date() - date
+        diff_date = date - timezone.now().date()
         if diff_date.days <= 7 and diff_date.days >= 1:
             return 1
         elif diff_date.days <= 0:
