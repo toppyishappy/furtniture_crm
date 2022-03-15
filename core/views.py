@@ -38,7 +38,7 @@ class PurchaseOrder(View):
         form = PurchaseOrderForm(request.POST)
         if form.is_valid():
             date = form.cleaned_data['date']
-            work_location_id = form.cleaned_data['work_place_id']
+            work_location_id = form.cleaned_data['work_location_id']
             fullname = form.cleaned_data['fullname']
             tel = form.cleaned_data['tel']
             str_dudate = form.cleaned_data['delivery_date'].split(" - ")
@@ -127,7 +127,8 @@ class PurchaseOrderDetail(View):
         return result
 
     def mapping_status(self,status):
-        return 'mock status'
+        return 2
+
 
 @method_decorator(login_required, name='dispatch')
 class PurchaseOrderItem(View):
@@ -181,7 +182,6 @@ class PurchaseOrderItem(View):
                         ItemImage.objects.create(image=file, order_detail=detail)
             except:
                 print('error', form.errors)
-        # import pdb ; pdb.set_trace()
         if sale_form.is_valid():
             user = request.user
             signature = EmployeeSignature.objects.get(user=user)
@@ -195,29 +195,99 @@ class PurchaseOrderItem(View):
 
 
 @method_decorator(login_required, name='dispatch')
+class PurchaseOrderEditItem(View):
+
+    def get_order(self, id):
+        sale_order = SaleOrder.objects.get(id=id)
+        customer_id = sale_order.customer_id
+        customer = Customer.objects.get(id=customer_id)
+        return sale_order, customer
+
+    def get_object_detail(self, objects):
+        result = []
+        for item in objects:
+            result.append({
+                'model': ItemModel.get_object(item.model_id),
+                'type': ItemType.get_object(item.type_id),
+                'color': ItemColor.get_object(item.color_id),
+                'material': ItemMaterial.get_object(item.material_id),
+                'images': ItemImage.get_all_images(item),
+                'amount': item.amount,
+                'price': item.price,
+                'id': item.id
+            })
+        return result
+
+    def get(self, request, id):
+        sale_order, customer = self.get_order(id)
+        init_saleorder_form = SaleForm.initial_data(sale_order)
+        sale_form = SaleForm(initial=init_saleorder_form)
+        form = ItemForm()
+        objects = SaleOrderDetail.objects.filter(sale_order=sale_order)
+        user = request.user
+        context = {
+            'order_id': sale_order.id,
+            'form': form,
+            'sale_form': sale_form,
+            'objects': self.get_object_detail(objects),
+            'signature': f'{user.first_name} {user.last_name}'
+        }
+        return render(request, 'core/purchase-order-edit-item.html', context=context)
+
+    def post(self, request, id):
+        form = ItemForm(request.POST, request.FILES)
+        sale_form = SaleForm(request.POST)
+        if form.is_valid():
+            try:
+                with transaction.atomic():
+                    model_id = form.cleaned_data['model_id']
+                    type_id = form.cleaned_data['type_id']
+                    color_id = form.cleaned_data['color_id']
+                    material_id = form.cleaned_data['material_id']
+                    price = form.cleaned_data['price']
+                    amount = form.cleaned_data['amount']
+                    files = request.FILES.getlist('files')
+                    sale_order = SaleOrder.objects.get(id=id)
+                    detail = SaleOrderDetail.objects.create(sale_order=sale_order, model_id=model_id, type_id=type_id, color_id=color_id,
+                                                                material_id=material_id, price=price, amount=amount)
+                    for file in files:
+                        ItemImage.objects.create(image=file, order_detail=detail)
+            except:
+                print('error', form.errors)
+        if sale_form.is_valid():
+            user = request.user
+            signature = EmployeeSignature.objects.get(user=user)
+            sale_form.cleaned_data['deposite_percent'] = sale_form.cleaned_data['deposite_percent'] or 0
+            sale_form.cleaned_data['deposite_money'] = sale_form.cleaned_data['deposite_money'] or 0
+            SaleOrder.objects.update(**(sale_form.cleaned_data), status=SaleOrder.WATING_APPROVED, signature_id=signature.id)
+            return redirect('/')
+        else:
+            print(sale_form.errors)
+        return redirect(f'/purchase-order/edit/{id}/item')
+
+
+@method_decorator(login_required, name='dispatch')
 class PurchaseOrderEdit(View):
 
+    def get_order(self, id):
+        sale_order = SaleOrder.objects.get(id=id)
+        customer_id = sale_order.customer_id
+        customer = Customer.objects.get(id=customer_id)
+        return sale_order, customer
+    
     def get(self, request, id):
         sale_order = SaleOrder.objects.get(id=id)
         customer_id = sale_order.customer_id
         customer = Customer.objects.get(id=customer_id)
         init_purchase_form = PurchaseOrderForm.initial_data(customer, sale_order)
-        init_saleorder_form = SaleForm.initial_data(sale_order)
         user_form = PurchaseOrderForm(initial=init_purchase_form)
-        sale_form = SaleForm(initial=init_saleorder_form)
         user = request.user
-        form = ItemForm()
-        objects = SaleOrderDetail.objects.filter(sale_order=sale_order)
         delivery_date = sale_order.delivery_start_date
         if sale_order.delivery_start_date != sale_order.delivery_end_date:
             delivery_date = sale_order.delivery_start_date.strftime("%m/%d/%Y") + ' - ' + sale_order.delivery_end_date.strftime("%m/%d/%Y")
         context = {
-            'form': form,
-            'sale_form': sale_form,
-            'objects': self.get_object_detail(objects),
             'user_form': user_form,
             'delivery_date': delivery_date,
-            'signature': f'{user.first_name} {user.last_name}'
         }
         return render(request, 'core/purchase-order-edit.html', context=context)
 
@@ -235,6 +305,36 @@ class PurchaseOrderEdit(View):
                 'id': item.id
             })
         return result
+
+    def post(self, request, id):
+        sale_order, customer = self.get_order(id)
+        user_form = PurchaseOrderForm(request.POST)
+        if user_form.is_valid():
+            fullname = user_form.cleaned_data['fullname']
+            tel = user_form.cleaned_data['tel']
+            try:
+                with transaction.atomic():
+                    Customer.objects.filter(id=customer.id).update(fullname=fullname, tel=tel)
+                    self.update_sale_order(sale_order, user_form)
+                    return redirect('/purchase-order/edit/1/item')
+            except:
+                print('write database error')
+            
+        return redirect('/purchase-order/edit/1')
+
+    def update_sale_order(self, sale_order, form):
+        form.cleaned_data.pop('fullname')
+        form.cleaned_data.pop('tel')
+        form_date = form.cleaned_data['date']
+        form.cleaned_data.pop('date')
+        str_dudate = form.cleaned_data['delivery_date'].split(" - ")
+        start_week_date = datetime.strptime(str_dudate[0] , "%m/%d/%Y")
+        end_week_date = datetime.strptime(str_dudate[0] , "%m/%d/%Y")
+        if len(str_dudate) > 1:
+            end_week_date = datetime.strptime(str_dudate[1] , "%m/%d/%Y")
+        form.cleaned_data.pop('delivery_date')
+        SaleOrder.objects.filter(id=sale_order.id).update(**(form.cleaned_data), delivery_start_date=start_week_date, 
+                                delivery_end_date=end_week_date, form_date=form_date)
 
 @method_decorator(login_required, name='dispatch')
 class AdminManagement(ListView):

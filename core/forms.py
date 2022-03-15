@@ -13,7 +13,7 @@ class PurchaseOrderForm(ModelForm):
     # province = forms.CharField(max_length=50)
     # district = forms.CharField(max_length=50)
     # zone = forms.CharField(max_length=50)
-    work_place_id = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-select'}), choices=WorkLocation.get_choices())
+    work_location_id = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-select'}), choices=WorkLocation.get_choices())
     delivery_address = forms.CharField(widget=forms.TextInput(attrs={ 'class': 'form-control'}))
     date = forms.DateField(widget=forms.TextInput(attrs={'class':'form-control', 'type': 'date', 'id': 'date'}))
     delivery_date = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'id': 'weeklyDatePicker'}))
@@ -29,7 +29,7 @@ class PurchaseOrderForm(ModelForm):
         fields = '__all__'
     
     def initial_data(customer, sale_order):
-        return {'fullname': customer.fullname, 'tel': customer.tel, 'work_place_id': 1, 'delivery_address': 'e', 'date': sale_order.created_date,
+        return {'fullname': customer.fullname, 'tel': customer.tel, 'work_location_id': sale_order.work_location_id, 'delivery_address': sale_order.delivery_address, 'date': sale_order.created_date,
                 'delivery_date': sale_order.delivery_end_date, 'province': sale_order.province, 'district': sale_order.district, 
                 'amphoe': sale_order.amphoe, 'zipcode': sale_order.zipcode}
 
@@ -43,7 +43,6 @@ class ItemForm(forms.Form):
     amount = forms.IntegerField(min_value=1,required=True, initial=1,widget=forms.NumberInput(attrs={'class':'form-control'})) 
     price = forms.DecimalField(min_value=0,required=True, initial=0,decimal_places=2,widget=forms.NumberInput(attrs={'class':'form-control'})) 
 
-    
 class SaleForm(forms.Form):
     deposite_type = forms.ChoiceField(choices=SaleOrder.DEPOSITE_CHOICES, widget=forms.Select(attrs={'class':'form-select', 'onchange':'handleChange(this)'}), required=False) 
     payment_method = forms.ChoiceField(choices=SaleOrder.PATMENT_CHOICES, widget=forms.Select(attrs={'class':'form-select'})) 
@@ -53,4 +52,4 @@ class SaleForm(forms.Form):
     
     def initial_data(sale_order):
         return {'deposite_percent': sale_order.deposite_percent, 'deposite_type': sale_order.deposite_type, 'payment_method': sale_order.payment_method,
-                'deposite_money': sale_order.deposite_money}
+                'deposite_money': sale_order.deposite_money, 'comment': sale_order.comment}

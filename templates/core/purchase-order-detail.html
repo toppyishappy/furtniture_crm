@@ -90,7 +90,7 @@
 <div class="d-flex justify-content-end mb-3">
     <div>
         <button type="button" class="btn btn-primary m-2" id="btnPrint" onclick="PrintPage()">Print</button>
-        {% if user.role == 2 and status == 1 %}
+        {% if user.role == 2 and status == 2 %}
             <button type="button" class="btn btn-success m-2 " id="btnPrint"
                 onclick="update_status('{{sale_order.id}}','confirm')">Confirm</button>
             <button type="button" class="btn btn-danger m-2" id="btnPrint"

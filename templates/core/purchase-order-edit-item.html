@@ -1,0 +1,241 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog justify-content-center"
+        style="height: 100%; display: flex!important; align-items: center;">
+        <div class="d-flex justify-content-center">
+            <div class="spinner-grow" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="qrModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <img  style="height: 400px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/1200px-QR_code_for_mobile_English_Wikipedia.svg.png"
+                alt="">
+        </div>
+    </div>
+</div>
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+        <div class="container">
+            <div class="row mt-2">
+                <div class="col-6">
+                    <label for="exampleFormControlInput1" class="form-label">แบบ</label>
+                    {{form.model_id}}
+                </div>
+                <div class="col-6">
+                    <label for="exampleFormControlInput1" class="form-label">ประเภท</label>
+                    {{form.type_id}}
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-3">
+                    <label for="exampleFormControlInput1" class="form-label">วัสดุ/รหัส</label>
+                    {{form.material_id}}
+                </div>
+                <div class="col-3">
+                    <label for="exampleFormControlInput1" class="form-label">สี</label>
+                    {{form.color_id}}
+                </div>
+                <div class="col-3">
+                    <label for="exampleFormControlInput1" class="form-label">จำนวน</label>
+                    {{form.amount}}
+                </div>
+                <div class="col-3">
+                    <label for="exampleFormControlInput1" class="form-label">ราคา</label>
+                    {{form.price}}
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-6">
+                    <label for="exampleFormControlInput1" class="form-label">รูปภาพ</label>
+                    {{form.files}}
+                </div>
+                <div class="col-6 d-grid" style="align-items: end;">
+                    <input type="submit" style="width: 100%;" class="btn btn-primary" value="add" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal" />
+                </div>
+            </div>
+            <div class="row mt-2">
+                <!-- <div class="col-6">
+                    <input type="submit" style="width: 100%;" class="btn btn-primary" value="add" data-bs-toggle="modal" data-bs-target="#exampleModal"/>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</form>
+{% if objects %}
+<div class="row mb-3" >
+    <div class="container border shadow-sm" style="overflow-y: scroll; height: 300px;">
+        {% for item in objects %}
+        <div class="card mt-2 mb-2">
+            <div>
+                <button class="btn btn-close" onclick="deleteItem({{item.id}})"
+                    style="float: right;"></button>
+            </div>
+            <div class="card-body">
+
+                <div class="row ">
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="d-flex-inline">
+                                <span>แบบ</span>
+                                <span>{{item.model.name}}</span>
+                            </div>
+                        </div>
+
+                        <div class="col-2">
+                            <div class="d-flex-inline">
+                                <span>ประเภท</span>
+                                <span>{{item.type.name}}</span>
+                            </div>
+                        </div>
+
+                        <div class="col-2">
+                            <div class="d-flex-inline">
+                                <span>วัสดุ/รหัส</span>
+                                <span>{{item.material.name}}</span>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="d-flex-inline">
+                                <span>สี</span>
+                                <span>{{item.color.name}}</span>
+                            </div>
+                        </div>
+
+                        <div class="col-2">
+                            <div class="d-flex-inline">
+                                <span>จำนวน</span>
+                                <span>{{item.amount}}</span>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="d-flex-inline">
+                                <span>ราคา</span>
+                                <span>{{item.price}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="d-flex" style="overflow-x: scroll;">
+                        {% for img in item.images %}
+                        <div class="me-2 border">
+                            <img style="height: 200px;" src="{{img.image.url}}" alt="">
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+<!-- end section -->
+<!-- section sale -->
+<form action="" method="post">
+    {% csrf_token %}
+    <div class="row mb-3">
+        <div class="col-6">
+            <label for="exampleFormControlInput1" class="form-label">วิธีการมัดจำ</label>
+            {{sale_form.deposite_type}}
+        </div>
+        <div class="col-3">
+            <label for="exampleFormControlInput1" class="form-label">มัดจำ(เปอเซ็นต์)</label>
+            {{sale_form.deposite_percent}}
+        </div>
+        <div class="col-3">
+            <label for="exampleFormControlInput1" class="form-label">มัดจำ(จำนวนเงิน)</label>
+            {{sale_form.deposite_money}}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-6">
+            <label for="exampleFormControlInput1" class="form-label">วิธีการชำระเงิน</label>
+            {{sale_form.payment_method}}
+        </div>
+        <div class="col-6">
+            <label for="exampleFormControlInput1" class="form-label">ลายมือชื่อ</label>
+            <input disabled type="email" class="form-control" id="exampleFormControlInput1" value="{{signature}}">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-12">
+            <label for="exampleFormControlInput1" class="form-label">หมายเหตุ</label>
+            {{sale_form.comment}}
+        </div>
+
+    </div>
+    <hr/>
+    <div class="row justify-content-center">
+        <div class="col-2">
+            <input type="submit" value="submit" class="btn btn-primary btn-submit" />
+        </div>
+        <div class="col-2">
+            <button type="button" class="btn btn-primary btn-submit" data-bs-toggle="modal" data-bs-target="#qrModal">
+                QR code
+            </button>
+        </div>
+    </div>
+
+</form>
+<!-- end section -->
+{% endblock %}
+{% block script %}
+<script>
+    (function(){
+        document.getElementById('deposite-money').disabled = true
+        document.getElementById('deposite-percent').disabled = true
+    })();
+    function handleChange(e) {
+        console.log(e.value)
+        if(e.value === '0'){
+            document.getElementById('deposite-money').disabled = true
+            document.getElementById('deposite-percent').disabled = false
+            document.getElementById('deposite-money').value = 0
+        }else if(e.value === '1'){
+            document.getElementById('deposite-money').disabled = false
+            document.getElementById('deposite-percent').disabled = true
+            document.getElementById('deposite-percent').value = 0
+        }else{
+            document.getElementById('deposite-money').disabled = true
+            document.getElementById('deposite-percent').disabled = true
+            document.getElementById('deposite-money').value = 0
+            document.getElementById('deposite-percent').value = 0
+        }
+
+    }
+    const deleteItem = async (itemId) => {
+        Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            })
+            .then(async (result) => {
+                if (result.isConfirmed) {
+                    const path = '/api/purchase-order';
+                    const data = {
+                        'item_id': itemId,
+                    }
+                    const res = await deleteData(path, data)
+                    if (res.ok) {
+                        window.location.reload();
+                    }
+                }
+            })
+
+    }
+</script>
+{% endblock %}

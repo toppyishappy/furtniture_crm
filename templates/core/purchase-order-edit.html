@@ -29,213 +29,72 @@
     </div>
     <!-- end section -->
     <!-- user information -->
-    <div class="row mt-3">
-        <div class="col-6">
-            <label for="exampleFormControlInput1" class="form-label">วันที่</label>
-            {{user_form.date}} 
+    <form method="post">
+        {% csrf_token %}
+        <div class="row mt-3">
+            <div class="col-6">
+                <label for="exampleFormControlInput1" class="form-label">วันที่</label>
+                {{user_form.date}} 
+            </div>
+            <div class="col-6">
+                <label for="exampleFormControlInput1" class="form-label">สถานที่จัดงาน</label>
+                {{user_form.work_location_id}}
+            </div>
         </div>
-        <div class="col-6">
-            <label for="exampleFormControlInput1" class="form-label">สถานที่จัดงาน</label>
-            {{user_form.work_place_id}}
+        <div class="row mt-3">
+            <div class="col-6">
+                <label for="exampleFormControlInput1" class="form-label">ชื่อลุกค้า</label>
+                {{user_form.fullname}}
+            </div>
+            <div class="col-6">
+                <label for="exampleFormControlInput1" class="form-label">เบอร์โทรศัพท์</label>
+                {{user_form.tel}}
+            </div>
         </div>
-    </div>
-    <div class="row mt-3">
-        <div class="col-6">
-            <label for="exampleFormControlInput1" class="form-label">ชื่อลุกค้า</label>
-            {{user_form.fullname}}
+        <div class="row mt-3">
+            <div class="col-12">
+                <label for="exampleFormControlInput1" class="form-label">ที่อยู่</label>
+                {{user_form.delivery_address}}
+            </div>
         </div>
-        <div class="col-6">
-            <label for="exampleFormControlInput1" class="form-label">เบอร์โทรศัพท์</label>
-            {{user_form.tel}}
+        <div class="row">
+            <div class="col-6">
+                <label for="exampleFormControlInput1" class="form-label">จังหวัด</label>
+                {{user_form.province}}
+            </div>
+            <div class="col-6">
+                <label for="exampleFormControlInput1" class="form-label">เขต</label>
+                {{user_form.district}}
+            </div>
         </div>
-    </div>
-    <div class="row mt-3">
-        <div class="col-12">
-            <label for="exampleFormControlInput1" class="form-label">ที่อยู่</label>
-            {{user_form.delivery_address}}
+        <div class="row">
+            <div class="col-6">
+                <label for="exampleFormControlInput1" class="form-label">อำเภอ</label>
+                {{user_form.amphoe}}
+            </div>
+            <div class="col-6">
+                <label for="exampleFormControlInput1" class="form-label">ไปรษณีย์</label>
+                {{user_form.zipcode}}
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-6">
-            <label for="exampleFormControlInput1" class="form-label">จังหวัด</label>
-            {{user_form.province}}
+        <div class="row">
+            <div class="col-6">
+                <label for="exampleFormControlInput1" class="">กำหนดส่งสินค้า</label>
+                {{user_form.delivery_date}}
+            </div>
         </div>
-        <div class="col-6">
-            <label for="exampleFormControlInput1" class="form-label">เขต</label>
-            {{user_form.district}}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6">
-            <label for="exampleFormControlInput1" class="form-label">อำเภอ</label>
-            {{user_form.amphoe}}
-        </div>
-        <div class="col-6">
-            <label for="exampleFormControlInput1" class="form-label">ไปรษณีย์</label>
-            {{user_form.zipcode}}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6">
-            <label for="exampleFormControlInput1" class="">กำหนดส่งสินค้า</label>
-            {{user_form.delivery_date}}
-        </div>
-    </div>
-    <hr/>
-    <!-- end section -->
+        <hr/>
+        <!-- end section -->
+        <input type="submit" value="Next" class="btn btn-primary btn-submit">
+    </form>
 
-    <!-- item information -->
-    <div class="row">
-        <div class="container">
-            <div class="row mt-2">
-                <div class="col-6">
-                    <label for="exampleFormControlInput1" class="form-label">แบบ</label>
-                    {{form.model_id}}
-                </div>
-                <div class="col-6">
-                    <label for="exampleFormControlInput1" class="form-label">ประเภท</label>
-                    {{form.type_id}}
-                </div>
-            </div>
-            <div class="row mt-2">
-                <div class="col-3">
-                    <label for="exampleFormControlInput1" class="form-label">วัสดุ/รหัส</label>
-                    {{form.material_id}}
-                </div>
-                <div class="col-3">
-                    <label for="exampleFormControlInput1" class="form-label">สี</label>
-                    {{form.color_id}}
-                </div>
-                <div class="col-3">
-                    <label for="exampleFormControlInput1" class="form-label">จำนวน</label>
-                    {{form.amount}}
-                </div>
-                <div class="col-3">
-                    <label for="exampleFormControlInput1" class="form-label">ราคา</label>
-                    {{form.price}}
-                </div>
-            </div>
-            <div class="row mt-2">
-                <div class="col-6">
-                    <label for="exampleFormControlInput1" class="form-label">รูปภาพ</label>
-                    {{form.files}}
-                </div>
-                <div class="col-6 d-grid" style="align-items: end;">
-                    <input type="submit" style="width: 100%;" class="btn btn-primary" value="add" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal" />
-                </div>
-            </div>
-            <div class="row mt-2">
-                <!-- <div class="col-6">
-                    <input type="submit" style="width: 100%;" class="btn btn-primary" value="add" data-bs-toggle="modal" data-bs-target="#exampleModal"/>
-                </div> -->
-            </div>
-        </div>
-    </div>
-    <div class="row mb-3">
-        <div class="container border shadow-sm" style="overflow-y: scroll; height: 300px;">
-            {% for item in objects %}
-            <div class="card mt-2 mb-2">
-                <div>
-                    <button class="btn btn-close" onclick="deleteItem({{item.id}})"
-                        style="float: right;"></button>
-                </div>
-                <div class="card-body">
-    
-                    <div class="row ">
-                        <div class="row">
-                            <div class="col-2">
-                                <div class="d-flex-inline">
-                                    <span>แบบ</span>
-                                    <span>{{item.model.name}}</span>
-                                </div>
-                            </div>
-    
-                            <div class="col-2">
-                                <div class="d-flex-inline">
-                                    <span>ประเภท</span>
-                                    <span>{{item.type.name}}</span>
-                                </div>
-                            </div>
-    
-                            <div class="col-2">
-                                <div class="d-flex-inline">
-                                    <span>วัสดุ/รหัส</span>
-                                    <span>{{item.material.name}}</span>
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="d-flex-inline">
-                                    <span>สี</span>
-                                    <span>{{item.color.name}}</span>
-                                </div>
-                            </div>
-    
-                            <div class="col-2">
-                                <div class="d-flex-inline">
-                                    <span>จำนวน</span>
-                                    <span>{{item.amount}}</span>
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="d-flex-inline">
-                                    <span>ราคา</span>
-                                    <span>{{item.price}}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="d-flex" style="overflow-x: scroll;">
-                            {% for img in item.images %}
-                            <div class="me-2 border">
-                                <img style="height: 200px;" src="{{img.image.url}}" alt="">
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-    <hr/>
-    <!-- end section -->
-    <div class="row mb-3">
-        <div class="col-6">
-            <label for="exampleFormControlInput1" class="form-label">มัดจำ(เปอเซ็นต์)</label>
-            {{sale_form.deposite_percent}}
-        </div>
-        <div class="col-6">
-            <label for="exampleFormControlInput1" class="form-label">วิธีการมัดจำ</label>
-            {{sale_form.deposite_type}}
-        </div>
-    </div>
-    <div class="row mb-3">
-        <div class="col-6">
-            <label for="exampleFormControlInput1" class="form-label">มัดจำ(จำนวนเงิน)</label>
-            {{sale_form.deposite_money}}
-        </div>
-        <div class="col-6">
-            <label for="exampleFormControlInput1" class="form-label">วิธีการชำระเงิน</label>
-            {{sale_form.payment_method}}
-        </div>
-    </div>
-    <div class="row mb-3">
-        <div class="col-6">
-            <label for="exampleFormControlInput1" class="form-label">หมายเหตุ</label>
-            {{sale_form.comment}}
-        </div>
-        <div class="col-6">
-            <label for="exampleFormControlInput1" class="form-label">ลายมือชื่อ</label>
-            <input disabled type="email" class="form-control" id="exampleFormControlInput1" value="{{signature}}">
-        </div>
-    </div>
-
-    <a href="/purchase-order/1"><button class="btn btn-success">save</button></a>
 {% endblock %}
 {% block script %}
 <script>
+    function handleSubmit(e){
+        debugger
+        console.log(e)
+    }
     function RedirectSavePage(){
     const urlParams = new URLSearchParams(window.location.search);
     const htmla = window.location.hostname;
