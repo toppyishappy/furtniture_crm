@@ -174,13 +174,13 @@
                             <div class="col-2">
                                 <div class="d-flex-inline">
                                     <span>จำนวน</span>
-                                    <span>1</span>
+                                    <span>{{item.amount}}</span>
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="d-flex-inline">
                                     <span>ราคา</span>
-                                    <span>29999</span>
+                                    <span>{{item.price}}</span>
                                 </div>
                             </div>
                         </div>
@@ -228,7 +228,7 @@
         </div>
         <div class="col-6">
             <label for="exampleFormControlInput1" class="form-label">ลายมือชื่อ</label>
-            {{sale_form.signature_id}}
+            <input disabled type="email" class="form-control" id="exampleFormControlInput1" value="{{signature}}">
         </div>
     </div>
 
@@ -241,6 +241,30 @@
     const htmla = window.location.hostname;
     window.location.href = ``
   }
+    const deleteItem = async (itemId) => {
+        Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            })
+            .then(async (result) => {
+                if (result.isConfirmed) {
+                    const path = '/api/purchase-order';
+                    const data = {
+                        'item_id': itemId,
+                    }
+                    const res = await deleteData(path, data)
+                    if (res.ok) {
+                        window.location.reload();
+                    }
+                }
+            })
+
+    }
 </script>
 <script>
     $.Thailand({
@@ -251,7 +275,6 @@
 });
 </script>
 <script>
-
     $(document).ready(function(){
         moment.locale('en', {
           week: { dow: 1 } // Monday is the first day of the week
@@ -274,6 +297,6 @@
           $("#weeklyDatePicker").val(firstDate + " - " + lastDate);
       });
     });
-    </script>
+</script>
     
 {% endblock %}

@@ -205,6 +205,7 @@ class PurchaseOrderEdit(View):
         init_saleorder_form = SaleForm.initial_data(sale_order)
         user_form = PurchaseOrderForm(initial=init_purchase_form)
         sale_form = SaleForm(initial=init_saleorder_form)
+        user = request.user
         form = ItemForm()
         objects = SaleOrderDetail.objects.filter(sale_order=sale_order)
         delivery_date = sale_order.delivery_start_date
@@ -215,7 +216,8 @@ class PurchaseOrderEdit(View):
             'sale_form': sale_form,
             'objects': self.get_object_detail(objects),
             'user_form': user_form,
-            'delivery_date': delivery_date
+            'delivery_date': delivery_date,
+            'signature': f'{user.first_name} {user.last_name}'
         }
         return render(request, 'core/purchase-order-edit.html', context=context)
 
