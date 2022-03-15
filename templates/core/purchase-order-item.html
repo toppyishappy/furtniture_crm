@@ -192,6 +192,10 @@
 {% endblock %}
 {% block script %}
 <script>
+    (function(){
+        document.getElementById('deposite-money').disabled = true
+        document.getElementById('deposite-percent').disabled = true
+    })();
     function handleChange(e) {
         console.log(e.value)
         if(e.value === '0'){

@@ -72,7 +72,7 @@ class PurchaseOrder(View):
 class PurchaseOrderDetail(View):
 
     def get(self, request, id):
-        sale_order = SaleOrder.objects.filter(id=id).first()
+        sale_order = SaleOrder.objects.get(id=id)
         customer = Customer.objects.get(id=sale_order.customer_id)
         work_location = WorkLocation.objects.get(id=sale_order.work_location_id)
         objects = SaleOrderDetail.objects.filter(sale_order=sale_order)
@@ -82,6 +82,7 @@ class PurchaseOrderDetail(View):
         objects,summary_price = self.get_object_detail(objects)
         price_detail = self.get_price_detail(summary_price,sale_order)
         status = self.mapping_status(sale_order.status)
+        signauter_url = EmployeeSignature.objects.get(id=sale_order.signature_id).image.url
         context = {
             'customer': customer,
             'work_location':work_location,
@@ -89,7 +90,8 @@ class PurchaseOrderDetail(View):
             'delivery_date': delivery_date,
             'objects': objects,
             'price_detail' :  price_detail,
-            'status': status
+            'status': status,
+            'signauter_url': signauter_url
         }
         return render(request, 'core/purchase-order-detail.html',context=context)
 
@@ -179,12 +181,16 @@ class PurchaseOrderItem(View):
                         ItemImage.objects.create(image=file, order_detail=detail)
             except:
                 print('error', form.errors)
-        
+        # import pdb ; pdb.set_trace()
         if sale_form.is_valid():
             user = request.user
             signature = EmployeeSignature.objects.get(user=user)
+            sale_form.cleaned_data['deposite_percent'] = sale_form.cleaned_data['deposite_percent'] or 0
+            sale_form.cleaned_data['deposite_money'] = sale_form.cleaned_data['deposite_money'] or 0
             SaleOrder.objects.update(**(sale_form.cleaned_data), status=SaleOrder.WATING_APPROVED, signature_id=signature.id)
             return redirect('/')
+        else:
+            print(sale_form.errors)
         return redirect(f'/purchase-order/{id}/item')
 
 

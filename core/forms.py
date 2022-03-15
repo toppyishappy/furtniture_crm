@@ -48,8 +48,8 @@ class SaleForm(forms.Form):
     deposite_type = forms.ChoiceField(choices=SaleOrder.DEPOSITE_CHOICES, widget=forms.Select(attrs={'class':'form-select', 'onchange':'handleChange(this)'}), required=False) 
     payment_method = forms.ChoiceField(choices=SaleOrder.PATMENT_CHOICES, widget=forms.Select(attrs={'class':'form-select'})) 
     comment = forms.CharField(widget=forms.Textarea(attrs={'rows': 2, 'class':'form-control'}), required=False)
-    deposite_percent = forms.IntegerField(min_value=0,max_value =100,required=True, disabled=True, initial=0,widget=forms.NumberInput(attrs={'class':'form-control', 'id': 'deposite-percent'})) 
-    deposite_money = forms.DecimalField(min_value=0,required=True, disabled=True, initial=0,decimal_places=2,widget=forms.NumberInput(attrs={'class':'form-control', 'id': 'deposite-money'})) 
+    deposite_percent = forms.IntegerField(required=False, initial=0, min_value=0,max_value=100,widget=forms.NumberInput(attrs={'class':'form-control', 'id': 'deposite-percent'})) 
+    deposite_money = forms.DecimalField(required=False, initial=0,min_value=0, widget=forms.NumberInput(attrs={'class':'form-control', 'id': 'deposite-money'})) 
     
     def initial_data(sale_order):
         return {'deposite_percent': sale_order.deposite_percent, 'deposite_type': sale_order.deposite_type, 'payment_method': sale_order.payment_method,
