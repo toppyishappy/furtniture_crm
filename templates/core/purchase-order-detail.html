@@ -90,10 +90,12 @@
 <div class="d-flex justify-content-end mb-3">
     <div>
         <button type="button" class="btn btn-primary m-2" id="btnPrint" onclick="PrintPage()">Print</button>
-        <button type="button" class="btn btn-success m-2 " id="btnPrint"
-            onclick="update_status('{{sale_order.id}}','confirm')">Confirm</button>
-        <button type="button" class="btn btn-danger m-2" id="btnPrint"
-            onclick="update_status('{{sale_order.id}}','reject')">Reject</button>
+        {% if user.role == 2 and status == 1 %}
+            <button type="button" class="btn btn-success m-2 " id="btnPrint"
+                onclick="update_status('{{sale_order.id}}','confirm')">Confirm</button>
+            <button type="button" class="btn btn-danger m-2" id="btnPrint"
+                onclick="update_status('{{sale_order.id}}','reject')">Reject</button>
+        {% endif %}
         <button type="button" class="btn btn-warning m-2" id="btnPrint" onclick="RedirectEditPage()">Edit</button>
         <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">Action</a></li>
@@ -251,13 +253,13 @@
 <!-- section image -->
 {% for item in objects %}
 <div class="row">
-    <div class="d-flex" style="overflow-x: scroll;">
+    <!-- <div class="d-flex" style="overflow-x: scroll;"> -->
         {% for img in item.images %}
         <div class="me-2 border">
             <img style="height: 200px;" src="{{img.image.url}}" alt="">
         </div>
         {% endfor %}
-    </div>
+    <!-- </div> -->
 </div>
 {% endfor %}
 <!-- end section -->
