@@ -15,7 +15,7 @@
       <a href="/purchase-order/" class="btn btn-primary btn-submit">Enter</a>
     </div>
   </div>
-
+  {% if user.role == 1 %}
   <div class="card col-12 mb-2" style="flex-direction: row;">
     <div class="col-2 mt-4 d-grid" style="justify-items: center;">
       <svg xmlns="http://www.w3.org/2000/svg" width="60%" fill="currentColor" class="bi bi-box2" viewBox="0 0 16 16">
@@ -29,6 +29,7 @@
       <a href="/sale-management/" class="btn btn-primary btn-submit">Enter</a>
     </div>
   </div>
+  {% endif %}
   <!-- role 2 = admin -->
   {% if role == 2 %}
   <div class="card col-12 mb-2" style="flex-direction: row;">
