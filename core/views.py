@@ -207,11 +207,15 @@ class PurchaseOrderEdit(View):
         sale_form = SaleForm(initial=init_saleorder_form)
         form = ItemForm()
         objects = SaleOrderDetail.objects.filter(sale_order=sale_order)
+        delivery_date = sale_order.delivery_start_date
+        if sale_order.delivery_start_date != sale_order.delivery_end_date:
+            delivery_date = sale_order.delivery_start_date.strftime("%m/%d/%Y") + ' - ' + sale_order.delivery_end_date.strftime("%m/%d/%Y")
         context = {
             'form': form,
             'sale_form': sale_form,
             'objects': self.get_object_detail(objects),
-            'user_form': user_form
+            'user_form': user_form,
+            'delivery_date': delivery_date
         }
         return render(request, 'core/purchase-order-edit.html', context=context)
 
