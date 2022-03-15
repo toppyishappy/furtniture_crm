@@ -125,6 +125,33 @@
         const res = await gettData(path);
         if(res.ok){
           for(let department of res.departments){
+            console.log(department.flag)
+            var button = '';
+            if(department.flag === 3){
+            button = `
+                <button type="button" disabled class="btn btn-primary" onclick="handleAction('start', ${department.id})">เริ่ม</button>
+                <button type="button" disabled class="btn btn-secondary" onclick="handleAction('stop', ${department.id})">สิ้นสุด</button>
+                <button type="button" class="btn btn-danger" onclick="handleAction('reject', ${department.id})">reject</button>
+            `
+            }else if(department.flag === 0){
+              button = `
+                <button type="button" class="btn btn-primary" onclick="handleAction('start', ${department.id})">เริ่ม</button>
+                <button type="button" disabled class="btn btn-secondary" onclick="handleAction('stop', ${department.id})">สิ้นสุด</button>
+                <button type="button" disabled class="btn btn-danger" onclick="handleAction('reject', ${department.id})">reject</button>
+              `
+            }else if(department.flag === 1){
+              button = `
+                <button type="button" disabled class="btn btn-primary" onclick="handleAction('start', ${department.id})">เริ่ม</button>
+                <button type="button" class="btn btn-secondary" onclick="handleAction('stop', ${department.id})">สิ้นสุด</button>
+                <button type="button" class="btn btn-danger" onclick="handleAction('reject', ${department.id})">reject</button>
+              `
+            }else if(department.flag === 2){
+              button = `
+                <button type="button" class="btn btn-primary" onclick="handleAction('start', ${department.id})">เริ่ม</button>
+                <button type="button" disabled class="btn btn-secondary" onclick="handleAction('stop', ${department.id})">สิ้นสุด</button>
+                <button type="button" class="btn btn-danger" onclick="handleAction('reject', ${department.id})">reject</button>
+              `
+            }
             html += `
               <div class="row mb-2">
                 <div class="col-4">
@@ -132,9 +159,7 @@
                   ${checkFlag(department.flag)}
                 </div>
                 <div class="col">
-                  <button type="button" class="btn btn-primary" onclick="handleAction('start', ${department.id})">เริ่ม</button>
-                  <button type="button" class="btn btn-secondary" onclick="handleAction('stop', ${department.id})">สิ้นสุด</button>
-                  <button type="button" class="btn btn-danger" onclick="handleAction('reject', ${department.id})">reject</button>
+                  ${button}
                 </div>
               </div>
             `
