@@ -38,15 +38,15 @@ class PurchaseOrder(View):
         form = PurchaseOrderForm(request.POST)
         if form.is_valid():
             date = form.cleaned_data['date']
-            work_location_id = form.cleaned_data['work_location_id']
+            work_location_id = form.cleaned_data['work_location_id'].id
             fullname = form.cleaned_data['fullname']
             tel = form.cleaned_data['tel']
+            delivery_address = form.cleaned_data['delivery_address']
             str_dudate = form.cleaned_data['delivery_date'].split(" - ")
             start_week_date = datetime.strptime(str_dudate[0] , "%m-%d-%Y")
             end_week_date = datetime.strptime(str_dudate[0] , "%m-%d-%Y")
             if len(str_dudate) > 1:
                 end_week_date = datetime.strptime(str_dudate[1] , "%m-%d-%Y")
-            print(start_week_date, ' ;  ' , end_week_date)
             province = form.cleaned_data['province']
             district = form.cleaned_data['district']
             amphoe = form.cleaned_data['amphoe']
@@ -56,7 +56,7 @@ class PurchaseOrder(View):
                 with transaction.atomic():
                     customer = Customer.objects.create(fullname=fullname, tel=tel)
                     order = SaleOrder.objects.create(form_date=date,customer_id=customer.id, province=province, district=district,
-                    amphoe=amphoe, zipcode=zipcode,
+                    amphoe=amphoe, zipcode=zipcode, delivery_address=delivery_address,
                     delivery_start_date=start_week_date,delivery_end_date=end_week_date , work_location_id=work_location_id,
                     comment = comment)
                     order_id = order.id
@@ -168,10 +168,10 @@ class PurchaseOrderItem(View):
         if form.is_valid():
             try:
                 with transaction.atomic():
-                    model_id = form.cleaned_data['model_id']
-                    type_id = form.cleaned_data['type_id']
-                    color_id = form.cleaned_data['color_id']
-                    material_id = form.cleaned_data['material_id']
+                    model_id = form.cleaned_data['model_id'].id
+                    type_id = form.cleaned_data['type_id'].id
+                    color_id = form.cleaned_data['color_id'].id
+                    material_id = form.cleaned_data['material_id'].id
                     price = form.cleaned_data['price']
                     amount = form.cleaned_data['amount']
                     files = request.FILES.getlist('files')
@@ -240,10 +240,10 @@ class PurchaseOrderEditItem(View):
         if form.is_valid():
             try:
                 with transaction.atomic():
-                    model_id = form.cleaned_data['model_id']
-                    type_id = form.cleaned_data['type_id']
-                    color_id = form.cleaned_data['color_id']
-                    material_id = form.cleaned_data['material_id']
+                    model_id = form.cleaned_data['model_id'].id
+                    type_id = form.cleaned_data['type_id'].id
+                    color_id = form.cleaned_data['color_id'].id
+                    material_id = form.cleaned_data['material_id'].id
                     price = form.cleaned_data['price']
                     amount = form.cleaned_data['amount']
                     files = request.FILES.getlist('files')
@@ -326,6 +326,7 @@ class PurchaseOrderEdit(View):
         form.cleaned_data.pop('fullname')
         form.cleaned_data.pop('tel')
         form_date = form.cleaned_data['date']
+        form.cleaned_data['work_location_id'] = form.cleaned_data['work_location_id'].id
         form.cleaned_data.pop('date')
         str_dudate = form.cleaned_data['delivery_date'].split(" - ")
         start_week_date = datetime.strptime(str_dudate[0] , "%m/%d/%Y")

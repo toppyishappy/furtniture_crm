@@ -8,12 +8,8 @@ class ItemModel(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
-    def get_choices():
-        result = [('', 'Please select a choice')]
-        objects = ItemModel.objects.values()
-        for i in objects:
-            result.append((i['id'], i['name']))
-        return result
+    def __str__(self):
+        return self.name
 
     def get_object(id):
         return ItemModel.objects.get(id=id)
@@ -26,12 +22,8 @@ class ItemColor(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
-    def get_choices():
-        result = [('', 'Please select a choice')]
-        objects = ItemColor.objects.values()
-        for i in objects:
-            result.append((i['id'], i['name']))
-        return result
+    def __str__(self):
+        return self.name
     
     def get_object(id):
         return ItemColor.objects.get(id=id)
@@ -44,12 +36,8 @@ class ItemMaterial(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
-    def get_choices():
-        result = [('', 'Please select a choice')]
-        objects = ItemMaterial.objects.values()
-        for i in objects:
-            result.append((i['id'], i['name']))
-        return result
+    def __str__(self):
+        return self.name
 
     def get_object(id):
         return ItemMaterial.objects.get(id=id)
@@ -62,12 +50,8 @@ class ItemType(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
-    def get_choices():
-        result = [('', 'Please select a choice')]
-        objects = ItemType.objects.values()
-        for i in objects:
-            result.append((i['id'], i['name']))
-        return result
+    def __str__(self):
+        return self.name
 
     def get_object(id):
         return ItemType.objects.get(id=id)
@@ -97,13 +81,9 @@ class WorkLocation(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
-    def get_choices():
-        result = [('', 'Please select a choice')]
-        objects = WorkLocation.objects.values()
-        for i in objects:
-            result.append((i['id'], i['name']))
-        return result
-
+    def __str__(self):
+        return self.name
+    
 
 class SaleOrderDetail(models.Model):
     sale_order = models.ForeignKey('core.SaleOrder', on_delete=models.CASCADE)

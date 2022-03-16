@@ -13,7 +13,7 @@ class PurchaseOrderForm(ModelForm):
     # province = forms.CharField(max_length=50)
     # district = forms.CharField(max_length=50)
     # zone = forms.CharField(max_length=50)
-    work_location_id = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-select'}), choices=WorkLocation.get_choices())
+    work_location_id = forms.ModelChoiceField(widget=forms.Select(attrs={'class': 'form-select'}), queryset=WorkLocation.objects.all(), empty_label="Please select")
     delivery_address = forms.CharField(widget=forms.TextInput(attrs={ 'class': 'form-control'}))
     date = forms.DateField(widget=forms.TextInput(attrs={'class':'form-control', 'type': 'date', 'id': 'date'}))
     delivery_date = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'id': 'weeklyDatePicker'}))
@@ -35,10 +35,10 @@ class PurchaseOrderForm(ModelForm):
 
 
 class ItemForm(forms.Form):
-    type_id = forms.ChoiceField(choices=ItemType.get_choices(), widget=forms.Select(attrs={'class':'form-select'}))
-    model_id = forms.ChoiceField(choices=ItemModel.get_choices(), widget=forms.Select(attrs={'class':'form-select'}))
-    color_id = forms.ChoiceField(choices=ItemColor.get_choices(), widget=forms.Select(attrs={'class':'form-select'}))
-    material_id = forms.ChoiceField(choices=ItemMaterial.get_choices(), widget=forms.Select(attrs={'class':'form-select'}))
+    type_id = forms.ModelChoiceField(queryset=ItemType.objects.all(), widget=forms.Select(attrs={'class':'form-select'}), empty_label="Please select")
+    model_id = forms.ModelChoiceField(queryset=ItemModel.objects.all(), widget=forms.Select(attrs={'class':'form-select'}), empty_label="Please select")
+    color_id = forms.ModelChoiceField(queryset=ItemColor.objects.all(), widget=forms.Select(attrs={'class':'form-select'}), empty_label="Please select")
+    material_id = forms.ModelChoiceField(queryset=ItemMaterial.objects.all(), widget=forms.Select(attrs={'class':'form-select'}), empty_label="Please select")
     files = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True, 'class': 'form-control'}), required=False)
     amount = forms.IntegerField(min_value=1,required=True, initial=1,widget=forms.NumberInput(attrs={'class':'form-control'})) 
     price = forms.DecimalField(min_value=0,required=True, initial=0,decimal_places=2,widget=forms.NumberInput(attrs={'class':'form-control'})) 
