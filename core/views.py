@@ -92,7 +92,8 @@ class PurchaseOrderDetail(View):
             'objects': objects,
             'price_detail' :  price_detail,
             'status': status,
-            'signauter_url': signauter_url
+            'signauter_url': signauter_url,
+            'payment_method': payment_method
         }
         return render(request, 'core/purchase-order-detail.html',context=context)
 
@@ -141,12 +142,13 @@ class PurchaseOrderDetail(View):
             str_status = "Failed"
         return str_status
 
-    def mapping_payment_method(self,status):
+    def mapping_payment_method(self,payment_method):
         str_payment_method = ""
-        if status == 0:
+        if payment_method == 0:
             str_payment_method = "Cash"
-        elif status == 1:
+        elif payment_method == 1:
             str_payment_method = "Credit"
+        return str_payment_method
 
 @method_decorator(login_required, name='dispatch')
 class PurchaseOrderItem(View):
@@ -367,8 +369,23 @@ class AdminManagement(ListView):
             result.append({
                 'customer': Customer.objects.get(id=order.customer_id),
                 'order': order,
+                'status': self.mapping_status(order.status)
             })
         return result
+
+    def mapping_status(self,status):
+        str_status = ""
+        if status == 0:
+            str_status = "Initial"
+        elif status == 1:
+            str_status = "Waiting Approved"
+        elif status == 2:
+            str_status = "On Going"
+        elif status == 3:
+            str_status = "Done"
+        elif status == 4:
+            str_status = "Failed"
+        return str_status
 
 
 @method_decorator(login_required, name='dispatch')
@@ -385,7 +402,7 @@ class SaleManagement(ListView):
             result.append({
                 'customer': Customer.objects.get(id=order.customer_id),
                 'order': order,
-                'status': self.mapping_status(orders.status)
+                'status': self.mapping_status(order.status)
             })
         return result
 
