@@ -1,5 +1,3 @@
-import pdb
-from turtle import pd
 from utils.misc import import_app
 from pathlib import Path
 import dj_database_url
