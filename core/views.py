@@ -82,6 +82,7 @@ class PurchaseOrderDetail(View):
         objects,summary_price = self.get_object_detail(objects)
         price_detail = self.get_price_detail(summary_price,sale_order)
         status = self.mapping_status(sale_order.status)
+        payment_method = self.mapping_payment_method(sale_order.payment_method)
         signauter_url = EmployeeSignature.objects.get(id=sale_order.signature_id).image.url
         context = {
             'customer': customer,
@@ -127,8 +128,25 @@ class PurchaseOrderDetail(View):
         return result
 
     def mapping_status(self,status):
-        return 2
+        str_status = ""
+        if status == 0:
+            str_status = "Initial"
+        elif status == 1:
+            str_status = "Waiting Approved"
+        elif status == 2:
+            str_status = "On Going"
+        elif status == 3:
+            str_status = "Done"
+        elif status == 4:
+            str_status = "Failed"
+        return str_status
 
+    def mapping_payment_method(self,status):
+        str_payment_method = ""
+        if status == 0:
+            str_payment_method = "Cash"
+        elif status == 1:
+            str_payment_method = "Credit"
 
 @method_decorator(login_required, name='dispatch')
 class PurchaseOrderItem(View):
@@ -367,9 +385,23 @@ class SaleManagement(ListView):
             result.append({
                 'customer': Customer.objects.get(id=order.customer_id),
                 'order': order,
+                'status': self.mapping_status(orders.status)
             })
         return result
 
+    def mapping_status(self,status):
+        str_status = ""
+        if status == 0:
+            str_status = "Initial"
+        elif status == 1:
+            str_status = "Waiting Approved"
+        elif status == 2:
+            str_status = "On Going"
+        elif status == 3:
+            str_status = "Done"
+        elif status == 4:
+            str_status = "Failed"
+        return str_status
 
 @method_decorator(login_required, name='dispatch')
 class Management(ListView):
@@ -389,6 +421,7 @@ class Management(ListView):
                 'customer': Customer.objects.get(id=order.customer_id),
                 'order': order,
                 'flag': self.check_delivery_date(order.delivery_end_date),
+                'status' : self.mapping_status(order.status)
             })
         return result
     
@@ -404,6 +437,19 @@ class Management(ListView):
         else:
             return 0
 
+    def mapping_status(self,status):
+        str_status = ""
+        if status == 0:
+            str_status = "Initial"
+        elif status == 1:
+            str_status = "Waiting Approved"
+        elif status == 2:
+            str_status = "On Going"
+        elif status == 3:
+            str_status = "Done"
+        elif status == 4:
+            str_status = "Failed"
+        return str_status
 
 @method_decorator(login_required, name='dispatch')
 class Summary(View):
