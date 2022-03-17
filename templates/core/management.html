@@ -41,7 +41,7 @@
         <input type="submit" value="search" class="btn btn-primary">
       </form>
     </div>
-    <button type="button" class="btn btn-primary">excel</button>
+    <button type="button" class="btn btn-primary" onclick="exportExcel()">excel</button>
   </div>
 </div>
 <div class="row">
@@ -66,7 +66,7 @@
           {% else %}
             <tr class="">
           {% endif %}
-              <td><input type="checkbox" name="" id=""></td>
+              <td><input type="checkbox" name="" id="{{item.order.id}}" onchange="handleCheckBox(this)"></td>
               <td>{{item.order.created_date|date:"SHORT_DATE_FORMAT"}}</td>
               <td><a href="/purchase-order/{{item.order.id}}">{{item.order.id}}</a></td>
               <td>{{item.customer.fullname}}</td>
@@ -102,6 +102,34 @@
 {% endblock %}
 {% block script %}
     <script>
+      var idList = [];
+      function handleCheckBox(e){
+        if(e.checked){
+          idList.push(parseInt(e.id))
+        }else{
+          idList = idList.filter(i => i === e.id);
+        }
+      }
+      function exportExcel(){
+        Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      })
+      .then(async (result) => {
+        if (result.isConfirmed) {
+          if(idList.length <= 0) return;
+          path = `/export-excel?id_list=${idList}`;
+          window.open(path)
+        }
+      })
+      }
+    </script>
+    <script>
       function navigateToDetail(){
         window.location.href = '/purchase-order/1/'
       }
@@ -122,7 +150,7 @@
         var content = document.getElementById('department-content')
         var html = '';
         const path = `/api/department?order_id=${orderId}`;
-        const res = await gettData(path);
+        const res = await getData(path);
         if(res.ok){
           for(let department of res.departments){
             console.log(department.flag)

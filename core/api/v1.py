@@ -24,7 +24,8 @@ class AdminManagementAPI(View):
         order.save()
         return JsonResponse({'ok': True})
 
-
+from django.http import FileResponse
+from django.conf import settings
 @method_decorator([login_required, csrf_exempt], name='dispatch')
 class ExportExcelAPI(View):
     
@@ -43,11 +44,12 @@ class ExportExcelAPI(View):
                 })
         return result
 
+    
     def get(self, request):
         output = io.BytesIO()
         workbook = xlsxwriter.Workbook(output)
         worksheet = workbook.add_worksheet()
-        id_list = [1,3]
+        id_list = request.GET.get('id_list').split(',')
         result = self.get_data(id_list)
         worksheet.write(0, 0, 'id')
         worksheet.write(1, 0, 'model')
@@ -61,22 +63,20 @@ class ExportExcelAPI(View):
             worksheet.write(3, row+1, item['type'])
             worksheet.write(4, row+1, item['material'])
         # worksheet.write(5, 0, 'Some Data')
-
         workbook.close()
 
         # Rewind the buffer.
         output.seek(0)
-
         response = HttpResponse(
             output,
-            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         )
-        filename = 'django_simple.xlsx'
+        today = datetime.strftime(timezone.now(), '%Y-%m-%d')
+        filename = f'{today}_excel.xlsx'
         response['Content-Disposition'] = 'attachment; filename=%s' % filename
         # Set up the Http response.
 
         return response
-        return JsonResponse({'res': result})
 
 @method_decorator([login_required, csrf_exempt], name='dispatch')
 class PurchaseOrdertAPI(View):

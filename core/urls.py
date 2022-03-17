@@ -20,7 +20,7 @@ urlpatterns = [
     path('api/purchase-order', PurchaseOrdertAPI.as_view()),
     path('api/management', ManagementAPI.as_view()),
     path('api/department', DepartmentListAPI.as_view()),
-    path('api/export-excel', ExportExcelAPI.as_view()),
+    path('export-excel', ExportExcelAPI.as_view()),
     
 ]
 
