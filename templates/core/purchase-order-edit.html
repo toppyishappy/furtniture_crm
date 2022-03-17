@@ -20,11 +20,26 @@
             Status
             </button>
             <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Separated link</a></li>
+            {% if status == 1 %}
+            <li class="dropdown-item disabled" onclick="">Waiting Approved</li>
+            {% else %}
+            <li class="dropdown-item" onclick="updateItem({{item_id}},1)">Waiting Approved</li>
+            {% endif %}
+            {% if status == 2 %}
+            <li class="dropdown-item disabled" onclick="">On Going</li>
+            {% else %}
+            <li class="dropdown-item" onclick="updateItem({{item_id}},2)">On Going</li>
+            {% endif %}
+            {% if status == 3 %}    
+            <li class="dropdown-item disabled" onclick="">Done</li>
+            {% else %}
+            <li class="dropdown-item" onclick="updateItem({{item_id}},3)">Done</li>
+            {% endif %}
+            {% if status == 4 %}    
+            <li class="dropdown-item disabled" onclick="">Failed</li>
+            {% else %}
+            <li class="dropdown-item" onclick="updateItem({{item_id}},4)">Failed</li>
+            {% endif %}
             </ul>
         </div>
     </div>
@@ -124,7 +139,31 @@
                     }
                 }
             })
+    }
 
+    const updateItem = async (itemId,status) => {
+        Swal.fire({
+                title: 'Are you sure?',
+                text: "You want to be confirm this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, confirm it!'
+            })
+            .then(async (result) => {
+                if (result.isConfirmed) {
+                    const path = '/api/purchase-order';
+                    const data = {
+                        'item_id': itemId,
+                        'status': status
+                    }
+                    const res = await patchData(path, data)
+                    if (res.ok) {
+                        window.location.reload();
+                    }
+                }
+            })
     }
 </script>
 <script>

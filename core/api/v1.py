@@ -1,6 +1,7 @@
 from datetime import datetime
 import io
 import json
+from os import stat
 import xlsxwriter
 
 from django.http import HttpResponse, JsonResponse
@@ -85,6 +86,13 @@ class PurchaseOrdertAPI(View):
         data = json.loads(request.body)
         item_id = data['item_id']
         SaleOrderDetail.objects.filter(id=item_id).delete()
+        return JsonResponse({'ok': True})
+    
+    def patch(self, request):
+        data = json.loads(request.body)
+        item_id = data['item_id']
+        status = data['status']
+        SaleOrder.objects.filter(id=item_id).update(status = status)
         return JsonResponse({'ok': True})
 
 @method_decorator([login_required, csrf_exempt], name='dispatch')

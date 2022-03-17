@@ -308,6 +308,8 @@ class PurchaseOrderEdit(View):
         context = {
             'user_form': user_form,
             'delivery_date': delivery_date,
+            'status': sale_order.status,
+            'item_id': sale_order.id
         }
         return render(request, 'core/purchase-order-edit.html', context=context)
 
