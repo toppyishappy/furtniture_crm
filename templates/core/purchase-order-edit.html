@@ -13,6 +13,7 @@
 {% block content %}
     <div>ใบสั่งซื้อสินค้า</div>
     <!-- status section -->
+    {% if user.role == 2 %}
     <div class="d-flex justify-content-end mb-3">
         <div class="btn-group">
             <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -27,6 +28,7 @@
             </ul>
         </div>
     </div>
+    {% endif %}
     <!-- end section -->
     <!-- user information -->
     <form method="post">
