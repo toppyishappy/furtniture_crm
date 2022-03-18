@@ -117,9 +117,9 @@ class PurchaseOrderDetail(View):
     
     def get_price_detail(self,summary_price, sale_order):
         deposit_price = 0
-        if sale_order.deposite_type == '1':
+        if sale_order.deposite_type == 1:
             deposit_price = sale_order.deposite_money
-        elif sale_order.deposite_type == '0':
+        elif sale_order.deposite_type == 0:
             deposit_price = summary_price * Decimal( sale_order.deposite_percent / 100)
         remain_price = summary_price - deposit_price
         result = {
@@ -450,7 +450,7 @@ class Management(ListView):
         if month_range:
             start_month = datetime.strptime(month_range, '%Y-%m')
             end_month = start_month + relativedelta.relativedelta(months=1) - timedelta(days=1)
-            orders = orders.filter(created_date__range=(start_month, end_month))
+            orders = orders.filter(form_date__range=(start_month, end_month))
         for order in orders:
             result.append({
                 'customer': Customer.objects.get(id=order.customer_id),
