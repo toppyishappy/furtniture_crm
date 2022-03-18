@@ -28,7 +28,7 @@ class PurchaseOrderForm(ModelForm):
     
     def initial_data(customer, sale_order):
         return {'fullname': customer.fullname, 'tel': customer.tel, 'work_location_id': sale_order.work_location_id, 'delivery_address': sale_order.delivery_address, 'date': sale_order.form_date,
-                'delivery_date': sale_order.delivery_end_date, 'province': sale_order.province, 'district': sale_order.district, 
+                'delivery_date': sale_order.delivery_start_date, 'province': sale_order.province, 'district': sale_order.district, 
                 'amphoe': sale_order.amphoe, 'zipcode': sale_order.zipcode}
 
 

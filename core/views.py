@@ -51,14 +51,12 @@ class PurchaseOrder(View):
             district = form.cleaned_data['district']
             amphoe = form.cleaned_data['amphoe']
             zipcode = form.cleaned_data['zipcode']
-            comment = form.cleaned_data['comment']
             try:
                 with transaction.atomic():
                     customer = Customer.objects.create(fullname=fullname, tel=tel)
                     order = SaleOrder.objects.create(form_date=date,customer_id=customer.id, province=province, district=district,
                     amphoe=amphoe, zipcode=zipcode, delivery_address=delivery_address,
-                    delivery_start_date=start_week_date,delivery_end_date=end_week_date , work_location_id=work_location_id,
-                    comment = comment)
+                    delivery_start_date=start_week_date,delivery_end_date=end_week_date , work_location_id=work_location_id)
                     order_id = order.id
                 return redirect(f'/purchase-order/{order_id}/item')
             except:
@@ -304,8 +302,6 @@ class PurchaseOrderEdit(View):
         user_form = PurchaseOrderForm(initial=init_purchase_form)
         user = request.user
         delivery_date = sale_order.delivery_start_date
-        if sale_order.delivery_start_date != sale_order.delivery_end_date:
-            delivery_date = sale_order.delivery_start_date.strftime("%m/%d/%Y") + ' - ' + sale_order.delivery_end_date.strftime("%m/%d/%Y")
         context = {
             'user_form': user_form,
             'delivery_date': delivery_date,
