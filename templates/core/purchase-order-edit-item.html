@@ -192,8 +192,17 @@
 {% block script %}
 <script>
     (function(){
-        document.getElementById('deposite-money').disabled = true
-        document.getElementById('deposite-percent').disabled = true
+        var deposite_type = document.getElementById('id_deposite_type').value
+        if(deposite_type === '0'){
+            document.getElementById('deposite-money').disabled = true
+            document.getElementById('deposite-percent').disabled = false
+        }else if(deposite_type === '1'){
+            document.getElementById('deposite-money').disabled = false
+            document.getElementById('deposite-percent').disabled = true
+        }else{
+            document.getElementById('deposite-money').disabled = true
+            document.getElementById('deposite-percent').disabled = true
+        }
     })();
     function handleChange(e) {
         console.log(e.value)
