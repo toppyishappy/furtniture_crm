@@ -6,12 +6,18 @@
 <script type="text/javascript" src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dependencies/typeahead.bundle.js"></script>
 <link rel="stylesheet" href="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dist/jquery.Thailand.min.css">
 <script type="text/javascript" src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dist/jquery.Thailand.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css">
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/2.10.6/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
 {% endblock %}
 {% block content %}
     
+<div class="row mt-3 justify-content-end">
+    <div class="col-3">
+        <label for="exampleFormControlInput1" class="form-label">วันที่</label>
+        
+    </div>
+</div>
     <h3 class="text-center">ใบสั่งซื้อสินค้า</h3>
     <!-- section customer -->
     <form action="" method="post">
@@ -27,9 +33,11 @@
                 <label for="exampleFormControlInput1" class="form-label">สถานที่จัดงาน</label>
                 {{form.work_location_id}}
             </div>
-            <div class="col-6">
+            <div class="col-6" style="position: relative;">
                 <label for="exampleFormControlInput1" class="form-label">กำหนดส่งสินค้า</label>
-                {{form.delivery_date}}
+                <div id="picker-wrapper">
+                    {{form.delivery_date}}
+                </div>
             </div>
         </div>
         <div class="row mt-3">
@@ -80,18 +88,26 @@
 
 {% block script%}
 <script>
-
-    const postData = async(data) => {
-        await fetch('/api/purchase-order', 
-            {
-                method: 'POST',
-                headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-        return await response.json()
+    function set_week_picker(date) {
+        start_date = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay());
+        end_date = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 6);
+        weekpicker.datepicker('update', start_date);
+        weekpicker.val((start_date.getMonth() + 1) + '/' + start_date.getDate() + '/' + start_date.getFullYear() + ' - ' + (end_date.getMonth() + 1) + '/' + end_date.getDate() + '/' + end_date.getFullYear());
     }
+    $(document).ready(function(){
+        weekpicker = $('.week-picker');
+        weekpicker.datepicker({
+            autoclose: true,
+            forceParse: false,
+            calendarWeeks: true,
+            container: '#picker-wrapper',
+        }).on("changeDate", function(e) {
+            set_week_picker(e.date);
+        });
+        set_week_picker(new Date);
+
+    })
+    
     const addItem = async() => {
         const formData = new FormData();
         const fileList = document.getElementById('file').files;
@@ -124,29 +140,6 @@
     $amphoe: $('#amphoe'), // input ของอำเภอ
     $province: $('#province'), // input ของจังหวัด
     $zipcode: $('#zipcode'), // input ของรหัสไปรษณีย์
-});
-</script>
-<script>
-
-$(document).ready(function(){
-    moment.locale('en', {
-      week: { dow: 1 } // Monday is the first day of the week
-    });
-
-    document.getElementById('date').value = new Date().toLocaleString('en-CA').split(',')[0]
-
-  //Initialize the datePicker(I have taken format as mm-dd-yyyy, you can     //have your owh)
-  $("#weeklyDatePicker").datetimepicker({
-      format: 'MM-DD-YYYY'
-  });
-
-   //Get the value of Start and End of Week
-  $('#weeklyDatePicker').on('dp.change', function (e) {
-      var value = $("#weeklyDatePicker").val();
-      var firstDate = moment(value, "MM-DD-YYYY").day(1).format("MM/DD/YYYY");
-      var lastDate =  moment(value, "MM-DD-YYYY").day(7).format("MM/DD/YYYY");
-      $("#weeklyDatePicker").val(firstDate + " - " + lastDate);
-  });
 });
 </script>
 

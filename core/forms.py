@@ -16,7 +16,7 @@ class PurchaseOrderForm(ModelForm):
     work_location_id = forms.ModelChoiceField(widget=forms.Select(attrs={'class': 'form-select'}), queryset=WorkLocation.objects.all(), empty_label="Please select")
     delivery_address = forms.CharField(widget=forms.TextInput(attrs={ 'class': 'form-control'}))
     date = forms.DateField(widget=forms.TextInput(attrs={'class':'form-control', 'type': 'date', 'id': 'date'}))
-    delivery_date = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'id': 'weeklyDatePicker'}))
+    delivery_date = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control week-picker', 'id': 'weeklyDatePicker'}))
     province = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'id': 'province'}))
     district = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'id': 'district'}))
     amphoe = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'id': 'amphoe'}))
