@@ -206,7 +206,7 @@ class PurchaseOrderItem(View):
             signature = EmployeeSignature.objects.get(user=user)
             sale_form.cleaned_data['deposite_percent'] = sale_form.cleaned_data['deposite_percent'] or 0
             sale_form.cleaned_data['deposite_money'] = sale_form.cleaned_data['deposite_money'] or 0
-            SaleOrder.objects.update(**(sale_form.cleaned_data), status=SaleOrder.WATING_APPROVED, signature_id=signature.id)
+            SaleOrder.objects.filter(id=id).update(**(sale_form.cleaned_data), status=SaleOrder.WATING_APPROVED, signature_id=signature.id)
             return redirect('/')
         else:
             print(sale_form.errors)
