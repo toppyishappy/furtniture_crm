@@ -119,7 +119,7 @@
     const updateItem = async (itemId,status) => {
         Swal.fire({
                 title: 'ยืนยันการเปลี่ยนสถานะ?',
-                text: "ตอ้งการเปลี่ยนสถานะใช่หรือไม่?",
+                text: "ต้องการเปลี่ยนสถานะใช่หรือไม่?",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -136,7 +136,8 @@
                     }
                     const res = await patchData(path, data)
                     if (res.ok) {
-                        window.location.reload();
+                        debugger;
+                        window.location.href = '/';
                     }
                 }
             })
