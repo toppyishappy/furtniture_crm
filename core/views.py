@@ -310,7 +310,8 @@ class PurchaseOrderEdit(View):
             'user_form': user_form,
             'delivery_date': delivery_date,
             'status': sale_order.status,
-            'item_id': sale_order.id
+            'item_id': sale_order.id,
+            'str_status': self.mapping_status(sale_order.status)
         }
         return render(request, 'core/purchase-order-edit.html', context=context)
 
@@ -344,6 +345,20 @@ class PurchaseOrderEdit(View):
                 print('write database error', user_form.errors)
             
         return redirect(f'/purchase-order/edit/{id}')
+    
+    def mapping_status(self,status):
+        str_status = ""
+        if status == 0:
+            str_status = "Initial"
+        elif status == 1:
+            str_status = "Waiting Approved"
+        elif status == 2:
+            str_status = "On Going"
+        elif status == 3:
+            str_status = "Done"
+        elif status == 4:
+            str_status = "Failed"
+        return str_status
 
     def update_sale_order(self, sale_order, form):
         form.cleaned_data.pop('fullname')
@@ -449,10 +464,10 @@ class Management(ListView):
         # 0 = nomral
         # 1 = yellow
         # 2 = red
-        diff_date = date - timezone.now().date()
+        diff_date = timezone.now().date() - date
         if diff_date.days <= 7 and diff_date.days >= 1:
             return 1
-        elif diff_date.days <= 0:
+        elif diff_date.days >= 0:
             return 2
         else:
             return 0
