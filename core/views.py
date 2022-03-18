@@ -362,7 +362,7 @@ class PurchaseOrderEdit(View):
 @method_decorator(login_required, name='dispatch')
 class AdminManagement(ListView):
     template_name = 'core/admin-management.html'
-    paginate_by = 1
+    paginate_by = 30
 
     def get_queryset(self):
         result = []
@@ -393,7 +393,7 @@ class AdminManagement(ListView):
 @method_decorator(login_required, name='dispatch')
 class SaleManagement(ListView):
     template_name = 'core/sale-management.html'
-    paginate_by = 10
+    paginate_by = 30
 
     def get_queryset(self):
         result = []
@@ -425,7 +425,7 @@ class SaleManagement(ListView):
 @method_decorator(login_required, name='dispatch')
 class Management(ListView):
     template_name = 'core/management.html'
-    paginate_by = 2
+    paginate_by = 30
 
     def get_queryset(self):
         result = []

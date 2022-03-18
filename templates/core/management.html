@@ -7,7 +7,7 @@
   
           <!-- Modal Header -->
           <div class="modal-header">
-          <h4 class="modal-title">Modal Heading</h4>
+          <h4 class="modal-title">แผนก</h4>
           <div class="visually-hidden" id="hidden-id"></div>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
@@ -26,7 +26,7 @@
   
           <!-- Modal footer -->
           <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ปิด</button>
           </div>
   
       </div>
@@ -38,7 +38,7 @@
     <div>
       <form action="" method="get">
         <input type="month" name="query">
-        <input type="submit" value="search" class="btn btn-primary">
+        <input type="submit" value="ค้นหา" class="btn btn-primary">
       </form>
     </div>
     <button type="button" class="btn btn-primary" onclick="exportExcel()">excel</button>
@@ -49,12 +49,12 @@
     <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">PO Date</th>
-          <th scope="col">PO Number</th>
-          <th scope="col">Customer</th>
-          <th scope="col">Due date</th>
-          <th scope="col">Status</th>
-          <th scope="col">Action</th>
+          <th scope="col">วันที่ PO</th>
+          <th scope="col">หมายเลข PO</th>
+          <th scope="col">ชื่อลูกค้า</th>
+          <th scope="col">วันที่จัดส่ง</th>
+          <th scope="col">สถานะ</th>
+          <th scope="col">แผนก</th>
         </tr>
       </thead>
       <tbody>
@@ -72,7 +72,7 @@
               <td>{{item.customer.fullname}}</td>
               <td>{{item.order.delivery_start_date|date:"SHORT_DATE_FORMAT"}} - {{item.order.delivery_end_date|date:"SHORT_DATE_FORMAT"}}</td>
               <td>{{item.status}}</td>
-              <td><button class='btn btn-success' onclick="toggleModal({{item.order.id}})">Confirm</button></td>
+              <td><button class='btn btn-success' onclick="toggleModal({{item.order.id}})">Action</button></td>
         </tr>
       {% endfor %}
       </tbody>

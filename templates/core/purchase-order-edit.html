@@ -74,7 +74,7 @@
                 {{user_form.delivery_address}}
             </div>
         </div>
-        <div class="row">
+        <div class="row mt-3">
             <div class="col-6">
                 <label for="exampleFormControlInput1" class="form-label">จังหวัด</label>
                 {{user_form.province}}
@@ -84,7 +84,7 @@
                 {{user_form.district}}
             </div>
         </div>
-        <div class="row">
+        <div class="row mt-3">
             <div class="col-6">
                 <label for="exampleFormControlInput1" class="form-label">อำเภอ</label>
                 {{user_form.amphoe}}
@@ -94,7 +94,7 @@
                 {{user_form.zipcode}}
             </div>
         </div>
-        <div class="row">
+        <div class="row mt-3">
             <div class="col-6">
                 <label for="exampleFormControlInput1" class="">กำหนดส่งสินค้า</label>
                 {{user_form.delivery_date}}
@@ -102,7 +102,9 @@
         </div>
         <hr/>
         <!-- end section -->
-        <input type="submit" value="Next" class="btn btn-primary btn-submit">
+        <div class="d-flex justify-content-center">
+            <input type="submit" value="ต่อไป" class="btn btn-primary btn-submit">
+        </div>
     </form>
 
 {% endblock %}
