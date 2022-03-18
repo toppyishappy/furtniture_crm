@@ -44,39 +44,41 @@
     <button type="button" class="btn btn-primary" onclick="exportExcel()">excel</button>
   </div>
 </div>
-<div class="row">
-  <table class="table table-striped">
-    <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">วันที่ PO</th>
-          <th scope="col">หมายเลข PO</th>
-          <th scope="col">ชื่อลูกค้า</th>
-          <th scope="col">วันที่จัดส่ง</th>
-          <th scope="col">สถานะ</th>
-          <th scope="col">แผนก</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for item in page_obj %}
-          {% if item.flag == 1%}
-            <tr class="bg-warning">
-          {% elif item.flag == 2%}
-            <tr class="bg-danger">
-          {% else %}
-            <tr class="">
-          {% endif %}
-              <td><input type="checkbox" name="" id="{{item.order.id}}" onchange="handleCheckBox(this)"></td>
-              <td>{{item.order.created_date|date:"SHORT_DATE_FORMAT"}}</td>
-              <td><a href="/purchase-order/{{item.order.id}}">{{item.order.id}}</a></td>
-              <td>{{item.customer.fullname}}</td>
-              <td>{{item.order.delivery_start_date|date:"SHORT_DATE_FORMAT"}} - {{item.order.delivery_end_date|date:"SHORT_DATE_FORMAT"}}</td>
-              <td>{{item.status}}</td>
-              <td><button class='btn btn-success' onclick="toggleModal({{item.order.id}})">Action</button></td>
-        </tr>
-      {% endfor %}
-      </tbody>
-  </table>
+<div class="row mt-4">
+  <div class="card-body shadow">
+    <table class="table table-striped">
+      <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">วันที่ PO</th>
+            <th scope="col">หมายเลข PO</th>
+            <th scope="col">ชื่อลูกค้า</th>
+            <th scope="col">วันที่จัดส่ง</th>
+            <th scope="col">สถานะ</th>
+            <th scope="col">แผนก</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in page_obj %}
+            {% if item.flag == 1%}
+              <tr class="bg-warning">
+            {% elif item.flag == 2%}
+              <tr class="bg-danger">
+            {% else %}
+              <tr class="">
+            {% endif %}
+                <td><input type="checkbox" name="" id="{{item.order.id}}" onchange="handleCheckBox(this)"></td>
+                <td>{{item.order.created_date|date:"SHORT_DATE_FORMAT"}}</td>
+                <td><a href="/purchase-order/{{item.order.id}}">{{item.order.id}}</a></td>
+                <td>{{item.customer.fullname}}</td>
+                <td>{{item.order.delivery_start_date|date:"SHORT_DATE_FORMAT"}} - {{item.order.delivery_end_date|date:"SHORT_DATE_FORMAT"}}</td>
+                <td>{{item.status}}</td>
+                <td><button class='btn btn-success' onclick="toggleModal({{item.order.id}})">Action</button></td>
+          </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+  </div>
   <div class="d-flex justify-content-center mt-2">
     <nav aria-label="Page navigation example">
       <ul class="pagination">

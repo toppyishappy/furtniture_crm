@@ -96,7 +96,7 @@
             <button type="button" class="btn btn-danger m-2" id="btnPrint"
                 onclick="update_status('{{sale_order.id}}','reject')">Reject</button>
         {% endif %}
-        <button type="button" class="btn btn-warning m-2" id="btnPrint" onclick="RedirectEditPage()">Edit</button>
+        <button type="button" class="btn btn-warning m-2" id="btnPrint" onclick="RedirectEditPage({{id}})">Edit</button>
         <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">Action</a></li>
             <li><a class="dropdown-item" href="#">Another action</a></li>
@@ -299,10 +299,10 @@
     }
 </script>
 <script>
-    function RedirectEditPage() {
+    function RedirectEditPage(itemId) {
         const urlParams = new URLSearchParams(window.location.search);
         const htmla = window.location.hostname;
-        window.location.href = `/purchase-order/edit/1`
+        window.location.href = `/purchase-order/edit/${itemId}`
     }
 
     function PrintPage() {

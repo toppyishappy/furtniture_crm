@@ -110,48 +110,22 @@
 {% endblock %}
 {% block script %}
 <script>
-    function handleSubmit(e){
-        debugger
-        console.log(e)
-    }
     function RedirectSavePage(){
     const urlParams = new URLSearchParams(window.location.search);
     const htmla = window.location.hostname;
     window.location.href = ``
   }
-    const deleteItem = async (itemId) => {
-        Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            })
-            .then(async (result) => {
-                if (result.isConfirmed) {
-                    const path = '/api/purchase-order';
-                    const data = {
-                        'item_id': itemId,
-                    }
-                    const res = await deleteData(path, data)
-                    if (res.ok) {
-                        window.location.reload();
-                    }
-                }
-            })
-    }
 
     const updateItem = async (itemId,status) => {
         Swal.fire({
-                title: 'Are you sure?',
-                text: "You want to be confirm this!",
+                title: 'ยืนยันการเปลี่ยนสถานะ?',
+                text: "ตอ้งการเปลี่ยนสถานะใช่หรือไม่?",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, confirm it!'
+                confirmButtonText: 'ยืนยัน',
+                cancelButtonText: 'ยกเลิก'
             })
             .then(async (result) => {
                 if (result.isConfirmed) {
@@ -194,8 +168,8 @@
        //Get the value of Start and End of Week
       $('#weeklyDatePicker').on('dp.change', function (e) {
           var value = $("#weeklyDatePicker").val();
-          var firstDate = moment(value, "MM-DD-YYYY").day(1).format("MM-DD-YYYY");
-          var lastDate =  moment(value, "MM-DD-YYYY").day(7).format("MM-DD-YYYY");
+          var firstDate = moment(value, "MM-DD-YYYY").day(1).format("MM/DD/YYYY");
+          var lastDate =  moment(value, "MM-DD-YYYY").day(7).format("MM/DD/YYYY");
           $("#weeklyDatePicker").val(firstDate + " - " + lastDate);
       });
     });

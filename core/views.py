@@ -43,10 +43,10 @@ class PurchaseOrder(View):
             tel = form.cleaned_data['tel']
             delivery_address = form.cleaned_data['delivery_address']
             str_dudate = form.cleaned_data['delivery_date'].split(" - ")
-            start_week_date = datetime.strptime(str_dudate[0] , "%m-%d-%Y")
-            end_week_date = datetime.strptime(str_dudate[0] , "%m-%d-%Y")
+            start_week_date = datetime.strptime(str_dudate[0] , "%m/%d/%Y")
+            end_week_date = datetime.strptime(str_dudate[0] , "%m/%d/%Y")
             if len(str_dudate) > 1:
-                end_week_date = datetime.strptime(str_dudate[1] , "%m-%d-%Y")
+                end_week_date = datetime.strptime(str_dudate[1] , "%m/%d/%Y")
             province = form.cleaned_data['province']
             district = form.cleaned_data['district']
             amphoe = form.cleaned_data['amphoe']
@@ -85,6 +85,7 @@ class PurchaseOrderDetail(View):
         payment_method = self.mapping_payment_method(sale_order.payment_method)
         signauter_url = EmployeeSignature.objects.get(id=sale_order.signature_id).image.url
         context = {
+            'id': id,
             'customer': customer,
             'work_location':work_location,
             'sale_order': sale_order,
@@ -279,7 +280,7 @@ class PurchaseOrderEditItem(View):
             signature = EmployeeSignature.objects.get(user=user)
             sale_form.cleaned_data['deposite_percent'] = sale_form.cleaned_data['deposite_percent'] or 0
             sale_form.cleaned_data['deposite_money'] = sale_form.cleaned_data['deposite_money'] or 0
-            SaleOrder.objects.update(**(sale_form.cleaned_data), status=SaleOrder.WATING_APPROVED, signature_id=signature.id)
+            SaleOrder.objects.filter(id=id).update(**(sale_form.cleaned_data), signature_id=signature.id)
             return redirect('/')
         else:
             print(sale_form.errors)
@@ -338,11 +339,11 @@ class PurchaseOrderEdit(View):
                 with transaction.atomic():
                     Customer.objects.filter(id=customer.id).update(fullname=fullname, tel=tel)
                     self.update_sale_order(sale_order, user_form)
-                    return redirect('/purchase-order/edit/1/item')
+                    return redirect(f'/purchase-order/edit/{id}/item')
             except:
-                print('write database error')
+                print('write database error', user_form.errors)
             
-        return redirect('/purchase-order/edit/1')
+        return redirect(f'/purchase-order/edit/{id}')
 
     def update_sale_order(self, sale_order, form):
         form.cleaned_data.pop('fullname')
