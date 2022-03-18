@@ -22,8 +22,6 @@ class PurchaseOrderForm(ModelForm):
     amphoe = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'id': 'amphoe'}))
     zipcode = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'id': 'zipcode'}))
 
-    comment = forms.CharField(widget=forms.Textarea(attrs={'rows': 2, 'style': 'width: 471px;'}), required=False)
-
     class Meta:
         model = Customer
         fields = '__all__'

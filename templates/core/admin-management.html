@@ -20,7 +20,7 @@
       <tbody>
         {% for item in page_obj %}
         <tr>
-          <td>{{item.order.created_date|date:"SHORT_DATE_FORMAT"}}</td>
+          <td>{{item.order.form_date|date:"SHORT_DATE_FORMAT"}}</td>
           <td><a href="/purchase-order/{{item.order.id}}">{{item.order.id}}</a></td>
           <td>{{item.customer.fullname}}</td>
           <td>{{item.order.delivery_start_date|date:"SHORT_DATE_FORMAT"}} -
