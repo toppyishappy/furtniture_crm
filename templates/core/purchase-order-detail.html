@@ -251,13 +251,13 @@
 
 <!-- section image -->
 {% for item in objects %}
-<div class="row">
+<div class="row mt-3">
     <!-- <div class="d-flex" style="overflow-x: scroll;"> -->
-        {% for img in item.images %}
         <div class="me-2 border">
+        {% for img in item.images %}
             <img style="height: 200px;" src="{{img.image.url}}" alt="">
+            {% endfor %}
         </div>
-        {% endfor %}
     <!-- </div> -->
 </div>
 {% endfor %}
