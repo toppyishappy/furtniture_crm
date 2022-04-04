@@ -128,6 +128,7 @@ class SaleOrder(models.Model):
         (PERCENTAGE, 'percentage'),
         (MONEY, 'money'),
     )
+    custom_po = models.CharField(max_length=50, null=True, blank=True)
     province = models.CharField(max_length=50)
     district = models.CharField(max_length=50)
     amphoe = models.CharField(max_length=50)

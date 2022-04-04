@@ -11,6 +11,7 @@ from django.utils import timezone
 
 from core.forms import PurchaseOrderForm, ItemForm, SaleForm
 from core.models import Department, ItemColor, ItemImage, ItemMaterial, ItemModel, ItemType, SaleOrder, SaleOrderDetail, WorkLocation
+from log.models import DepartmentLog
 from user.models import Customer, EmployeeSignature, User
 
 @method_decorator(login_required, name='dispatch')
@@ -300,7 +301,6 @@ class PurchaseOrderEdit(View):
         customer = Customer.objects.get(id=customer_id)
         init_purchase_form = PurchaseOrderForm.initial_data(customer, sale_order)
         user_form = PurchaseOrderForm(initial=init_purchase_form)
-        user = request.user
         delivery_date = sale_order.delivery_start_date
         context = {
             'user_form': user_form,
@@ -452,9 +452,17 @@ class Management(ListView):
                 'customer': Customer.objects.get(id=order.customer_id),
                 'order': order,
                 'flag': self.check_delivery_date(order.delivery_end_date),
-                'status' : self.mapping_status(order.status)
+                'status' : self.mapping_status(order.status),
+                'is_completed': self.check_completed_tasks(order.id)
             })
         return result
+    
+    def check_completed_tasks(self, order_id):
+        logs_amount = DepartmentLog.objects.filter(order__id=order_id, status=True, start_time__isnull=False, end_time__isnull=False).count()
+        department_amount = Department.objects.filter(status=True).count()
+        if logs_amount == department_amount:
+            return True
+        return False
     
     def check_delivery_date(self, date):
         # 0 = nomral

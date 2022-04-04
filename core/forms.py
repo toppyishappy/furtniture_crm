@@ -8,6 +8,7 @@ from user.models import Customer, EmployeeSignature
 
 class PurchaseOrderForm(ModelForm):
     fullname = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class':'form-control'}))
+    custom_po = forms.CharField(required=False, max_length=50, widget=forms.TextInput(attrs={'class':'form-control'}))
     tel = forms.CharField(max_length=10, widget=forms.TextInput(attrs={'class':'form-control'}), 
                             validators=[RegexValidator('^0\d{9}$', message='กรุณาตรวจสอบเบอร์โทรศัพ')])
     # province = forms.CharField(max_length=50)
