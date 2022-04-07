@@ -2,6 +2,7 @@ from datetime import datetime
 import io
 import json
 from os import stat
+from user.models import Customer
 import xlsxwriter
 
 from django.http import HttpResponse, JsonResponse
@@ -25,45 +26,42 @@ class AdminManagementAPI(View):
         order.save()
         return JsonResponse({'ok': True})
 
-from django.http import FileResponse
-from django.conf import settings
+
 @method_decorator([login_required, csrf_exempt], name='dispatch')
 class ExportExcelAPI(View):
     
-    def get_data(self, id_list):
-        result = []
-        for id in id_list:
-            sale_order = SaleOrder.objects.filter(id=id).first()
-            order_details = SaleOrderDetail.objects.filter(sale_order=sale_order)
-            for detail in order_details:
-                result.append({
-                    'sale_order_id': sale_order.id,
-                    'model': ItemModel.get_object(detail.model_id).name,
-                    'color': ItemColor.get_object(detail.color_id).name,
-                    'type': ItemType.get_object(detail.type_id).name,
-                    'material': ItemMaterial.get_object(detail.material_id).name,
-                })
-        return result
-
-    
     def get(self, request):
+        id_list = request.GET.get('id_list').split(',')
         output = io.BytesIO()
         workbook = xlsxwriter.Workbook(output)
         worksheet = workbook.add_worksheet()
-        id_list = request.GET.get('id_list').split(',')
-        result = self.get_data(id_list)
-        worksheet.write(0, 0, 'id')
-        worksheet.write(1, 0, 'model')
-        worksheet.write(2, 0, 'color')
-        worksheet.write(3, 0, 'type')
-        worksheet.write(4, 0, 'material')
-        for row, item in enumerate(result):
-            worksheet.write(0, row+1, item['sale_order_id'])
-            worksheet.write(1, row+1, item['model'])
-            worksheet.write(2, row+1, item['color'])
-            worksheet.write(3, row+1, item['type'])
-            worksheet.write(4, row+1, item['material'])
-        # worksheet.write(5, 0, 'Some Data')
+        text_wrap_format = workbook.add_format({'text_wrap': 'true'})
+        today = datetime.strftime(timezone.now(), '%Y-%m-%d')
+        worksheet.write(0, 0, today)
+        worksheet.write(1, 0, 'หมายเลข PO')
+        worksheet.write(1, 1, 'แบบ')
+        worksheet.write(1, 2, 'วัสดุ')
+        worksheet.write(1, 3, 'สี')
+        worksheet.write(1, 4, 'ประเภท')
+        worksheet.write(1, 5, 'จำนวน')
+        worksheet.write(1, 6, 'หมายเหตุ')
+        worksheet.write(1, 7, 'ลูกค้า')
+        row = 2
+        for id in id_list:
+            sale_order = SaleOrder.objects.filter(id=id).first()
+            order_details = SaleOrderDetail.objects.filter(sale_order=sale_order)
+            order_detail_length = order_details.count()
+            worksheet.merge_range(row, 0, row+order_detail_length, 0, sale_order.custom_po or sale_order.id)
+            worksheet.merge_range(row, 6, row+order_detail_length, 6, sale_order.comment, text_wrap_format)
+            worksheet.merge_range(row, 7, row+order_detail_length, 7, Customer.objects.get(id=sale_order.customer_id).fullname)
+            for detail in order_details:
+                worksheet.write(row, 1, ItemModel.get_object(detail.model_id).name)
+                worksheet.write(row, 2, ItemMaterial.get_object(detail.material_id).name)
+                worksheet.write(row, 3, ItemColor.get_object(detail.color_id).name)
+                worksheet.write(row, 4, ItemType.get_object(detail.type_id).name)
+                worksheet.write(row, 5, detail.amount)
+                row += 1
+            row += 1
         workbook.close()
 
         # Rewind the buffer.
@@ -72,7 +70,6 @@ class ExportExcelAPI(View):
             output,
             content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         )
-        today = datetime.strftime(timezone.now(), '%Y-%m-%d')
         filename = f'{today}_excel.xlsx'
         response['Content-Disposition'] = 'attachment; filename=%s' % filename
         # Set up the Http response.

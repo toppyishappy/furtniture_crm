@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
 <!-- modal -->
 <div class="modal fade" id="myModal">
@@ -82,9 +83,13 @@
                 <td>{{item.status}}</td>
                 <td><button class='btn btn-success' onclick="toggleModal({{item.order.id}})">Action</button></td>
                 {% if item.is_completed %}
-                  <td>completed</td>
+                  <td style="text-align: center;">
+                    <img src="{% static 'check-circle-fill.svg'%}" alt="">
+                  </td>
                 {% else %}
-                  <td>not completed</td>
+                <td style="text-align: center;">
+                  <img src="{% static 'x-circle-fill.svg'%}" alt="">
+                </td>
                 {% endif %}
           </tr>
         {% endfor %}
