@@ -159,11 +159,19 @@
         </div>
     </div>
     <div class="row mb-3">
-        <div class="col-6">
+        <div class="col-3">
             <label for="exampleFormControlInput1" class="form-label">วิธีการชำระเงิน</label>
             {{sale_form.payment_method}}
         </div>
-        <div class="col-6">
+        <div class="col-3">
+            <label for="exampleFormControlInput1" class="form-label">จำนวนเงินมัดจำ(เปอเซ็นต์)</label>
+            <input id="total-deposite" class="form-control" value="0" disabled/>
+        </div>
+        <div class="col-3">
+            <label for="exampleFormControlInput1" class="form-label">ราคารวม</label>
+            <input id="total-price" class="form-control" value="{{total_price}}" disabled/>
+        </div>
+        <div class="col-3">
             <label for="exampleFormControlInput1" class="form-label">ลายมือชื่อ</label>
             <input disabled type="email" class="form-control" id="exampleFormControlInput1" value="{{signature}}">
         </div>
@@ -180,11 +188,11 @@
         <div class="col-2">
             <input type="submit" value="บันทึก" class="btn btn-primary btn-submit" />
         </div>
-        <div class="col-2">
+        <!-- <div class="col-2">
             <button type="button" class="btn btn-primary btn-submit" data-bs-toggle="modal" data-bs-target="#qrModal">
                 QR code
             </button>
-        </div>
+        </div> -->
     </div>
 
 </form>
@@ -192,12 +200,26 @@
 {% endblock %}
 {% block script %}
 <script>
+    function calTotalPrice(e){
+        var totalPrice = {{total_price}}
+        // var method = document.getElementById('deposite-method').value
+        var percentage = document.getElementById('deposite-percent').value
+        var money = document.getElementById('deposite-money').value
+        var totalPriceInput = document.getElementById('total-price')
+        var totalDepositeInput = document.getElementById('total-deposite')
+        if(percentage > 0){
+            totalPriceInput.value = totalPrice * (100-percentage) / 100
+            totalDepositeInput.value = totalPrice * percentage / 100
+        }else if(money > 0){
+            totalPriceInput.value = totalPrice - money
+        }
+    }
     (function(){
         document.getElementById('deposite-money').disabled = true
         document.getElementById('deposite-percent').disabled = true
     })();
     function handleChange(e) {
-        console.log(e.value)
+        var totalPriceInput = document.getElementById('total-price').value = {{total_price}}
         if(e.value === '0'){
             document.getElementById('deposite-money').disabled = true
             document.getElementById('deposite-percent').disabled = false

@@ -30,7 +30,7 @@ class PurchaseOrderForm(ModelForm):
     def initial_data(customer, sale_order):
         return {'fullname': customer.fullname, 'tel': customer.tel, 'work_location_id': sale_order.work_location_id, 'delivery_address': sale_order.delivery_address, 'date': sale_order.form_date,
                 'delivery_date': sale_order.delivery_start_date, 'province': sale_order.province, 'district': sale_order.district, 
-                'amphoe': sale_order.amphoe, 'zipcode': sale_order.zipcode}
+                'amphoe': sale_order.amphoe, 'zipcode': sale_order.zipcode, 'custom_po': sale_order.custom_po}
 
 
 class ItemForm(forms.Form):
@@ -44,10 +44,10 @@ class ItemForm(forms.Form):
 
 class SaleForm(forms.Form):
     deposite_type = forms.ChoiceField(choices=SaleOrder.DEPOSITE_CHOICES, widget=forms.Select(attrs={'class':'form-select', 'onchange':'handleChange(this)'}), required=False) 
-    payment_method = forms.ChoiceField(choices=SaleOrder.PATMENT_CHOICES, widget=forms.Select(attrs={'class':'form-select'})) 
+    payment_method = forms.ChoiceField(choices=SaleOrder.PATMENT_CHOICES, widget=forms.Select(attrs={'class':'form-select', 'id': 'deposite-method'})) 
     comment = forms.CharField(widget=forms.Textarea(attrs={'rows': 2, 'class':'form-control'}), required=False)
-    deposite_percent = forms.IntegerField(required=False, initial=0, min_value=0,max_value=100,widget=forms.NumberInput(attrs={'class':'form-control', 'id': 'deposite-percent'})) 
-    deposite_money = forms.DecimalField(required=False, initial=0,min_value=0, widget=forms.NumberInput(attrs={'class':'form-control', 'id': 'deposite-money'})) 
+    deposite_percent = forms.IntegerField(required=False, initial=0, min_value=0,max_value=100,widget=forms.NumberInput(attrs={'class':'form-control', 'id': 'deposite-percent', 'onfocusout': 'calTotalPrice(this)'})) 
+    deposite_money = forms.DecimalField(required=False, initial=0,min_value=0, widget=forms.NumberInput(attrs={'class':'form-control', 'id': 'deposite-money', 'onfocusout': 'calTotalPrice(this)'})) 
     
     def initial_data(sale_order):
         return {'deposite_percent': sale_order.deposite_percent, 'deposite_type': sale_order.deposite_type, 'payment_method': sale_order.payment_method,

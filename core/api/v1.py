@@ -99,6 +99,8 @@ class DepartmentListAPI(View):
         result = []
         order_id = request.GET['order_id']
         departments = Department.objects.filter(status=True)
+        order = SaleOrder.objects.get(id=order_id)
+        customer = Customer.objects.get(id=order.customer_id)
         for department in departments:
             # risk bug multi departmentlog
             log = DepartmentLog.objects.filter(department_id=department.id, order__id=order_id, status=True).first()
@@ -107,7 +109,8 @@ class DepartmentListAPI(View):
                 'name': department.name,
                 'flag': self.check_flag(log),
             })
-        return JsonResponse({'ok': True, 'departments': result})
+        po_id = order.custom_po if order.custom_po else f'{datetime.strftime(order.created_date, "%y-%M")}-{order.id}'
+        return JsonResponse({'ok': True, 'departments': result, 'po_id': po_id, 'customer': customer.fullname})
 
     def check_flag(self, log):
         # 0 = init, 1 = start, 2 = stop, 3 = done

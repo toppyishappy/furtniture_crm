@@ -84,7 +84,8 @@ class PurchaseOrderDetail(View):
         payment_method = self.mapping_payment_method(sale_order.payment_method)
         signauter_url = EmployeeSignature.objects.get(id=sale_order.signature_id).image.url
         context = {
-            'id': id,
+            'id': sale_order.id,
+            'po_id': sale_order.custom_po if sale_order.custom_po else f'{datetime.strftime(sale_order.created_date, "%y-%M")}-{sale_order.id}',
             'customer': customer,
             'work_location':work_location,
             'sale_order': sale_order,
@@ -159,16 +160,19 @@ class PurchaseOrderItem(View):
         objects = SaleOrderDetail.objects.filter(sale_order=sale_order)
         user = request.user
         sale_form = SaleForm()
+        object_detail, total_price = self.get_object_detail(objects)
         context = {
             'form': form,
             'sale_form': sale_form,
-            'objects': self.get_object_detail(objects),
-            'signature': f'{user.first_name} {user.last_name}'
+            'objects': object_detail,
+            'signature': f'{user.first_name} {user.last_name}',
+            'total_price': total_price
         }
         return render(request, 'core/purchase-order-item.html', context=context)
 
     def get_object_detail(self, objects):
         result = []
+        total_price = 0
         for item in objects:
             result.append({
                 'model': ItemModel.get_object(item.model_id),
@@ -177,10 +181,11 @@ class PurchaseOrderItem(View):
                 'material': ItemMaterial.get_object(item.material_id),
                 'images': ItemImage.get_all_images(item),
                 'amount': item.amount,
-                'price': item.price,
+                'price': item.amount*item.price,
                 'id': item.id
             })
-        return result
+            total_price += item.amount*item.price
+        return result, total_price
 
     def post(self, request, id):
         form = ItemForm(request.POST, request.FILES)
@@ -446,7 +451,7 @@ class Management(ListView):
         if month_range:
             start_month = datetime.strptime(month_range, '%Y-%m')
             end_month = start_month + relativedelta.relativedelta(months=1) - timedelta(days=1)
-            orders = orders.filter(form_date__range=(start_month, end_month))
+            orders = orders.filter(delivery_start_date__range=(start_month, end_month))
         for order in orders:
             result.append({
                 'customer': Customer.objects.get(id=order.customer_id),

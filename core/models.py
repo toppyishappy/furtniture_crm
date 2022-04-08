@@ -126,7 +126,7 @@ class SaleOrder(models.Model):
     DEPOSITE_CHOICES = (
         (NONE, 'Please select a choice'),
         (PERCENTAGE, 'percentage'),
-        (MONEY, 'money'),
+        (MONEY, 'amount'),
     )
     custom_po = models.CharField(max_length=50, null=True, blank=True)
     province = models.CharField(max_length=50)

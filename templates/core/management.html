@@ -8,7 +8,7 @@
   
           <!-- Modal Header -->
           <div class="modal-header">
-          <h4 class="modal-title">แผนก</h4>
+          <h4 class="modal-title" id="title"></h4>
           <div class="visually-hidden" id="hidden-id"></div>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
@@ -71,7 +71,7 @@
             {% if item.flag == 1%}
               <tr class="bg-warning">
             {% elif item.flag == 2%}
-              <tr class="bg-danger">
+              <tr style="background: #ff6961">
             {% else %}
               <tr class="">
             {% endif %}
@@ -168,12 +168,13 @@
       }
       const toggleModal = async(orderId) => {
         var content = document.getElementById('department-content')
+        var title = document.getElementById('title')
         var html = '';
         const path = `/api/department?order_id=${orderId}`;
         const res = await getData(path);
         if(res.ok){
+          title.innerHTML = `<div>หมายเลข PO ${res.po_id}</div><div>ลูกค้า ${res.customer}</div>`
           for(let department of res.departments){
-            console.log(department.flag)
             var button = '';
             if(department.flag === 3){
             button = `

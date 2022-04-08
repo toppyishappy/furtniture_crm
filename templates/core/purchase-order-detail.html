@@ -112,79 +112,51 @@
 </div>
 
 <div class="mb-4">
-
-    <div>
-        <h4>ใบสั่งซื้อสินค้า</h4>
-    </div>
-    <!-- section customer -->
-    <div class="row mt-3 justify-content-end">
-        <div class="col-3">
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">วันที่</label>
-                <input class="form-control" type="text" value="{{sale_order.form_date}}"
-                    aria-label="Disabled input example" disabled readonly>
-            </div>
-        </div>
-        <div class="col-3">
-            <label for="exampleFormControlInput1" class="form-label">สถานที่จัดงาน</label>
-            <input class="form-control" type="text" value="{{work_location.name}}" aria-label="Disabled input example"
-                disabled readonly>
-        </div>
-        <div class="col-6">
-            <label for="exampleFormControlInput1" class="form-label">กำหนดส่งสินค้า</label>
-            <input class="form-control" type="text" value="{{delivery_date}}" aria-label="Disabled input example"
-                disabled readonly>
-        </div>
-    </div>
-
     <div class="row mt-3">
         <div class="col-6">
+            <img style='height: 100px;' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5oS_MzgZ5NOSyfW-3BtWWWGBmwdKwOZJFD_N5H3aJPPxS4KG9XV99VX6IFsDhH1HPufo&usqp=CAU" alt="">
+        </div>
+        <div class="col-6" style="text-align: end;">
+            <h4>ใบสั่งซื้อสินค้า {{po_id}}</h4>
+            <div>ที่อยู่บริษัท</div>
+        </div>
+    </div>
+    <!-- section customer -->
+    <div class="row mt-3">
+        <div class="col-6">
+            <label for="exampleFormControlInput1" class="form-label">วันที่</label>
+            <div>{{sale_order.form_date}}</div>
+        </div>
+        <div class="col-6">
             <label for="exampleFormControlInput1" class="form-label">ชื่อลูกค้า</label>
-            <input class="form-control" type="text" value="{{customer.fullname}}" aria-label="Disabled input example"
-                disabled readonly>
+            <div>{{customer.fullname}}</div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-6">
+            <label for="exampleFormControlInput1" class="form-label">สถานที่</label>
+            <div>{{work_location.name}}</div>
         </div>
         <div class="col-6">
             <label for="exampleFormControlInput1" class="form-label">เบอร์โทรศัพท์</label>
-            <input class="form-control" type="text" value="{{customer.tel}}" aria-label="Disabled input example"
-                disabled readonly>
+            <div>{{customer.tel}}</div>
         </div>
     </div>
     <div class="row mt-3">
-        <div class="col-12">
+        <div class="col-6">
+            <label for="exampleFormControlInput1" class="form-label">กำหนดส่งสินค้า</label>
+            <div>{{delivery_date}}</div>
+        </div>
+        <div class="col-6">
             <label for="exampleFormControlInput1" class="form-label">ที่อยู่</label>
-            <input class="form-control" type="text" value="{{sale_order.delivery_address}}"
-                aria-label="Disabled input example" disabled readonly>
-        </div>
-    </div>
-    <div class="row mt-3">
-        <div class="col-6">
-            <label for="exampleFormControlInput1" class="form-label">จังหวัด</label>
-            <input class="form-control" type="text" value="{{sale_order.province}}" aria-label="Disabled input example"
-                disabled readonly>
-        </div>
-        <div class="col-6">
-            <label for="exampleFormControlInput1" class="form-label">ตำบล/แขวง</label>
-            <input class="form-control" type="text" value="{{sale_order.district}}" aria-label="Disabled input example"
-                disabled readonly>
-        </div>
-    </div>
-    <div class="row mt-3">
-        <div class="col-6">
-            <label for="exampleFormControlInput1" class="form-label">อำเภอ/เขต</label>
-            <input class="form-control" type="text" value="{{sale_order.amphoe}}" aria-label="Disabled input example"
-                disabled readonly>
-        </div>
-        <div class="col-6">
-            <label for="exampleFormControlInput1" class="form-label">ไปรษณีย์</label>
-            <input class="form-control" type="text" value="{{sale_order.zipcode}}" aria-label="Disabled input example"
-                disabled readonly>
+            <div>{{sale_order.delivery_address}} {{sale_order.district}} {{sale_order.amphoe}} {{sale_order.province}} {{sale_order.zipcode}}</div>
         </div>
     </div>
     <!-- end section -->
 
     <!-- item information -->
 
-    <div class="row card-body shadow-sm mt-3">
+    <div class="row card-body mt-3">
         <table class="table">
             <thead>
                 <tr>
@@ -213,29 +185,33 @@
     <hr />
 <!-- end section -->
 
-<div class="row">
+<div class="row mt-3">
     <div class="col-3">
         <label for="exampleFormControlInput1" class="form-label">การชำระเงิน</label>
-        <input class="form-control" type="text" value="{{payment_method}}"
-            aria-label="Disabled input example" disabled readonly>
+        <div>{{payment_method}}</div>
+        <!-- <input class="form-control" type="text" value="{{payment_method}}"
+            aria-label="Disabled input example" disabled readonly> -->
     </div>
     <div class="col-3">
         <label for="exampleFormControlInput1" class="form-label">รวม</label>
-        <input class="form-control" type="text" value="{{price_detail.summary_price}}"
-            aria-label="Disabled input example" disabled readonly>
+        <div>{{price_detail.summary_price}}</div>
+        <!-- <input class="form-control" type="text" value="{{price_detail.summary_price}}"
+            aria-label="Disabled input example" disabled readonly> -->
     </div>
     <div class="col-3">
         <label for="exampleFormControlInput1" class="form-label">มัดจำ</label>
-        <input class="form-control" type="text" value="{{price_detail.deposit_price}}"
-            aria-label="Disabled input example" disabled readonly>
+        <div>{{price_detail.deposit_price}}</div>
+        <!-- <input class="form-control" type="text" value="{{price_detail.deposit_price}}"
+            aria-label="Disabled input example" disabled readonly> -->
     </div>
     <div class="col-3">
         <label for="exampleFormControlInput1" class="form-label">คงเหลือ</label>
-        <input class="form-control" type="text" value="{{price_detail.remain_price}}"
-            aria-label="Disabled input example" disabled readonly>
+        <div>{{price_detail.remain_price}}</div>
+        <!-- <input class="form-control" type="text" value="{{price_detail.remain_price}}"
+            aria-label="Disabled input example" disabled readonly> -->
     </div>
 </div>
-<div class="row">
+<div class="row mt-3">
     <div class="col-6">
         <label for="exampleFormControlInput1" class="form-label">หมายเหตุ</label>
         <textarea class="form-control" style="height: 150px;" aria-label="Disabled input example" 
@@ -243,8 +219,11 @@
     </div>
     <div class="col-6">
         <label class="form-label">ลายมือชื่อ</label>
-        <input class="form-control" style="height: 150px;" type="image" src="{{signauter_url}}" alt="" disabled
-            readonly>
+        <div>
+            <img src="{{signauter_url}}" alt="" style="height: 100px;">
+        </div>
+        <!-- <input class="form-control" style="height: 150px;" type="image" src="{{signauter_url}}" alt="" disabled
+            readonly> -->
     </div>
 </div>
 </div>
