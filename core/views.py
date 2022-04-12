@@ -112,7 +112,7 @@ class PurchaseOrderDetail(View):
                 'price': item.price,
                 'id': item.id
             })
-            summary_price += item.price
+            summary_price += item.price * item.amount
         return result,summary_price
     
     def get_price_detail(self,summary_price, sale_order):
@@ -230,6 +230,7 @@ class PurchaseOrderEditItem(View):
 
     def get_object_detail(self, objects):
         result = []
+        total_price = 0
         for item in objects:
             result.append({
                 'model': ItemModel.get_object(item.model_id),
@@ -239,23 +240,26 @@ class PurchaseOrderEditItem(View):
                 'images': ItemImage.get_all_images(item),
                 'amount': item.amount,
                 'price': item.price,
-                'id': item.id
+                'id': item.id,
             })
-        return result
+            total_price += item.amount*item.price
+        return result,total_price
 
     def get(self, request, id):
         sale_order, customer = self.get_order(id)
         init_saleorder_form = SaleForm.initial_data(sale_order)
         sale_form = SaleForm(initial=init_saleorder_form)
         form = ItemForm()
-        objects = SaleOrderDetail.objects.filter(sale_order=sale_order)
         user = request.user
+        objects = SaleOrderDetail.objects.filter(sale_order=sale_order)
+        object_detail, total_price = self.get_object_detail(objects)
         context = {
             'order_id': sale_order.id,
             'form': form,
             'sale_form': sale_form,
-            'objects': self.get_object_detail(objects),
-            'signature': f'{user.first_name} {user.last_name}'
+            'objects': object_detail,
+            'signature': f'{user.first_name} {user.last_name}',
+            'total_price': total_price
         }
         return render(request, 'core/purchase-order-edit-item.html', context=context)
 

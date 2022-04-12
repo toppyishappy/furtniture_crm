@@ -213,10 +213,24 @@
         }else if(money > 0){
             totalPriceInput.value = totalPrice - money
         }
+        else if(percentage == 0 && money == 0)
+        {
+            totalDepositeInput.value = 0
+            totalPriceInput.value = totalPrice
+        }
     }
     (function(){
-        document.getElementById('deposite-money').disabled = true
-        document.getElementById('deposite-percent').disabled = true
+        var deposite_type = document.getElementById('id_deposite_type').value
+        if(deposite_type === '0'){
+            document.getElementById('deposite-money').disabled = true
+            document.getElementById('deposite-percent').disabled = false
+        }else if(deposite_type === '1'){
+            document.getElementById('deposite-money').disabled = false
+            document.getElementById('deposite-percent').disabled = true
+        }else{
+            document.getElementById('deposite-money').disabled = true
+            document.getElementById('deposite-percent').disabled = true
+        }
     })();
     function handleChange(e) {
         var totalPriceInput = document.getElementById('total-price').value = {{total_price}}
@@ -228,11 +242,13 @@
             document.getElementById('deposite-money').disabled = false
             document.getElementById('deposite-percent').disabled = true
             document.getElementById('deposite-percent').value = 0
+            document.getElementById('total-deposite').value = 0
         }else{
             document.getElementById('deposite-money').disabled = true
             document.getElementById('deposite-percent').disabled = true
             document.getElementById('deposite-money').value = 0
             document.getElementById('deposite-percent').value = 0
+            document.getElementById('total-deposite').value = 0
         }
 
     }
