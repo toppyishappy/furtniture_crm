@@ -58,6 +58,7 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col">วันที่ PO</th>
+            <th scope="col">id</th>
             <th scope="col">หมายเลข PO</th>
             <th scope="col">ชื่อลูกค้า</th>
             <th scope="col">วันที่จัดส่ง</th>
@@ -71,13 +72,14 @@
             {% if item.flag == 1%}
               <tr class="bg-warning">
             {% elif item.flag == 2%}
-              <tr style="background: #ff6961">
+              <tr style="background: #ff6961;">
             {% else %}
               <tr class="">
             {% endif %}
                 <td><input type="checkbox" name="" id="{{item.order.id}}" onchange="handleCheckBox(this)"></td>
                 <td>{{item.order.form_date|date:"SHORT_DATE_FORMAT"}}</td>
                 <td><a href="/purchase-order/{{item.order.id}}">{{item.order.id}}</a></td>
+                <td>{{item.order.custom_po|default:"-"}}</td>
                 <td>{{item.customer.fullname}}</td>
                 <td>{{item.order.delivery_start_date|date:"SHORT_DATE_FORMAT"}} - {{item.order.delivery_end_date|date:"SHORT_DATE_FORMAT"}}</td>
                 <td>{{item.status}}</td>

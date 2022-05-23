@@ -36,8 +36,9 @@ class PurchaseOrderForm(ModelForm):
 class ItemForm(forms.Form):
     type_id = forms.ModelChoiceField(queryset=ItemType.objects.all(), widget=forms.Select(attrs={'class':'form-select'}), empty_label="Please select")
     model_id = forms.ModelChoiceField(queryset=ItemModel.objects.all(), widget=forms.Select(attrs={'class':'form-select'}), empty_label="Please select")
-    color_id = forms.ModelChoiceField(queryset=ItemColor.objects.all(), widget=forms.Select(attrs={'class':'form-select'}), empty_label="Please select")
-    material_id = forms.ModelChoiceField(queryset=ItemMaterial.objects.all(), widget=forms.Select(attrs={'class':'form-select'}), empty_label="Please select")
+    color_id = forms.ModelChoiceField(queryset=ItemColor.objects.all(), widget=forms.Select(attrs={'class':'form-select', 'id': 'color-select'}), empty_label="Please select")
+    material_id = forms.ModelChoiceField(queryset=ItemMaterial.objects.all(), widget=forms.Select(attrs={'class':'form-select', 'id':'material-select'}), empty_label="Please select")
+    size = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
     files = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True, 'class': 'form-control'}), required=False)
     amount = forms.IntegerField(min_value=1,required=True, initial=1,widget=forms.NumberInput(attrs={'class':'form-control'})) 
     price = forms.DecimalField(min_value=0,required=True, initial=0,decimal_places=2,widget=forms.NumberInput(attrs={'class':'form-control'})) 

@@ -94,6 +94,7 @@ class SaleOrderDetail(models.Model):
     comment = models.TextField(blank=True, null=True)
     amount = models.IntegerField()
     price = models.DecimalField(max_digits=9, decimal_places=2)
+    size = models.CharField(max_length=50, blank=True, null=True)
 
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)

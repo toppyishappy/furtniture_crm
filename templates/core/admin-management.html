@@ -10,6 +10,7 @@
       <thead>
         <tr>
           <th scope="col">วันที่ PO</th>
+          <th scope="col">id</th>
           <th scope="col">หมายเลข PO</th>
           <th scope="col">ชื่อลูกค้า</th>
           <th scope="col">วันที่จัดส่ง</th>
@@ -22,6 +23,7 @@
         <tr>
           <td>{{item.order.form_date|date:"SHORT_DATE_FORMAT"}}</td>
           <td><a href="/purchase-order/{{item.order.id}}">{{item.order.id}}</a></td>
+          <td>{{item.order.custom_po|default:"-"}}</td>
           <td>{{item.customer.fullname}}</td>
           <td>{{item.order.delivery_start_date|date:"SHORT_DATE_FORMAT"}} -
             {{item.order.delivery_end_date|date:"SHORT_DATE_FORMAT"}}</td>

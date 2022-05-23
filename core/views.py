@@ -182,6 +182,7 @@ class PurchaseOrderItem(View):
                 'images': ItemImage.get_all_images(item),
                 'amount': item.amount,
                 'price': item.amount*item.price,
+                'size': item.size,
                 'id': item.id
             })
             total_price += item.amount*item.price
@@ -199,10 +200,11 @@ class PurchaseOrderItem(View):
                     material_id = form.cleaned_data['material_id'].id
                     price = form.cleaned_data['price']
                     amount = form.cleaned_data['amount']
+                    size = form.cleaned_data['size']
                     files = request.FILES.getlist('files')
                     sale_order = SaleOrder.objects.get(id=id)
                     detail = SaleOrderDetail.objects.create(sale_order=sale_order, model_id=model_id, type_id=type_id, color_id=color_id,
-                                                                material_id=material_id, price=price, amount=amount)
+                                                                material_id=material_id, price=price, amount=amount, size=size)
                     for file in files:
                         ItemImage.objects.create(image=file, order_detail=detail)
             except:
@@ -238,6 +240,7 @@ class PurchaseOrderEditItem(View):
                 'color': ItemColor.get_object(item.color_id),
                 'material': ItemMaterial.get_object(item.material_id),
                 'images': ItemImage.get_all_images(item),
+                'size': item.size,
                 'amount': item.amount,
                 'price': item.price,
                 'id': item.id,
@@ -275,10 +278,11 @@ class PurchaseOrderEditItem(View):
                     material_id = form.cleaned_data['material_id'].id
                     price = form.cleaned_data['price']
                     amount = form.cleaned_data['amount']
+                    size = form.cleaned_data['size']
                     files = request.FILES.getlist('files')
                     sale_order = SaleOrder.objects.get(id=id)
                     detail = SaleOrderDetail.objects.create(sale_order=sale_order, model_id=model_id, type_id=type_id, color_id=color_id,
-                                                                material_id=material_id, price=price, amount=amount)
+                                                                material_id=material_id, price=price, amount=amount, size=size)
                     for file in files:
                         ItemImage.objects.create(image=file, order_detail=detail)
             except:

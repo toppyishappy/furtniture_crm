@@ -162,8 +162,9 @@
                 <tr>
                     <th scope="col">แบบ</th>
                     <th scope="col">วัสดุ/รหัส</th>
-                    <th scope="col">สี</th>
                     <th scope="col">ประเภท</th>
+                    <th scope="col">สี</th>
+                    <th scope="col">ไซส์</th>
                     <th scope="col">จำนวน</th>
                     <th scope="col">ราคา</th>
                 </tr>
@@ -175,6 +176,7 @@
                     <td>{{item.material.name}}</td>
                     <td>{{item.color.name}}</td>
                     <td>{{item.type.name}}</td>
+                    <td>{{item.size|default:"-"}}</td>
                     <td>{{item.amount}}</td>
                     <td>{{item.price}}</td>
                 </tr>
