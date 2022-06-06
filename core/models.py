@@ -88,7 +88,7 @@ class WorkLocation(models.Model):
 class SaleOrderDetail(models.Model):
     sale_order = models.ForeignKey('core.SaleOrder', on_delete=models.CASCADE)
     model_id = models.IntegerField()
-    color_id = models.IntegerField()
+    color = models.TextField(blank=True, null=True)
     material_id = models.IntegerField()
     type_id = models.IntegerField()
     comment = models.TextField(blank=True, null=True)

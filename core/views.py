@@ -38,6 +38,7 @@ class PurchaseOrder(View):
     def post(self, request):
         form = PurchaseOrderForm(request.POST)
         if form.is_valid():
+            custom_po = form.cleaned_data['custom_po']
             date = form.cleaned_data['date']
             work_location_id = form.cleaned_data['work_location_id'].id
             fullname = form.cleaned_data['fullname']
@@ -55,7 +56,7 @@ class PurchaseOrder(View):
             try:
                 with transaction.atomic():
                     customer = Customer.objects.create(fullname=fullname, tel=tel)
-                    order = SaleOrder.objects.create(form_date=date,customer_id=customer.id, province=province, district=district,
+                    order = SaleOrder.objects.create(custom_po=custom_po,form_date=date,customer_id=customer.id, province=province, district=district,
                     amphoe=amphoe, zipcode=zipcode, delivery_address=delivery_address,
                     delivery_start_date=start_week_date,delivery_end_date=end_week_date , work_location_id=work_location_id)
                     order_id = order.id
@@ -105,11 +106,12 @@ class PurchaseOrderDetail(View):
             result.append({
                 'model': ItemModel.get_object(item.model_id),
                 'type': ItemType.get_object(item.type_id),
-                'color': ItemColor.get_object(item.color_id),
+                'color': item.color,
                 'material': ItemMaterial.get_object(item.material_id),
                 'images': ItemImage.get_all_images(item),
                 'amount': item.amount,
                 'price': item.price,
+                'size': item.size,
                 'id': item.id
             })
             summary_price += item.price * item.amount
@@ -177,7 +179,7 @@ class PurchaseOrderItem(View):
             result.append({
                 'model': ItemModel.get_object(item.model_id),
                 'type': ItemType.get_object(item.type_id),
-                'color': ItemColor.get_object(item.color_id),
+                'color': item.color,
                 'material': ItemMaterial.get_object(item.material_id),
                 'images': ItemImage.get_all_images(item),
                 'amount': item.amount,
@@ -196,14 +198,14 @@ class PurchaseOrderItem(View):
                 with transaction.atomic():
                     model_id = form.cleaned_data['model_id'].id
                     type_id = form.cleaned_data['type_id'].id
-                    color_id = form.cleaned_data['color_id'].id
+                    color = form.cleaned_data['color']
                     material_id = form.cleaned_data['material_id'].id
                     price = form.cleaned_data['price']
                     amount = form.cleaned_data['amount']
                     size = form.cleaned_data['size']
                     files = request.FILES.getlist('files')
                     sale_order = SaleOrder.objects.get(id=id)
-                    detail = SaleOrderDetail.objects.create(sale_order=sale_order, model_id=model_id, type_id=type_id, color_id=color_id,
+                    detail = SaleOrderDetail.objects.create(sale_order=sale_order, model_id=model_id, type_id=type_id, color=color,
                                                                 material_id=material_id, price=price, amount=amount, size=size)
                     for file in files:
                         ItemImage.objects.create(image=file, order_detail=detail)
@@ -237,7 +239,7 @@ class PurchaseOrderEditItem(View):
             result.append({
                 'model': ItemModel.get_object(item.model_id),
                 'type': ItemType.get_object(item.type_id),
-                'color': ItemColor.get_object(item.color_id),
+                'color': item.color,
                 'material': ItemMaterial.get_object(item.material_id),
                 'images': ItemImage.get_all_images(item),
                 'size': item.size,
@@ -274,14 +276,14 @@ class PurchaseOrderEditItem(View):
                 with transaction.atomic():
                     model_id = form.cleaned_data['model_id'].id
                     type_id = form.cleaned_data['type_id'].id
-                    color_id = form.cleaned_data['color_id'].id
+                    color = form.cleaned_data['color']
                     material_id = form.cleaned_data['material_id'].id
                     price = form.cleaned_data['price']
                     amount = form.cleaned_data['amount']
                     size = form.cleaned_data['size']
                     files = request.FILES.getlist('files')
                     sale_order = SaleOrder.objects.get(id=id)
-                    detail = SaleOrderDetail.objects.create(sale_order=sale_order, model_id=model_id, type_id=type_id, color_id=color_id,
+                    detail = SaleOrderDetail.objects.create(sale_order=sale_order, model_id=model_id, type_id=type_id, color=color,
                                                                 material_id=material_id, price=price, amount=amount, size=size)
                     for file in files:
                         ItemImage.objects.create(image=file, order_detail=detail)
@@ -330,7 +332,7 @@ class PurchaseOrderEdit(View):
             result.append({
                 'model': ItemModel.get_object(item.model_id),
                 'type': ItemType.get_object(item.type_id),
-                'color': ItemColor.get_object(item.color_id),
+                'color': item.color,
                 'material': ItemMaterial.get_object(item.material_id),
                 'images': ItemImage.get_all_images(item),
                 'amount': item.amount,

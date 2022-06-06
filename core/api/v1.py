@@ -43,23 +43,25 @@ class ExportExcelAPI(View):
         worksheet.write(1, 2, 'วัสดุ')
         worksheet.write(1, 3, 'สี')
         worksheet.write(1, 4, 'ประเภท')
-        worksheet.write(1, 5, 'จำนวน')
-        worksheet.write(1, 6, 'หมายเหตุ')
-        worksheet.write(1, 7, 'ลูกค้า')
+        worksheet.write(1, 5, 'ไซน์')
+        worksheet.write(1, 6, 'จำนวน')
+        worksheet.write(1, 7, 'หมายเหตุ')
+        worksheet.write(1, 8, 'ลูกค้า')
         row = 2
         for id in id_list:
             sale_order = SaleOrder.objects.filter(id=id).first()
             order_details = SaleOrderDetail.objects.filter(sale_order=sale_order)
             order_detail_length = order_details.count()
             worksheet.merge_range(row, 0, row+order_detail_length, 0, sale_order.custom_po or sale_order.id)
-            worksheet.merge_range(row, 6, row+order_detail_length, 6, sale_order.comment, text_wrap_format)
-            worksheet.merge_range(row, 7, row+order_detail_length, 7, Customer.objects.get(id=sale_order.customer_id).fullname)
+            worksheet.merge_range(row, 7, row+order_detail_length, 7, sale_order.comment, text_wrap_format)
+            worksheet.merge_range(row, 8, row+order_detail_length, 8, Customer.objects.get(id=sale_order.customer_id).fullname)
             for detail in order_details:
                 worksheet.write(row, 1, ItemModel.get_object(detail.model_id).name)
                 worksheet.write(row, 2, ItemMaterial.get_object(detail.material_id).name)
-                worksheet.write(row, 3, ItemColor.get_object(detail.color_id).name)
+                worksheet.write(row, 3, detail.color)
                 worksheet.write(row, 4, ItemType.get_object(detail.type_id).name)
-                worksheet.write(row, 5, detail.amount)
+                worksheet.write(row, 5, detail.size)
+                worksheet.write(row, 6, detail.amount)
                 row += 1
             row += 1
         workbook.close()

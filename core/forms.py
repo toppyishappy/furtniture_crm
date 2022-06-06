@@ -36,7 +36,7 @@ class PurchaseOrderForm(ModelForm):
 class ItemForm(forms.Form):
     type_id = forms.ModelChoiceField(queryset=ItemType.objects.all(), widget=forms.Select(attrs={'class':'form-select'}), empty_label="Please select")
     model_id = forms.ModelChoiceField(queryset=ItemModel.objects.all(), widget=forms.Select(attrs={'class':'form-select'}), empty_label="Please select")
-    color_id = forms.ModelChoiceField(queryset=ItemColor.objects.all(), widget=forms.Select(attrs={'class':'form-select', 'id': 'color-select'}), empty_label="Please select")
+    color = forms.CharField(required=False, max_length=50, widget=forms.TextInput(attrs={'class':'form-control'}))
     material_id = forms.ModelChoiceField(queryset=ItemMaterial.objects.all(), widget=forms.Select(attrs={'class':'form-select', 'id':'material-select'}), empty_label="Please select")
     size = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
     files = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True, 'class': 'form-control'}), required=False)

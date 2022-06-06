@@ -174,8 +174,8 @@
                 <tr class="">
                     <td>{{item.model.name}}</td>
                     <td>{{item.material.name}}</td>
-                    <td>{{item.color.name}}</td>
                     <td>{{item.type.name}}</td>
+                    <td>{{item.color|default:"-"}}</td>
                     <td>{{item.size|default:"-"}}</td>
                     <td>{{item.amount}}</td>
                     <td>{{item.price}}</td>
