@@ -183,7 +183,7 @@ class PurchaseOrderItem(View):
                 'material': ItemMaterial.get_object(item.material_id),
                 'images': ItemImage.get_all_images(item),
                 'amount': item.amount,
-                'price': item.amount*item.price,
+                'price': item.price,
                 'size': item.size,
                 'id': item.id
             })

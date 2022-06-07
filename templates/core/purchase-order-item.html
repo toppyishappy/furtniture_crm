@@ -56,7 +56,7 @@
                     {{form.amount}}
                 </div>
                 <div class="col-2">
-                    <label for="exampleFormControlInput1" class="form-label">ราคา</label>
+                    <label for="exampleFormControlInput1" class="form-label">ราคาต่อหน่วย</label>
                     {{form.price}}
                 </div>
             </div>
@@ -115,20 +115,20 @@
                                 <span>{{item.material.name}}</span>
                             </div>
                         </div>
-                        <div class="col-2">
+                        <div class="col-1">
                             <div class="d-flex-inline">
                                 <span>สี</span>
                                 <span>{{item.color|default:"-"}}</span>
                             </div>
                         </div>
-                        <div class="col-2">
+                        <div class="col-1">
                             <div class="d-flex-inline">
                                 <span>ไซส์</span>
                                 <span>{{item.size|default:"-"}}</span>
                             </div>
                         </div>
 
-                        <div class="col-2">
+                        <div class="col-1">
                             <div class="d-flex-inline">
                                 <span>จำนวน</span>
                                 <span>{{item.amount}}</span>
@@ -136,7 +136,7 @@
                         </div>
                         <div class="col-2">
                             <div class="d-flex-inline">
-                                <span>ราคา</span>
+                                <span>ราคาต่อหน่วย</span>
                                 <span>{{item.price}}</span>
                             </div>
                         </div>
