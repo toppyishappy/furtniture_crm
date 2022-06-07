@@ -12,7 +12,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
 
-from core.models import Department, ItemColor, ItemMaterial, ItemModel, ItemType, SaleOrder, SaleOrderDetail
+from core.models import Department, ItemMaterial, ItemModel, ItemType, SaleOrder, SaleOrderDetail
 from log.models import DepartmentLog
 
 @method_decorator([login_required, csrf_exempt], name='dispatch')

@@ -10,7 +10,7 @@ from django.db import DatabaseError, transaction
 from django.utils import timezone
 
 from core.forms import PurchaseOrderForm, ItemForm, SaleForm
-from core.models import Department, ItemColor, ItemImage, ItemMaterial, ItemModel, ItemType, SaleOrder, SaleOrderDetail, WorkLocation
+from core.models import Department, ItemImage, ItemMaterial, ItemModel, ItemType, SaleOrder, SaleOrderDetail, WorkLocation
 from log.models import DepartmentLog
 from user.models import Customer, EmployeeSignature, User
 

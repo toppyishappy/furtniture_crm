@@ -2,7 +2,6 @@ from django.contrib import admin
 from core.models import *
 # Register your models here.
 
-admin.site.register(ItemColor)
 admin.site.register(ItemImage)
 admin.site.register(ItemMaterial)
 admin.site.register(ItemModel)

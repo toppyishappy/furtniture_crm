@@ -2,7 +2,7 @@ from django import forms
 from django.core.validators import RegexValidator
 from django.forms import ModelForm
 
-from core.models import ItemColor, ItemMaterial, ItemModel, ItemType, SaleOrder, SaleOrderDetail, WorkLocation
+from core.models import ItemMaterial, ItemModel, ItemType, SaleOrder, SaleOrderDetail, WorkLocation
 from user.models import Customer, EmployeeSignature
 
 

@@ -15,20 +15,6 @@ class ItemModel(models.Model):
         return ItemModel.objects.get(id=id)
 
 
-class ItemColor(models.Model):
-    name = models.CharField(max_length=50)
-    status = models.BooleanField(default=True)
-
-    created_date = models.DateTimeField(auto_now_add=True)
-    updated_date = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.name
-    
-    def get_object(id):
-        return ItemColor.objects.get(id=id)
-
-
 class ItemMaterial(models.Model):
     name = models.CharField(max_length=50)
     status = models.BooleanField(default=True)
